@@ -1,7 +1,7 @@
 
 import requests
 
-from app.core import config
+from core import config
 
 
 data = {

@@ -2,8 +2,8 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-from app.db_models.peso import Peso
-from app.models.peso import PesoCreate
+from db_models.peso import Peso
+from models.peso import PesoCreate
 
 
 def get(db_session: Session, *, peso_id: int) -> Optional[Peso]:

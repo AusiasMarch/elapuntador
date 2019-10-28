@@ -1,13 +1,13 @@
-from app import crud
-from app.core import config
-from app.models.user import UserCreate
-from app.db.base import Base
-from app.db.session import engine
+import crud
+from core import config
+from models.user import UserCreate
+from db.base import Base
+from db.session import engine
 
 # make sure all SQL Alchemy models are imported before initializing DB
 # otherwise, SQL Alchemy might fail to initialize properly relationships
 # for more details: https://github.com/tiangolo/full-stack-fastapi-postgresql/issues/28
-from app.db import base
+from db import base
 
 
 def init_db(db_session):
