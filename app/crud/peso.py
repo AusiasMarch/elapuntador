@@ -10,7 +10,7 @@ def get(db_session: Session, *, peso_id: int) -> Optional[Peso]:
     return db_session.query(Peso).filter(Peso.id == peso_id).first()
 
 
-def get_all(db_session: Session, *) -> List[Optional[Peso]]:
+def get_all(db_session: Session) -> List[Optional[Peso]]:
     return db_session.query(Peso).all()
 
 
