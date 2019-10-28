@@ -1,4 +1,4 @@
-from app import crud
+import app.crud as crud
 from app.db.session import get_db_session
 
 from app.models.peso import PesoCreate

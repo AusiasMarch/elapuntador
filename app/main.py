@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-import models as models
-import tasks as tasks
+import app.models as models
+import app.tasks as tasks
 
 app = FastAPI()
 
