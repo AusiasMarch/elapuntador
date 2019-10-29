@@ -13,7 +13,15 @@ class Peso(BaseModel):
 
     def __repr__(self):
         return '{} kilos {} gramos'.format(self.kilos, self.gramos)
-    
+
+
+class PesoInDb(Peso):
+    datetime: datetime
+
+    def __repr__(self):
+        return '{} kilos {} gramos'.format(self.kilos, self.gramos)
+
+
 class PesoCreate(Peso):
     id: Optional[int]
     gramos: Optional[int]

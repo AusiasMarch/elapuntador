@@ -24,11 +24,12 @@ def get_all_by_reporter(
     )
 
 
-def insert_peso(db_session: Session, *, peso_in: PesoCreate) -> Peso:
+def create(db_session: Session, *, peso_in: PesoCreate) -> Peso:
     peso_in_data = jsonable_encoder(peso_in)
     peso = Peso(**peso_in_data)
     db_session.add(peso)
     db_session.commit()
     db_session.refresh(peso)
     
+    print(peso)
     return peso

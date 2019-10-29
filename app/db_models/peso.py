@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
@@ -9,6 +10,6 @@ class Peso(Base):
     reporter_id = Column(Integer, ForeignKey("reporter.id"))
     kilos = Column(Integer)
     gramos = Column(Integer)
-    datetime = Column(DateTime)
+    datetime = Column(DateTime, default=datetime.datetime.utcnow)
 
     reporter = relationship("Reporter", back_populates="pesos")
