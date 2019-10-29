@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from db.session import get_db_session
 from sqlalchemy.orm import Session
 
-from utils.db import get_db
 import models as models
 from core import config
 
