@@ -2,7 +2,7 @@ import crud
 
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
-from db.session import get_db_session
+from utils.db import get_db
 
 import models as models
 from core import config
@@ -21,7 +21,7 @@ async def root():
 @app.post("/peso")
 async def insert_note(
         *,
-        db = get_db_session(),
+        db: Session = Depends(get_db),
         peso_in: models.peso.PesoCreate):
     
     peso = crud.peso.create(db_session=db, peso_in=peso_in)
