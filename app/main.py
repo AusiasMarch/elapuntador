@@ -19,7 +19,7 @@ async def root():
 
 
 @app.post("/peso")
-async def insert_note(
+def insert_note(
         *,
         db: Session = Depends(get_db),
         peso_in: models.peso.PesoCreate):
