@@ -28,5 +28,7 @@ def insert_note(
 async def root():
     
     pesos = crud.peso.get_all(db_session=db_session)
+    for peso in pesos:
+        print(peso.reporter)
     
     return pesos
