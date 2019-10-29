@@ -31,6 +31,7 @@ sudo sed -i "/^#listen_addresses.*/a listen_addresses\ =\ '*'" /etc/postgresql/$
 sudo systemctl restart postgresql
 sudo su postgres -c "psql  -c \"CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';\""
 sudo su postgres -c "psql  -c \"CREATE DATABASE $POSTGRES_USER OWNER $POSTGRES_USER;\""
+sudo su postgres -c "psql  -c \"CREATE DATABASE $POSTGRES_DB OWNER $POSTGRES_USER;\""
 
 
 sudo apt install -y uvicorn
