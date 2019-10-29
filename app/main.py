@@ -21,7 +21,7 @@ async def root():
 @app.post("/peso")
 async def insert_note(
         *,
-        db: Session = get_db_session(),
+        db = get_db_session(),
         peso_in: models.peso.PesoCreate):
     
     peso = crud.peso.create(db_session=db, peso_in=peso_in)
