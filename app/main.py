@@ -2,8 +2,11 @@ from fastapi import FastAPI
 
 import models as models
 import tasks as tasks
+from core import config
 
 app = FastAPI()
+
+print(config.SQLALCHEMY_DATABASE_URI)
 
 
 @app.get("/")
