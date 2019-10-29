@@ -3,3 +3,5 @@ fastapi
 email-validator
 sqlalchemy
 psycopg2
+passlib
+environs

@@ -1,6 +1,6 @@
 import crud
 from core import config
-from models.user import UserCreate
+from models.reporter import ReporterCreate
 from db.base import Base
 from db.session import engine
 
@@ -16,11 +16,15 @@ def init_db(db_session):
     # the tables un-commenting the next line
     Base.metadata.create_all(bind=engine)
 
-    user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER)
-    if not user:
-        user_in = UserCreate(
+    reporter = crud.reporter.get_by_email(db_session, email=config.FIRST_SUPERUSER)
+    if not reporter:
+        reporter_in = ReporterCreate(
             email=config.FIRST_SUPERUSER,
             password=config.FIRST_SUPERUSER_PASSWORD,
             is_superuser=True,
         )
-        user = crud.user.create(db_session, user_in=user_in)
+        reporter = crud.reporter.create(db_session, reporter_in=reporter_in)
+
+
+import db
+init_db(db.session.get_db_session())
