@@ -12,4 +12,4 @@ class Peso(Base):
     gramos = Column(Integer)
     datetime = Column(DateTime, default=datetime.datetime.utcnow)
 
-    # reporter = relationship("Reporter", back_populates="pesos")
+    reporter = relationship("Reporter", back_populates="pesos")
