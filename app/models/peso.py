@@ -17,6 +17,7 @@ class Peso(BaseModel):
 
 class PesoInDb(Peso):
     datetime: datetime
+    
 
 class PesoCreate(Peso):
     id: Optional[int]
