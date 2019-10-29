@@ -13,5 +13,5 @@ class Reporter(Base):
     is_superuser = Column(Boolean(), default=False)
     relation_id = Column(Integer, ForeignKey("relation.id"))
     
-    pesos = relationship("Peso", back_populates="reporter")
+    pesos = relationship("Peso")
     relation = relationship("Relation", back_populates="reporter")
