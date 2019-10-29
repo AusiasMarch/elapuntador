@@ -3,7 +3,7 @@ import crud
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
-from app.utils.db import get_db
+from utils.db import get_db
 import models as models
 from core import config
 
