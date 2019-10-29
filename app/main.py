@@ -24,5 +24,5 @@ def insert_note(
         *,
         peso_in: models.peso.PesoCreate):
     
-    peso = crud.peso.create(db_session=db_session, peso_in=peso_in)
+    peso = crud.peso.create(db_session=db_session   , peso_in=peso_in)
     print(peso)
