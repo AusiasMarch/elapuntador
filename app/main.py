@@ -23,3 +23,10 @@ def insert_note(
         peso_in: models.peso.PesoCreate):
     
     peso = crud.peso.create(db_session=db_session, peso_in=peso_in)
+    
+@app.get("/get_pesos")
+async def root():
+    
+    pesos = crud.peso.get_all(db_session=db_session)
+    
+    return pesos

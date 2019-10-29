@@ -5,8 +5,8 @@ from core import config
 
 data = {
     'reporter_id': 1,
-    'kilos': 4,
-    'gramos': 300
+    'kilos': 6,
+    'gramos': 350
 }
 
 SERVER_NAME = config.SERVER_NAME
