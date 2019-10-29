@@ -10,6 +10,9 @@ class Peso(BaseModel):
     reporter_id: int
     kilos: int
     gramos: int
+
+    def __repr__(self):
+        return '{} kilos {} gramos'.format(self.kilos, self.gramos)
     
 class PesoCreate(Peso):
     id: Optional[int]

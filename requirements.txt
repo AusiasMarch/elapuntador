@@ -1,3 +1,5 @@
 uvicorn
 fastapi
 email-validator
+sqlalchemy
+psycopg2
