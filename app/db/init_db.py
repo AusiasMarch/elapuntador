@@ -24,3 +24,7 @@ def init_db(db_session):
             is_superuser=True,
         )
         reporter = crud.reporter.create(db_session, reporter_in=reporter_in)
+
+
+import db
+init_db(db.session.db_session)
