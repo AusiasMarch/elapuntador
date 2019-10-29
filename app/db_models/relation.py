@@ -7,3 +7,5 @@ from db.base_class import Base
 class Relation(Base):
     id = Column(Integer, primary_key=True, index=True)
     relation = Column(String, index=True)
+
+    reporters = relationship("Reporter", back_populates="relation")

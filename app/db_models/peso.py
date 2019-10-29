@@ -6,7 +6,9 @@ from db.base_class import Base
 
 class Peso(Base):
     id = Column(Integer, primary_key=True, index=True)
-    reporter = relationship("reporter", back_populates="reporter")
+    reporter_id = Column(Integer, ForeignKey="reporter.id")
     kilos = Column(Integer)
     gramos = Column(Integer)
     datetime = Column(DateTime)
+
+    reporter = relationship("Reporter", back_populates="pesos")
