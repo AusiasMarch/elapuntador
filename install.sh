@@ -26,8 +26,8 @@ echo '0 0 1 * * sudo certbot renew --pre-hook "service nginx stop" --post-hook "
 
 
 sudo apt install -y postgresql-$POSTGRES_VERSION libpq-dev postgresql-client postgresql-client-common
-echo "host all all 192.168.1.0/24 trust" | sudo tee -a /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
-sudo sed -i "/^#listen_addresses.*/a listen_addresses\ =\ '127.0.0.1,192.168.1.26'" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
+echo "host all all 192.168.1.0/24 md5" | sudo tee -a /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
+sudo sed -i "/^#listen_addresses.*/a listen_addresses\ =\ '*'" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
 sudo systemctl restart postgresql
 sudo su postgres -c "psql  -c \"CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';\""
 sudo su postgres -c "psql  -c \"CREATE DATABASE $POSTGRES_USER OWNER $POSTGRES_USER;\""
