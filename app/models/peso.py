@@ -17,3 +17,5 @@ class Peso(BaseModel):
 class PesoCreate(Peso):
     id: Optional[int]
     gramos: Optional[int]
+    kilos: Optional[int]
+    gramos: Optional[int]
