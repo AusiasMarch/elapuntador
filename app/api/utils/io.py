@@ -4,8 +4,6 @@ from io import StringIO, BytesIO
 from typing import List
 from sqlalchemy import inspect
 
-from ml.ml_dummy.core.io import unzip_pkl
-
 
 def get_predictions_csv(prediction_data: list, **kwargs) -> StringIO:
     """
