@@ -86,31 +86,3 @@ def send_test_email(email_to: str):
         environment={"project_name": config.PROJECT_NAME, "email": email_to},
     )
 
-
-def send_prediction_email(email_to: str, prediction_id: int):
-    project_name = config.PROJECT_NAME
-    subject = f"{project_name} - Predicció"
-
-    prediction = crud.prediction.read(db_session, prediction_id=prediction_id)
-    prediction_data = crud.prediction.read_data(
-        db_session, prediction_id=prediction_id, limit=None, offset=None
-    )
-    csv_file = get_predictions_csv(
-        prediction_data, undesired_attrs=["id", "prediction_id"]
-    )
-
-    with open(Path(config.EMAIL_TEMPLATES_DIR) / "prediction_result.html") as f:
-        template_str = f.read()
-    send_email(
-        email_to=email_to,
-        subject_template=subject,
-        html_template=template_str,
-        environment={
-            "project_name": config.PROJECT_NAME,
-            "username": email_to,
-            "file": csv_file,
-            "file_name": "prediction_{}.csv".format(
-                prediction.updated.strftime("%Y_%m_%d_%H_%M_%S")
-            ),
-        },
-    )
