@@ -12,7 +12,6 @@ sudo echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment
 sudo echo "LANG=en_US.UTF-8 UTF-8" | sudo tee -a /etc/environment
 
 
-sudo apt install -y python3
 sudo apt install -y python3-pip
 
 
