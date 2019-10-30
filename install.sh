@@ -1,3 +1,6 @@
+sudo apt -y update
+sudo apt -y upgrade
+
 set -a
 source backend.env
 source env-postgres.env
