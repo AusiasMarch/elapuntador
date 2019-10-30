@@ -4,7 +4,7 @@ from typing import Optional
 import jwt
 from jwt.exceptions import InvalidTokenError
 
-from app.core import config
+from core import config
 
 password_reset_jwt_subject = "preset"
 

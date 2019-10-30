@@ -3,10 +3,10 @@ from emails.template import JinjaTemplate
 import logging
 from pathlib import Path
 
-from app import crud
-from app.core import config
-from app.db.session import db_session
-from app.api.utils.io import get_predictions_csv
+import crud
+from core import config
+from db.session import db_session
+from api.utils.io import get_predictions_csv
 
 
 def send_email(email_to: str, subject_template="", html_template="", environment={}):

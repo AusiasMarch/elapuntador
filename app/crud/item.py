@@ -3,8 +3,8 @@ from typing import List, Optional
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from app.db_models.item import Item
-from app.models.item import ItemCreate, ItemUpdate
+from db_models.item import Item
+from models.item import ItemCreate, ItemUpdate
 
 
 def get(db_session: Session, *, item_id: int) -> Optional[Item]:

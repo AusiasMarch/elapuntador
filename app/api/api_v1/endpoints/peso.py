@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app import crud
-from app.api.utils.db import get_db
-from app.api.utils.security import get_current_active_superuser
-from app.db_models.user import User as DBUser
-from app.models.peso import (
+import crud
+from api.utils.db import get_db
+from api.utils.security import get_current_active_superuser
+from db_models.user import User as DBUser
+from models.peso import (
     PesoCreate,
 )
-from app.models.msg import Msg
+from models.msg import Msg
 
 router = APIRouter()
 

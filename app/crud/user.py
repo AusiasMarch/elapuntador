@@ -3,9 +3,9 @@ from typing import List, Optional
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from app.core.security import get_password_hash, verify_password
-from app.db_models.user import User
-from app.models.user import UserCreate, UserUpdate
+from core.security import get_password_hash, verify_password
+from db_models.user import User
+from models.user import UserCreate, UserUpdate
 
 
 def get(db_session: Session, *, user_id: int) -> Optional[User]:
