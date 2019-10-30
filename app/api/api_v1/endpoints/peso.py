@@ -16,8 +16,8 @@ router = APIRouter()
 @router.post("", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    db_session: Session = Depends(get_db),
     peso_in: PesoCreate,
+    db_session: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_active_superuser),
 ):
     """
