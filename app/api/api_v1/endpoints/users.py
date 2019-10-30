@@ -11,7 +11,7 @@ from api.utils.security import get_current_active_superuser, get_current_active_
 from core import config
 from db_models.user import User as DBUser
 from models.user import User, UserCreate, UserInDB, UserUpdate
-from emails import send_new_account_email
+from myemails import send_new_account_email
 
 router = APIRouter()
 

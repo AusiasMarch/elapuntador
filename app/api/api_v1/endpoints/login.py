@@ -15,7 +15,7 @@ from models.msg import Msg
 from models.token import Token
 from models.user import User
 from utils import generate_password_reset_token, verify_password_reset_token
-from emails import send_reset_password_email
+from myemails import send_reset_password_email
 
 router = APIRouter()
 
