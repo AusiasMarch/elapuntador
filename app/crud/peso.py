@@ -6,7 +6,7 @@ from db_models.peso import Peso
 from models.peso import PesoCreate
 
 
-def get(db_session: Session, *, peso_id: int) -> Optional[Peso]:
+def get_by_id(db_session: Session, *, peso_id: int) -> Optional[Peso]:
     return db_session.query(Peso).filter(Peso.id == peso_id).first()
 
 

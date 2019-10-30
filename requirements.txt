@@ -1,10 +1,10 @@
 uvicorn
 fastapi
-email-validator
-sqlalchemy
 psycopg2
+sqlalchemy
+email-validator
+emails
 passlib
 environs
 bcrypt
-passlib
-environs
+PyJWT

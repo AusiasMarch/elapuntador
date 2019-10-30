@@ -5,12 +5,12 @@ from jwt import PyJWTError
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_403_FORBIDDEN
 
-import crud
-from api.utils.db import get_db
-from core import config
-from core.jwt import ALGORITHM
-from db_models.user import User
-from models.token import TokenPayload
+from app import crud
+from app.api.utils.db import get_db
+from app.core import config
+from app.core.jwt import ALGORITHM
+from app.db_models.user import User
+from app.models.token import TokenPayload
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/api/v1/login/access-token")
 

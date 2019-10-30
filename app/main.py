@@ -1,34 +1,36 @@
-import crud
-
 from fastapi import FastAPI
-from db.session import db_session
+from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
 
-import models as models
-from core import config
+from app.api.api_v1.api import api_router
+from app.core import config
+from app.db.session import Session
+
+app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
+
+# CORS Cross-origin resource sharing
+origins = []
+
+# Set all CORS enabled origins
+if config.BACKEND_CORS_ORIGINS:
+    origins_raw = config.BACKEND_CORS_ORIGINS.split(",")
+    for origin in origins_raw:
+        use_origin = origin.strip()
+        origins.append(use_origin)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    ),
+
+app.include_router(api_router, prefix=config.API_V1_STR)
 
 
-app = FastAPI()
-
-print(config.SQLALCHEMY_DATABASE_URI)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.post("/peso")
-def insert_note(
-        *,
-        peso_in: models.peso.PesoCreate):
-    
-    peso = crud.peso.create(db_session=db_session, peso_in=peso_in)
-    
-@app.get("/get_pesos")
-async def root():
-    
-    pesos = crud.peso.get_all(db_session=db_session)
-    for peso in pesos:
-        print(peso.reporter)
-    
-    return pesos
+@app.middleware("http")
+async def db_session_middleware(request: Request, call_next):
+    request.state.db = Session()
+    response = await call_next(request)
+    request.state.db.close()
+    return response

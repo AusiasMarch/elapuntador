@@ -1,4 +1,6 @@
 from . import (
+    item,
     peso,
-    reporter
+    reporter,
+    user
 )
