@@ -3,6 +3,7 @@ from environs import Env
 
 env = Env()
 env_files = [x for x in os.listdir('.') if x.endswith('.env')]
+env_files = [x for x in env_files if '_{}'.format(x) not in env_files]
 for env_file in env_files:
     env.read_env(env_file, recurse=False)
 
