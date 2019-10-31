@@ -20,6 +20,7 @@ def user_authentication_headers(server_api, email, password):
 def create_random_user():
     email = random_lower_string()
     password = random_lower_string()
-    user_in = UserCreate(username=email, email=email, password=password)
+    relation = random_lower_string()
+    user_in = UserCreate(full_name=email, email=email, password=password, relation=relation)
     user = crud.user.create(db_session=db_session, user_in=user_in)
     return user

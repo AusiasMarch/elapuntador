@@ -31,5 +31,4 @@ def create(db_session: Session, *, peso_in: PesoCreate) -> Peso:
     db_session.commit()
     db_session.refresh(peso)
     
-    print(peso)
     return peso

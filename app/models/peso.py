@@ -21,6 +21,5 @@ class PesoInDb(Peso):
 
 class PesoCreate(Peso):
     id: Optional[int]
-    gramos: Optional[int]
     kilos: Optional[int]
     gramos: Optional[int]
