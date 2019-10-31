@@ -5,11 +5,12 @@ env = Env()
 env_files = [x for x in os.listdir('.') if x.endswith('.env')]
 env_files = [x for x in env_files if '_{}'.format(x) not in env_files]
 for env_file in env_files:
+    print("Loading {} file.".format(env_file))
     env.read_env(env_file, recurse=False)
 
 
 def get_env_variable(var_name):
-    variable = get_env_variable(var_name)
+    variable = os.getenv(var_name)
     if variable is not None:
         return variable
     else:
