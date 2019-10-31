@@ -13,7 +13,7 @@ from models.msg import Msg
 router = APIRouter()
 
 
-@router.post("/", response_model=Msg, status_code=202)
+@router.post("/peso", response_model=Msg, status_code=202)
 def insert_peso(
     *,
     peso_in: PesoCreate,
