@@ -35,7 +35,7 @@ Insert SD
 * `sudo reboot`
 * `sudo apt -y install git`
 * `git clone git@github.com:AusiasMarch/mi_apio.git`
-* ``
+* `scp /home/ausias/tpy_programs/mi_apio/_* raspi:mi_apio`
 * ``
 * ``
 * ``
