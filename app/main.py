@@ -62,7 +62,20 @@ app.add_middleware(AuthenticationMiddleware, backend=BasicAuthBackend())
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
-
+    print(dir(request))
+    print('request.auth')
+    print(request.auth)
+    print('request.body')
+    print(await request.body())
+    print('request.form')
+    print(await request.form())
+    print('request.headers')
+    print(request.headers)
+    print('request.json')
+    print(await request.json())
+    # print('request.session')
+    print('request.user')
+    # print(request.user)
     
     request.state.db = Session()
     response = await call_next(request)
