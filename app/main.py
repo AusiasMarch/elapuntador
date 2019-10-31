@@ -34,3 +34,10 @@ async def db_session_middleware(request: Request, call_next):
     response = await call_next(request)
     request.state.db.close()
     return response
+
+@app.middleware("https")
+async def db_session_middleware(request: Request, call_next):
+    request.state.db = Session()
+    response = await call_next(request)
+    request.state.db.close()
+    return response
