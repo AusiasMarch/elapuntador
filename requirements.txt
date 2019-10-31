@@ -4,7 +4,7 @@ psycopg2
 sqlalchemy
 email-validator
 emails
-passlib
+passlib[bcrypt]
 environs
-bcrypt
 PyJWT
+requests
