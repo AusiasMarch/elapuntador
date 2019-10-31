@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
+from starlette.requests import Request
 import crud
 from api.utils.db import get_db
 from api.utils.security import get_current_active_superuser
@@ -17,13 +17,30 @@ router = APIRouter()
 def insert_peso(
     *,
     peso_in: PesoCreate,
+    request: Request,
     db_session: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_active_superuser),
 ):
     """
     Call the process that inserts a peso in the DB.
     """
-    print(peso_in)
+    print(dir(request))
+    print('request.auth')
+    # print(request.auth)
+    print('request.body')
+    print(await
+    request.body())
+    print('request.form')
+    print(await
+    request.form())
+    print('request.headers')
+    print(request.headers)
+    print('request.json')
+    print(await
+    request.json())
+    # print('request.session')
+    print('request.user')
+    # print(request.user)
     crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
         "msg": "The peso has been inserted.".format(

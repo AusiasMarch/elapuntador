@@ -8,3 +8,4 @@ passlib[bcrypt]
 environs
 PyJWT
 requests
+python-multipart
