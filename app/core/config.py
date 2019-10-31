@@ -28,7 +28,7 @@ def getenv_boolean(var_name, default_value=False):
 
 API_V1_STR = get_env_variable("API_V1_STR")
 
-SECRET_KEY = os.get_env_variable(b"SECRET_KEY")
+SECRET_KEY = get_env_variable(b"SECRET_KEY")
 if not SECRET_KEY:
     SECRET_KEY = os.urandom(32)
 

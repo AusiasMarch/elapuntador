@@ -9,9 +9,7 @@ data = {
     'gramos': 350
 }
 
-
-SERVER_NAME = config.SERVER_NAME
-a = requests.post(f'http://{SERVER_NAME}/peso/insert', json=data)
+a = requests.post(f'http://{config.SERVER_NAME}{config.API_V1_STR}/peso/insert', json=data)
 a.content
 a.reason
 dir(a)
