@@ -7,7 +7,7 @@ from datetime import datetime
 
 class Peso(BaseModel):
     id: int
-    reporter_id: int
+    user_id: int
     kilos: int
     gramos: int
 

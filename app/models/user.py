@@ -7,7 +7,9 @@ class UserBase(BaseModel):
     email: Optional[str] = None
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
+    can_report: Optional[bool] = False
     full_name: Optional[str] = None
+    relation_id: Optional[str] = None
 
     class Config:
         orm_mode = True

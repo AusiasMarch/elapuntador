@@ -33,6 +33,10 @@ def is_superuser(user) -> bool:
     return user.is_superuser
 
 
+def can_report(user) -> bool:
+    return user.can_report
+
+
 def get_multi(db_session: Session, *, skip=0, limit=100) -> List[Optional[User]]:
     return db_session.query(User).offset(skip).limit(limit).all()
 
@@ -43,6 +47,8 @@ def create(db_session: Session, *, user_in: UserCreate) -> User:
         hashed_password=get_password_hash(user_in.password),
         full_name=user_in.full_name,
         is_superuser=user_in.is_superuser,
+        can_report=user_in.can_report,
+        relation_id=user_in.relation_id
     )
     db_session.add(user)
     db_session.commit()
