@@ -9,7 +9,7 @@ class UserBase(BaseModel):
     is_superuser: Optional[bool] = False
     can_report: Optional[bool] = False
     full_name: Optional[str] = None
-    relation_id: Optional[str] = None
+    relation_id: Optional[int] = None
 
     class Config:
         orm_mode = True
@@ -23,6 +23,8 @@ class UserBaseInDB(UserBase):
 class UserCreate(UserBaseInDB):
     email: str
     password: str
+    full_name: str
+    relation_id: int
 
 
 # Properties to receive via API on update

@@ -17,22 +17,27 @@ def init_db(db_session):
     # the tables un-commenting the next line
     Base.metadata.create_all(bind=engine)
 
-    user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER)
+    user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER_MAIL)
     if not user:
-        relation_id = crud.relation.get_by_relation(db_session, name=config.FIRST_SUPERUSER_RELATION).id
-        if not relation_id:
-            relation_id = RelationCreate(
+        relation = crud.relation.get_by_relation(
+            db_session,
+            relation=config.FIRST_SUPERUSER_RELATION)
+        if not relation:
+            relation_in = RelationCreate(
                 relation=config.FIRST_SUPERUSER_RELATION
-            ).id
+            )
+            relation = crud.relation.create(db_session, relation_in=relation_in)
         user_in = UserCreate(
-            email=config.FIRST_SUPERUSER,
+            email=config.FIRST_SUPERUSER_MAIL,
             password=config.FIRST_SUPERUSER_PASSWORD,
+            full_name=config.FIRST_SUPERUSER_NAME,
             is_superuser=True,
             can_report=True,
-            relation_id=relation_id
+            relation_id=relation.id
         )
         user = crud.user.create(db_session, user_in=user_in)
 
 
 import db
-init_db(db.session.db_session)
+db_session = db.session.db_session
+init_db(db_session)

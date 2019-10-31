@@ -10,7 +10,7 @@ class Relation(BaseModel):
     relation: str
 
     def __repr__(self):
-        return '<Relation(id={}, name={})>'.format(self.id, self.name)
+        return '<Relation(id={}, relation={})>'.format(self.id, self.relation)
 
 
 class RelationInDb(Relation):

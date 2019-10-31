@@ -17,7 +17,7 @@ def test_get_users_superuser_me(superuser_token_headers):
     assert current_user
     assert current_user["is_active"] is True
     assert current_user["is_superuser"]
-    assert current_user["email"] == config.FIRST_SUPERUSER
+    assert current_user["email"] == config.FIRST_SUPERUSER_MAIL
 
 
 def test_create_user_new_email(superuser_token_headers):

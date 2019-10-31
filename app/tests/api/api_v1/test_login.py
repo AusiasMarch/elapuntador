@@ -7,7 +7,7 @@ from tests.utils.utils import get_server_api
 def test_get_access_token():
     server_api = get_server_api()
     login_data = {
-        "username": config.FIRST_SUPERUSER,
+        "username": config.FIRST_SUPERUSER_MAIL,
         "password": config.FIRST_SUPERUSER_PASSWORD,
     }
     r = requests.post(
