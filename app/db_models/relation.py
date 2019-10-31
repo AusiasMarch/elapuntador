@@ -8,4 +8,4 @@ class Relation(Base):
     id = Column(Integer, primary_key=True, index=True)
     relation = Column(String, index=True)
 
-    # user = relationship("User")
+    # user = relationship("User", back_populates="relation_id")

@@ -19,21 +19,21 @@ def init_db(db_session):
 
     user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER_MAIL)
     if not user:
-        relation = crud.relation.get_by_relation(
-            db_session,
-            relation=config.FIRST_SUPERUSER_RELATION)
-        if not relation:
-            relation_in = RelationCreate(
-                relation=config.FIRST_SUPERUSER_RELATION
-            )
-            relation = crud.relation.create(db_session, relation_in=relation_in)
+        # relation = crud.relation.get_by_relation(
+        #     db_session,
+        #     relation=config.FIRST_SUPERUSER_RELATION)
+        # if not relation:
+        #     relation_in = RelationCreate(
+        #         relation=config.FIRST_SUPERUSER_RELATION
+        #     )
+        #     relation = crud.relation.create(db_session, relation_in=relation_in)
         user_in = UserCreate(
             email=config.FIRST_SUPERUSER_MAIL,
             password=config.FIRST_SUPERUSER_PASSWORD,
             full_name=config.FIRST_SUPERUSER_NAME,
             is_superuser=True,
             can_report=True,
-            relation_id=relation.id
+            relation=config.FIRST_SUPERUSER_RELATION
         )
         user = crud.user.create(db_session, user_in=user_in)
 

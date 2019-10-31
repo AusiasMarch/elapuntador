@@ -1,11 +1,14 @@
 from typing import List, Optional
 
+import crud
+
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from core.security import get_password_hash, verify_password
 from db_models.user import User
 from models.user import UserCreate, UserUpdate
+from models.relation import RelationCreate
 
 
 def get(db_session: Session, *, user_id: int) -> Optional[User]:
@@ -42,13 +45,22 @@ def get_multi(db_session: Session, *, skip=0, limit=100) -> List[Optional[User]]
 
 
 def create(db_session: Session, *, user_in: UserCreate) -> User:
+    relation = crud.relation.get_by_relation(
+        db_session,
+        relation=user_in.relation)
+    if not relation:
+        relation_in = RelationCreate(
+            relation=user_in.relation
+        )
+        relation = crud.relation.create(db_session, relation_in=relation_in)
+    
     user = User(
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
         full_name=user_in.full_name,
         is_superuser=user_in.is_superuser,
         can_report=user_in.can_report,
-        relation_id=user_in.relation_id
+        relation_id=relation.id
     )
     db_session.add(user)
     db_session.commit()

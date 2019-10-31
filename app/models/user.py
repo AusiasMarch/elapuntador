@@ -24,7 +24,7 @@ class UserCreate(UserBaseInDB):
     email: str
     password: str
     full_name: str
-    relation_id: int
+    relation: str
 
 
 # Properties to receive via API on update
