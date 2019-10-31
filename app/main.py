@@ -36,6 +36,8 @@ from starlette.middleware.authentication import AuthenticationMiddleware
 from starlette.responses import PlainTextResponse
 import base64
 import binascii
+
+
 class BasicAuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
         if "Authorization" not in request.headers:
@@ -55,14 +57,14 @@ class BasicAuthBackend(AuthenticationBackend):
         #       possibly by installing `DatabaseMiddleware`
         #       and retrieving user information from `request.database`.
         return AuthCredentials(["authenticated"]), SimpleUser(username)
-from starlette.middleware.authentication import AuthenticationMiddleware
 app.add_middleware(AuthenticationMiddleware, backend=BasicAuthBackend())
+
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
     print(dir(request))
     print('request.auth')
-    print(request.auth)
+    # print(request.auth)
     print('request.body')
     print(request.body())
     print('request.form')
@@ -73,7 +75,7 @@ async def db_session_middleware(request: Request, call_next):
     print(request.json())
     # print('request.session')
     print('request.user')
-    print(request.user)
+    # print(request.user)
     
     request.state.db = Session()
     response = await call_next(request)
