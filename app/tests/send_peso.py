@@ -9,6 +9,7 @@ data = {
     'gramos': 350
 }
 
+
 SERVER_NAME = config.SERVER_NAME
 a = requests.post(f'http://{SERVER_NAME}/peso/insert', json=data)
 a.content
