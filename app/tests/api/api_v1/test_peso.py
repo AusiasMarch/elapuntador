@@ -8,7 +8,7 @@ from tests.utils.utils import get_server_api
 def test_insert_peso(superuser_token_headers):
     server_api = get_server_api()
     data = {
-        'reporter_id': 1,
+        'user_id': 1,
         'kilos': 6,
         'gramos': 350
     }

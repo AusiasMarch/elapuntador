@@ -5,11 +5,11 @@ from app.tests.utils.user import create_random_user
 from app.tests.utils.utils import random_lower_string
 
 
-def create_random_item(reporter_id: int = None):
-    if reporter_id is None:
+def create_random_peso(user_id: int = None):
+    if user_id is None:
         user = create_random_user()
-        reporter_id = user.id
+        user_id = user.id
     title = random_lower_string()
     description = random_lower_string()
     item_in = PesoCreate(title=title, description=description, id=id)
-    return crud.peso.create(db_session=db_session, peso_in=item_in, reporter_id=reporter_id)
+    return crud.peso.create(db_session=db_session, peso_in=item_in, user_id=user_id)

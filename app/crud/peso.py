@@ -14,12 +14,12 @@ def get_all(db_session: Session) -> List[Optional[Peso]]:
     return db_session.query(Peso).all()
 
 
-def get_all_by_reporter(
-    db_session: Session, *, reporter_id: int
+def get_all_by_user(
+    db_session: Session, *, user_id: int
 ) -> List[Optional[Peso]]:
     return (
         db_session.query(Peso)
-        .filter(Peso.reporter_id == reporter_id)
+        .filter(Peso.user_id == user_id)
         .all()
     )
 

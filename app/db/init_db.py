@@ -1,6 +1,7 @@
 import crud
 from core import config
-from models.reporter import ReporterCreate
+from models.user import UserCreate
+from models.relation import RelationCreate
 from db.base import Base
 from db.session import engine
 
@@ -16,14 +17,21 @@ def init_db(db_session):
     # the tables un-commenting the next line
     Base.metadata.create_all(bind=engine)
 
-    reporter = crud.reporter.get_by_email(db_session, email=config.FIRST_SUPERUSER)
-    if not reporter:
-        reporter_in = ReporterCreate(
+    user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER)
+    if not user:
+        relation_id = crud.relation.get_by_relation(db_session, name=config.FIRST_SUPERUSER_RELATION).id
+        if not relation_id:
+            relation_id = RelationCreate(
+                relation=config.FIRST_SUPERUSER_RELATION
+            ).id
+        user_in = UserCreate(
             email=config.FIRST_SUPERUSER,
             password=config.FIRST_SUPERUSER_PASSWORD,
             is_superuser=True,
+            can_report=True,
+            relation_id=relation_id
         )
-        reporter = crud.reporter.create(db_session, reporter_in=reporter_in)
+        user = crud.user.create(db_session, user_in=user_in)
 
 
 import db

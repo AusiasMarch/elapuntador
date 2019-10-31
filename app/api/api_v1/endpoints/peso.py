@@ -23,7 +23,7 @@ def insert_peso(
     """
     Call the process that inserts a peso in the DB.
     """
-    crud.peso.create(db_session=db_session, peso_in=peso_in, reporter_id=current_user.id)
+    crud.peso.create(db_session=db_session, peso_in=peso_in, user_id=current_user.id)
     return {
         "msg": "The peso has been inserted.".format(
             current_user.email

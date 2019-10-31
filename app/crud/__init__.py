@@ -1,5 +1,5 @@
 from . import (
     peso,
-    reporter,
+    relation,
     user
 )
