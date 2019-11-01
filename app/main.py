@@ -66,7 +66,7 @@ async def db_session_middleware(request: Request, call_next):
     print('request.auth')
     print(request.auth)
     print(dir(request.auth))
-    print(request.scopes)
+    print(request.auth.scopes)
     # print('request.body')
     # print(await request.body())
     # print('request.form')
