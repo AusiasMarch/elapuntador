@@ -64,7 +64,7 @@ class BasicAuthBackend(AuthenticationBackend):
 async def db_session_middleware(request: Request, call_next):
     print(dir(request))
     print('request.auth')
-    # print(request.auth)
+    print(request.auth)
     print('request.body')
     print(await request.body())
     print('request.form')
@@ -73,9 +73,10 @@ async def db_session_middleware(request: Request, call_next):
     print(request.headers)
     print('request.json')
     print(await request.json())
-    # print('request.session')
+    print('request.session')
+    print(request.session)
     print('request.user')
-    print(request.user)
+    print(request.user())
     
     request.state.db = Session()
     response = await call_next(request)
