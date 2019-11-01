@@ -73,8 +73,8 @@ async def db_session_middleware(request: Request, call_next):
     print(request.headers)
     print('request.json')
     print(await request.json())
-    print('request.session')
-    print(request.session)
+    # print('request.session')
+    # print(request.session)
     print('request.user')
     print(request.user())
     
