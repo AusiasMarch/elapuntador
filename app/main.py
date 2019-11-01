@@ -57,7 +57,7 @@ class BasicAuthBackend(AuthenticationBackend):
         #       possibly by installing `DatabaseMiddleware`
         #       and retrieving user information from `request.database`.
         return AuthCredentials(["authenticated"]), SimpleUser(username)
-app = AuthenticationMiddleware(app, backend=BasicAuthBackend())
+
 
 
 @app.middleware("http")
@@ -81,3 +81,6 @@ async def db_session_middleware(request: Request, call_next):
     response = await call_next(request)
     request.state.db.close()
     return response
+
+
+app = AuthenticationMiddleware(app, backend=BasicAuthBackend())
