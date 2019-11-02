@@ -33,7 +33,6 @@ def getenv_boolean(var_name, default_value=False):
 
 GOOGLE_CLIENTID = get_env_variable("GOOGLE_CLIENTID")
 GOOGLE_ISS = get_env_variable("GOOGLE_ISS")
-A = get_env_variable("A")
 
 API_V1_STR = get_env_variable("API_V1_STR")
 
