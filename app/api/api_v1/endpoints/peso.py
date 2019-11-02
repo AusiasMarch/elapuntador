@@ -29,7 +29,7 @@ def insert_peso(
         query_text=body['queryResult']['queryText'],
         user_id = current_user.id
     )
-
+    print(peso_in)
     
     crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
