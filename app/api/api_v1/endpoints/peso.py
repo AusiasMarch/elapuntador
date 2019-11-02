@@ -33,8 +33,8 @@ def insert_peso(
         raise AuthenticationError('Invalid Google Token ID iss.')
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
     
-    kilos = body['queryResult']['parameters']['kilos']
-    gramos = body['queryResult']['parameters']['gramos']
+    kilos = body['queryResult']['parameters']['n_kilos']
+    gramos = body['queryResult']['parameters']['n_gramos']
     peso_in = PesoCreate(
         user_id = user.id,
         query_text=body['queryResult']['queryText'],
