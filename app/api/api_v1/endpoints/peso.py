@@ -45,7 +45,7 @@ def insert_peso(
     peso_in = PesoCreate(
         user_id = user.id,
         query_text=body['queryResult']['queryText'],
-        ip=ip,
+        # ip=ip,
         kilos=kilos if kilos else 0,
         gramos=gramos if gramos else 0,
     )
