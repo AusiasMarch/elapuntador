@@ -20,4 +20,4 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None):
 
 
 def decode_google_token(encoded_token):
-    jwt.decode(encoded_token, config.GOOGLE_2_MIAPIO_CLIENT_ID, algorithms=['ES256'])
+    jwt.decode(encoded_token, config.GOOGLE_2_MIAPIO_CLIENT_ID, algorithms=["ES256", "HS256"])
