@@ -19,10 +19,10 @@ from starlette.requests import Request
 def insert_peso(
     *,
     body: dict,
-    # request = Request,
+    request: Request,
     db_session: Session = Depends(get_db),
 ):
-    # print(request.headers)
+    print(request.headers)
 
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
