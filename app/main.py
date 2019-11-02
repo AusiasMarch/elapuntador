@@ -3,9 +3,9 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
 from api.api_v1.api import api_router
-from core import jwt
 from core import config
 from db.session import Session
+
 
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
 

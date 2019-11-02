@@ -14,16 +14,13 @@ from core import config
 router = APIRouter()
 
 
-from starlette.requests import Request
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
     body: dict,
-    request: Request,
+    x_forwarded_for: Header(None),
     db_session: Session = Depends(get_db),
 ):
-    print(request.headers)
-
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
     if decoded_token['aud'] != config.GOOGLE_CLIENTID:
@@ -36,16 +33,13 @@ def insert_peso(
             "msg": "The user is not allowed to report"
         }
     
-    
-    print(body)
-    
+
     kilos = body['queryResult']['parameters']['n_kilos']
     gramos = body['queryResult']['parameters']['n_gramos']
-    ip = ''
     peso_in = PesoCreate(
         user_id = user.id,
         query_text=body['queryResult']['queryText'],
-        # ip=ip,
+        ip=x_forwarded_for,
         kilos=kilos if kilos else 0,
         gramos=gramos if gramos else 0,
     )

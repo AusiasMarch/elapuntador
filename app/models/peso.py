@@ -9,6 +9,7 @@ class Peso(BaseModel):
     id: int
     user_id: int
     query_text: str
+    ip: str
     kilos: int
     gramos: int
 

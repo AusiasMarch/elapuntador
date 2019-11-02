@@ -12,5 +12,6 @@ class Peso(Base):
     gramos = Column(Integer)
     query_text = Column(String)
     datetime = Column(DateTime, default=datetime.datetime.utcnow)
+    ip = Column(String)
 
     user = relationship("User", back_populates="pesos")
