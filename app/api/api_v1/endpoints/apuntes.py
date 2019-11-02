@@ -44,10 +44,6 @@ def insert_apunte(
             kilos=kilos if kilos else 0,
             gramos=gramos if gramos else 0,
         )
-        """
-        Call the process that inserts a peso in the DB.
-        """
-    
         crud.peso.create(db_session=db_session, peso_in=peso_in)
         return {
             "msg": "The peso has been inserted."
@@ -61,11 +57,7 @@ def insert_apunte(
             ip=x_forwarded_for,
             centimetros=centimetros,
         )
-        """
-        Call the process that inserts a peso in the DB.
-        """
-    
-        crud.altura.create(db_session=db_session, peso_in=altura_in)
+        crud.altura.create(db_session=db_session, altura_in=altura_in)
         return {
             "msg": "The altura has been inserted."
         }
