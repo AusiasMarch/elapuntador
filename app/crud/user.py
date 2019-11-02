@@ -16,7 +16,7 @@ def get(db_session: Session, *, user_id: int) -> Optional[User]:
 
 
 def get_by_email(db_session: Session, *, email: str) -> Optional[User]:
-    print(email)
+    print(db_session.query(User).filter(User.email == email).first())
     return db_session.query(User).filter(User.email == email).first()
 
 
