@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette.requests import Request
 import crud
-from core import jwt
 from api.utils.db import get_db
 from api.utils.security import get_current_active_superuser
 from db_models.user import User as DBUser
@@ -26,11 +25,7 @@ def insert_peso(
     Call the process that inserts a peso in the DB.
     """
 
-    a = request.json()
-    id_token = a['originalDetectIntentRequest']['payload']['user']['idToken']
-    decode_token = jwt.decode_google_token(id_token)
-    print(a)
-    print(decode_token)
+
     
     # crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
