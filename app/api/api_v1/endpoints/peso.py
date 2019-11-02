@@ -27,9 +27,9 @@ def insert_peso(
     """
 
     a = request.json()
-    print(a)
     id_token = a['originalDetectIntentRequest']['payload']['user']['idToken']
     decode_token = jwt.decode_google_token(id_token)
+    print(a)
     print(decode_token)
     
     # crud.peso.create(db_session=db_session, peso_in=peso_in)
