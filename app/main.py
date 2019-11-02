@@ -38,6 +38,7 @@ async def db_session_middleware(request: Request, call_next):
     request.state.db.close()
     return response
 
+
 @app.middleware("http")
 async def is_google_middleware(request: Request, call_next):
     user_agent = request.headers['user-agent']
@@ -45,10 +46,6 @@ async def is_google_middleware(request: Request, call_next):
         body = await request.json()
         id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
         decoded_token = jwt.decode_google_token(id_token)
-        print(decoded_token['aud'])
-        print(config.GOOGLE_CLIENTID)
-        print(config.GOOGLE_ISS)
-        print(config.A)
         if decoded_token['aud'] != config.GOOGLE_CLIENTID:
             raise AuthenticationError('Invalid Google Client ID.')
         if decoded_token['iss'] != config.GOOGLE_ISS:
