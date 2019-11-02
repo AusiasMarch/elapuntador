@@ -10,7 +10,7 @@ class Toma(BaseModel):
     user_id: int
     query_text: str
     ip: str
-    centimetros: int
+    mililitros: int
 
     def __repr__(self):
         return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)
