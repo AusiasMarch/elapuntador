@@ -20,15 +20,16 @@ def insert_peso(
     db_session: Session = Depends(get_db),
     current_user: User = Depends(get_google_user),
 ):
+    print('c')
+    peso_in = PesoCreate(
+        user_id = current_user.id,
+        query_text=body['queryResult']['queryText'],
+        kilos=body['queryResult']['parameters']['kilos'],
+        gramos=body['queryResult']['parameters']['gramos'],
+    )
     """
     Call the process that inserts a peso in the DB.
     """
-    peso_in = PesoCreate(
-        kilos=body['queryResult']['parameters']['kilos'],
-        gramos=body['queryResult']['parameters']['gramos'],
-        query_text=body['queryResult']['queryText'],
-        user_id = current_user.id
-    )
     
     crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
