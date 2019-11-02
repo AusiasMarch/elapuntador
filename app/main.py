@@ -74,16 +74,10 @@ async def db_session_middleware(request: Request, call_next):
     # print(request.auth.scopes)
     # # print('request.body')
     # # print(await request.body())
-    # print('request.form')
-    # print(await request.form())
+    print('request.form')
+    print(await request.form())
     # print('request.headers')
     # print(request.headers)
-    print(request.user.is_authenticated)
-    
-    a = await request.json()
-    print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
-    print(type(a['originalDetectIntentRequest']['payload']['user']['idToken']))
-    print(jwt.decode_google_token(a['originalDetectIntentRequest']['payload']['user']['idToken']))
     
     # # print('request.session')  # "SessionMiddleware must be installed to access request.session"
     # # print(request.session)
