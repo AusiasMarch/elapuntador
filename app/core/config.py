@@ -32,7 +32,6 @@ API_V1_STR = get_env_variable("API_V1_STR")
 SECRET_KEY = get_env_variable("SECRET_KEY")
 if not SECRET_KEY:
     SECRET_KEY = os.urandom(32)
-GOOGLE_2_MIAPIO_CLIENTID = get_env_variable("GOOGLE_2_MIAPIO_CLIENTID")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 8  # 60 minutes * 24 hours * 8 days = 8 days
 
@@ -72,3 +71,4 @@ FIRST_SUPERUSER_RELATION = get_env_variable("FIRST_SUPERUSER_RELATION")
 FIRST_SUPERUSER_NAME = get_env_variable("FIRST_SUPERUSER_NAME")
 
 USERS_OPEN_REGISTRATION = getenv_boolean("USERS_OPEN_REGISTRATION")
+GOOGLE_2_MIAPIO_CLIENTID = get_env_variable("GOOGLE_2_MIAPIO_CLIENTID")
