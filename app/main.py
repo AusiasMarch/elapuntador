@@ -39,25 +39,29 @@ import base64
 import binascii
 
 
-# class BasicAuthBackend(AuthenticationBackend):
-#     async def authenticate(self, request):
-#         if "Authorization" not in request.headers:
-#             return
-#
-#         auth = request.headers["Authorization"]
-#         try:
-#             scheme, credentials = auth.split()
-#             if scheme.lower() != 'basic':
-#                 return
-#             decoded = base64.b64decode(credentials).decode("ascii")
-#         except (ValueError, UnicodeDecodeError, binascii.Error) as exc:
-#             raise AuthenticationError('Invalid basic auth credentials')
-#
-#         username, _, password = decoded.partition(":")
-#         # TODO: You'd want to verify the username and password here,
-#         #       possibly by installing `DatabaseMiddleware`
-#         #       and retrieving user information from `request.database`.
-#         return AuthCredentials(["authenticated"]), SimpleUser(username)
+class BasicAuthBackend(AuthenticationBackend):
+    async def authenticate(self, request):
+        
+        
+        if "idToken" not in request.headers:
+            return
+
+        id_token = request.json()['originalDetectIntentRequest']['payload']['user']['idToken']
+
+        auth = jwt.decode_google_token(id_token)
+        try:
+            scheme, credentials = auth.split()
+            if scheme.lower() != 'basic':
+                return
+            decoded = base64.b64decode(credentials).decode("ascii")
+        except (ValueError, UnicodeDecodeError, binascii.Error) as exc:
+            raise AuthenticationError('Invalid basic auth credentials')
+
+        username, _, password = decoded.partition(":")
+        # TODO: You'd want to verify the username and password here,
+        #       possibly by installing `DatabaseMiddleware`
+        #       and retrieving user information from `request.database`.
+        return AuthCredentials(["authenticated"]), SimpleUser(username)
 
 
 
@@ -74,14 +78,11 @@ async def db_session_middleware(request: Request, call_next):
     # print(await request.form())
     # print('request.headers')
     # print(request.headers)
-    # print('request.json')
-    # print(a)
-    # print(dir(a))
-    # print(a.keys())
-    # print(a['originalDetectIntentRequest'])
-    # print(a['originalDetectIntentRequest']['payload'])
-    # print(a['originalDetectIntentRequest']['payload']['user'])
-    # print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
+
+    print(request.user.display_name)
+    print(request.user.identity)
+    print(request.user.is_authenticated)
+    
     a = await request.json()
     print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
     print(type(a['originalDetectIntentRequest']['payload']['user']['idToken']))
@@ -92,9 +93,6 @@ async def db_session_middleware(request: Request, call_next):
     # print('request.user')
     # print(request.user)
     # print(dir(request.user))
-    # print(request.user.display_name)
-    # # print(request.user.identity)
-    # print(request.user.is_authenticated)
     
     request.state.db = Session()
     response = await call_next(request)
@@ -102,4 +100,4 @@ async def db_session_middleware(request: Request, call_next):
     return response
 
 
-# app = AuthenticationMiddleware(app, backend=BasicAuthBackend())
+app = AuthenticationMiddleware(app, backend=BasicAuthBackend())
