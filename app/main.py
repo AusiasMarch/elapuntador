@@ -47,6 +47,7 @@ async def is_google_middleware(request: Request, call_next):
         decoded_token = jwt.decode_google_token(id_token)
         print(decoded_token['aud'])
         print(config.GOOGLE_2_MIAPIO_CLIENTID)
+        print(config.SECRET_KEY)
         if decoded_token['aud'] != config.GOOGLE_2_MIAPIO_CLIENTID:
             raise AuthenticationError('Invalid Google Client ID.')
         if decoded_token['iss'] != 'https://accounts.google.com':
