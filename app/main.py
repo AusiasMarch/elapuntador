@@ -49,7 +49,7 @@ async def is_google_middleware(request: Request, call_next):
         print(decoded_token['iss'])
         print(decoded_token['aud'])
         if decoded_token['iss'] != 'https://accounts.google.com' or decoded_token['aud'] != config.GOOGLE_2_MIAPIO_CLIENT_ID:
-            raise AuthenticationError('Invalid basic auth credentials')
+            raise AuthenticationError('Invalid Google Token ID.')
         request.state.email = decoded_token['email']
         
     response = await call_next(request)
