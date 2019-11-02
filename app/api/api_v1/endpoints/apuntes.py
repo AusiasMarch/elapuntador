@@ -32,6 +32,8 @@ def insert_apunte(
             "msg": "The user is not allowed to report"
         }
     
+    print(body['queryResult']['parameters'])
+    
     if body['queryResult']['parameters']['pesa']:
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
