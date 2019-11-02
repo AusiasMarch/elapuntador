@@ -31,7 +31,7 @@ def insert_peso(
         raise AuthenticationError('Invalid Google Client ID.')
     if decoded_token['iss'] != config.GOOGLE_ISS:
         raise AuthenticationError('Invalid Google Token ID iss.')
-    user = crud.user.get_by_email(db_session==db_session, email=decoded_token['email'])
+    user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
     
     peso_in = PesoCreate(
         user_id = user.id,
