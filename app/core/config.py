@@ -10,11 +10,14 @@ for env_file in env_files:
 
 
 def get_env_variable(var_name):
+    print(var_name)
     variable = os.getenv(var_name)
+    print(variable)
     if variable is not None:
         return variable
     else:
         try:
+            print(env(var_name))
             return env(var_name)
         except:
             return None
@@ -73,7 +76,3 @@ FIRST_SUPERUSER_RELATION = get_env_variable("FIRST_SUPERUSER_RELATION")
 FIRST_SUPERUSER_NAME = get_env_variable("FIRST_SUPERUSER_NAME")
 
 USERS_OPEN_REGISTRATION = getenv_boolean("USERS_OPEN_REGISTRATION")
-
-print("Config")
-print(GOOGLE_CLIENTID)
-print(GOOGLE_ISS)
