@@ -17,7 +17,7 @@ router = APIRouter()
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    peso_in: PesoCreate,
+    # peso_in: PesoCreate,
     request: Request,
     db_session: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_active_superuser),
@@ -27,11 +27,12 @@ def insert_peso(
     """
 
     a = request.json()
+    print(a)
     id_token = a['originalDetectIntentRequest']['payload']['user']['idToken']
     decode_token = jwt.decode_google_token(id_token)
     print(decode_token)
     
-    crud.peso.create(db_session=db_session, peso_in=peso_in)
+    # crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
         "msg": "The peso has been inserted.".format(
             current_user.email
