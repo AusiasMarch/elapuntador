@@ -6,6 +6,7 @@ from api.api_v1.api import api_router
 from core import jwt
 from core import config
 from db.session import Session
+from db_models.user import User
 
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
 
@@ -70,6 +71,22 @@ async def db_session_middleware(request: Request, call_next):
     decode_token = jwt.decode_google_token(id_token)
     print(body)
     print(decode_token)
+    
+    request.state.db = Session()
+    response = await call_next(request)
+    request.state.db.close()
+    return response
+
+@app.middleware("http")
+async def is_google_middleware(request: Request, call_next):
+    body = await request.json()
+    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+    decoded_token = jwt.decode_google_token(id_token)
+    print(body)
+    print(decoded_token)
+    user = User(email=decoded_token['email'])
+    request.state.user = user
+
     
     request.state.db = Session()
     response = await call_next(request)
