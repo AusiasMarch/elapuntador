@@ -30,49 +30,10 @@ if config.BACKEND_CORS_ORIGINS:
 app.include_router(api_router, prefix=config.API_V1_STR)
 
 
-# from starlette.authentication import (
-#     AuthenticationBackend, AuthenticationError, SimpleUser, UnauthenticatedUser,
-#     AuthCredentials
-# )
-# from starlette.middleware.authentication import AuthenticationMiddleware
-# from starlette.responses import PlainTextResponse
-# import base64
-# import binascii
-#
-#
-# class BasicAuthBackend(AuthenticationBackend):
-#     async def authenticate(self, request):
-#         if "idToken" not in request.headers:
-#             return
-#
-#         id_token = request.json()['originalDetectIntentRequest']['payload']['user']['idToken']
-#
-#         auth = jwt.decode_google_token(id_token)
-#         try:
-#             scheme, credentials = auth.split()
-#             if scheme.lower() != 'basic':
-#                 return
-#             decoded = base64.b64decode(credentials).decode("ascii")
-#         except (ValueError, UnicodeDecodeError, binascii.Error) as exc:
-#             raise AuthenticationError('Invalid basic auth credentials')
-#
-#         username, _, password = decoded.partition(":")
-#         # TODO: You'd want to verify the username and password here,
-#         #       possibly by installing `DatabaseMiddleware`
-#         #       and retrieving user information from `request.database`.
-#         return AuthCredentials(["authenticated"]), SimpleUser(username)
-
-
-
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
-    body = await request.json()
-    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
-    decode_token = jwt.decode_google_token(id_token)
-    print(body)
-    print(decode_token)
-    
     request.state.db = Session()
+    
     response = await call_next(request)
     request.state.db.close()
     return response
@@ -86,11 +47,8 @@ async def is_google_middleware(request: Request, call_next):
     print(decoded_token)
     user = User(email=decoded_token['email'])
     request.state.user = user
-
     
-    request.state.db = Session()
     response = await call_next(request)
-    request.state.db.close()
     return response
 
 # app = AuthenticationMiddleware(app, backend=BasicAuthBackend())
