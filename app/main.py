@@ -46,11 +46,12 @@ async def is_google_middleware(request: Request, call_next):
         id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
         decoded_token = jwt.decode_google_token(id_token)
         print(decoded_token['aud'])
+        print(config.GOOGLE_CLIENTID)
+        print(config.GOOGLE_ISS)
         print(config.A)
-        print(config.B)
-        if decoded_token['aud'] != config.A:
+        if decoded_token['aud'] != config.GOOGLE_CLIENTID:
             raise AuthenticationError('Invalid Google Client ID.')
-        if decoded_token['iss'] != config.B:
+        if decoded_token['iss'] != config.GOOGLE_ISS:
             raise AuthenticationError('Invalid Google Token ID iss.')
         request.state.email = decoded_token['email']
         
