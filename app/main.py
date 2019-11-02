@@ -36,6 +36,7 @@ async def db_session_middleware(request: Request, call_next):
     
     response = await call_next(request)
     request.state.db.close()
+    print('a')
     return response
 
 
@@ -53,4 +54,5 @@ async def is_google_middleware(request: Request, call_next):
         request.state.email = decoded_token['email']
         
     response = await call_next(request)
+    print('b')
     return response
