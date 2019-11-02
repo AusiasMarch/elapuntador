@@ -23,7 +23,6 @@ def insert_peso(
     """
     Call the process that inserts a peso in the DB.
     """
-    print(body)
     peso_in = PesoCreate(
         kilos=body['queryResult']['parameters']['kilos'],
         gramos=body['queryResult']['parameters']['gramos'],
