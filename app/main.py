@@ -78,6 +78,7 @@ async def db_session_middleware(request: Request, call_next):
     print(a)
     print(dir(a))
     print(a.keys())
+    print(a['originalDetectIntentRequest'])
     
     # print('request.session')  # "SessionMiddleware must be installed to access request.session"
     # print(request.session)
