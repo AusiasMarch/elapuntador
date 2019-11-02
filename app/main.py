@@ -67,23 +67,18 @@ class BasicAuthBackend(AuthenticationBackend):
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
-    # # print(dir(request))
-    # print('request.auth')
-    # print(request.auth)
-    # print(dir(request.auth))
-    # print(request.auth.scopes)
-    # # print('request.body')
-    # # print(await request.body())
+    print('request.auth')
+    print(request.auth)
+    print(dir(request.auth))
+    print(request.auth.scopes)
+    print('request.body')
+    print(await request.body())
     print('request.form')
     print(await request.form())
-    # print('request.headers')
-    # print(request.headers)
     
-    # # print('request.session')  # "SessionMiddleware must be installed to access request.session"
-    # # print(request.session)
-    # print('request.user')
-    # print(request.user)
-    # print(dir(request.user))
+    print('request.user')
+    print(request.user)
+    print(dir(request.user))
     
     request.state.db = Session()
     response = await call_next(request)
