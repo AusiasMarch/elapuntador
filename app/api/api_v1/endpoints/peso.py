@@ -18,7 +18,7 @@ router = APIRouter()
 def insert_peso(
     *,
     body: dict,
-    x_forwarded_for: Header(None),
+    x_forwarded_for: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
