@@ -11,9 +11,7 @@ for env_file in env_files:
 
 
 def get_env_variable(var_name):
-    print(var_name)
     variable = os.getenv(var_name)
-    print(variable)
     if variable is not None:
         return variable
     else:
