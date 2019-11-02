@@ -29,7 +29,7 @@ def getenv_boolean(var_name, default_value=False):
         result = env_value.upper() in ("TRUE", "1")
     return result
 
-GOOGLE_CLIENTID = get_env_variable("GOOGLE_2_MIAPIO_CLIENTID")
+GOOGLE_CLIENTID = get_env_variable("GOOGLE_CLIENTID")
 GOOGLE_ISS = get_env_variable("GOOGLE_ISS")
 
 API_V1_STR = get_env_variable("API_V1_STR")
