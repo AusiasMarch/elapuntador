@@ -4,7 +4,6 @@ from starlette.requests import Request
 
 from api.api_v1.api import api_router
 from core import config
-from core import jwt
 from db.session import Session
 
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
@@ -66,12 +65,6 @@ app.include_router(api_router, prefix=config.API_V1_STR)
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
     request.state.db = Session()
-
-    a = await   request.json()
-    id_token = a['originalDetectIntentRequest']['payload']['user']['idToken']
-    decode_token = jwt.decode_google_token(id_token)
-    print(decode_token)
-
     response = await call_next(request)
     request.state.db.close()
     return response
