@@ -34,7 +34,7 @@ def insert_apunte(
     
     print(body['queryResult']['parameters'])
     
-    if body['queryResult']['parameters']['pesa']:
+    if 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
         peso_in = PesoCreate(
@@ -49,7 +49,7 @@ def insert_apunte(
             "msg": "The peso has been inserted."
         }
     
-    if body['queryResult']['parameters']['mide']:
+    if 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
         altura_in = AlturaCreate(
             user_id = user.id,
