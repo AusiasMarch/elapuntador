@@ -18,16 +18,13 @@ from starlette.requests import Request
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    # body: dict,
+    body: dict,
     request = Request,
-    originalDetectIntentRequest: dict = Body(None),
-    queryResult: dict = Body(None),
     db_session: Session = Depends(get_db),
 ):
     print(request.headers)
 
-    # id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
-    id_token = originalDetectIntentRequest['payload']['user']['idToken']
+    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
     if decoded_token['aud'] != config.GOOGLE_CLIENTID:
         raise AuthenticationError('Invalid Google Client ID.')
@@ -42,10 +39,8 @@ def insert_peso(
     
     print(body)
     
-    kilos = queryResult['parameters']['n_kilos']
-    gramos = queryResult['parameters']['n_gramos']
-    # kilos = body['queryResult']['parameters']['n_kilos']
-    # gramos = body['queryResult']['parameters']['n_gramos']
+    kilos = body['queryResult']['parameters']['n_kilos']
+    gramos = body['queryResult']['parameters']['n_gramos']
     ip = ''
     peso_in = PesoCreate(
         user_id = user.id,
