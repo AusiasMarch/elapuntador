@@ -23,13 +23,13 @@ def insert_peso(
     """
     Call the process that inserts a peso in the DB.
     """
+    print(current_user)
     peso_in = PesoCreate(
         kilos=body['queryResult']['parameters']['kilos'],
         gramos=body['queryResult']['parameters']['gramos'],
         query_text=body['queryResult']['queryText'],
         user_id = current_user.id
     )
-    print(peso_in)
     
     crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
