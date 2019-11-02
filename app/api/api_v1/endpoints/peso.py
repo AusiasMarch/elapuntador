@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    body: dict  = Body(None),
+    body: dict = Body(None),
     db_session: Session = Depends(get_db),
     current_user: User = Depends(get_google_user),
 ):
