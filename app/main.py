@@ -83,6 +83,7 @@ async def db_session_middleware(request: Request, call_next):
     # print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
     a = await request.json()
     print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
+    print(type(a['originalDetectIntentRequest']['payload']['user']['idToken']))
     print(jwt.decode(a['originalDetectIntentRequest']['payload']['user']['idToken']), '', verify=False)
     
     # # print('request.session')  # "SessionMiddleware must be installed to access request.session"
