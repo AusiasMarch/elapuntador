@@ -81,7 +81,7 @@ async def db_session_middleware(request: Request, call_next):
     print(request.user)
     print(dir(request.user))
     print(request.user.display_name)
-    print(request.user.identity)
+    # print(request.user.identity)
     print(request.user.is_authenticated)
     
     request.state.db = Session()
