@@ -3,6 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
 from api.api_v1.api import api_router
+from core import jwt
 from core import config
 from db.session import Session
 
@@ -64,6 +65,12 @@ app.include_router(api_router, prefix=config.API_V1_STR)
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
+    body = await request.json()
+    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+    decode_token = jwt.decode_google_token(id_token)
+    print(body)
+    print(decode_token)
+    
     request.state.db = Session()
     response = await call_next(request)
     request.state.db.close()
