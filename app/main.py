@@ -40,11 +40,11 @@ async def db_session_middleware(request: Request, call_next):
 
 @app.middleware("http")
 async def is_google_middleware(request: Request, call_next):
+    print(request.headers)
+    
     body = await request.json()
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
-    print(body)
-    print(decoded_token)
     user = User(email=decoded_token['email'])
     request.state.user = user
     
