@@ -45,6 +45,10 @@ async def is_google_middleware(request: Request, call_next):
     user_agent = request.headers['user-agent']
     if user_agent == 'Google-Dialogflow':
         body = await request.json()
+        body2 = await request.body()
+        print(type(body))
+        print(body)
+        print(body2)
         print(type(body))
         id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
         decoded_token = jwt.decode_google_token(id_token)
