@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body, Header
 from sqlalchemy.orm import Session
 import crud
 from api.utils.db import get_db
@@ -14,14 +14,20 @@ from core import config
 router = APIRouter()
 
 
+from starlette.requests import Request
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    body: dict,
+    # body: dict,
+    request = Request,
+    originalDetectIntentRequest: Body(None),
+    queryResult: Body(None),
     db_session: Session = Depends(get_db),
 ):
+    print(request.headers)
 
-    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+    # id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+    id_token = originalDetectIntentRequest['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
     if decoded_token['aud'] != config.GOOGLE_CLIENTID:
         raise AuthenticationError('Invalid Google Client ID.')
@@ -34,11 +40,17 @@ def insert_peso(
         }
     
     
-    kilos = body['queryResult']['parameters']['n_kilos']
-    gramos = body['queryResult']['parameters']['n_gramos']
+    print(body)
+    
+    kilos = queryResult['parameters']['n_kilos']
+    gramos = queryResult['parameters']['n_gramos']
+    # kilos = body['queryResult']['parameters']['n_kilos']
+    # gramos = body['queryResult']['parameters']['n_gramos']
+    ip = ''
     peso_in = PesoCreate(
         user_id = user.id,
         query_text=body['queryResult']['queryText'],
+        ip=ip,
         kilos=kilos if kilos else 0,
         gramos=gramos if gramos else 0,
     )
