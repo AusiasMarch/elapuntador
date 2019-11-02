@@ -2,8 +2,6 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 import crud
 from api.utils.db import get_db
-from api.utils.security import get_google_user
-from db_models.user import User
 from models.peso import (
     PesoCreate,
 )
@@ -21,9 +19,7 @@ def insert_peso(
     *,
     body: dict,
     db_session: Session = Depends(get_db),
-    # current_user: User = Depends(get_google_user),
 ):
-    print('c')
 
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
@@ -32,6 +28,11 @@ def insert_peso(
     if decoded_token['iss'] != config.GOOGLE_ISS:
         raise AuthenticationError('Invalid Google Token ID iss.')
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
+    if not user.can_report():
+        return {
+            "msg": "The user is not allowed to report"
+        }
+    
     
     kilos = body['queryResult']['parameters']['n_kilos']
     gramos = body['queryResult']['parameters']['n_gramos']
