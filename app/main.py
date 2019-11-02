@@ -58,7 +58,7 @@ class BasicAuthBackend(AuthenticationBackend):
         #       and retrieving user information from `request.database`.
         return AuthCredentials(["authenticated"]), SimpleUser(username)
 
-import core.jwt as myjwt
+import jwt
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
@@ -82,16 +82,16 @@ async def db_session_middleware(request: Request, call_next):
     print(a['originalDetectIntentRequest']['payload'])
     print(a['originalDetectIntentRequest']['payload']['user'])
     print(a['originalDetectIntentRequest']['payload']['user']['idToken'])
-    print(myjwt.decode_google_token(a['originalDetectIntentRequest']['payload']['user']['idToken']))
+    print(jwt.decode(a['originalDetectIntentRequest']['payload']['user']['idToken']), '', verify=False)
     
-    # print('request.session')  # "SessionMiddleware must be installed to access request.session"
-    # print(request.session)
-    print('request.user')
-    print(request.user)
-    print(dir(request.user))
-    print(request.user.display_name)
-    # print(request.user.identity)
-    print(request.user.is_authenticated)
+    # # print('request.session')  # "SessionMiddleware must be installed to access request.session"
+    # # print(request.session)
+    # print('request.user')
+    # print(request.user)
+    # print(dir(request.user))
+    # print(request.user.display_name)
+    # # print(request.user.identity)
+    # print(request.user.is_authenticated)
     
     request.state.db = Session()
     response = await call_next(request)
