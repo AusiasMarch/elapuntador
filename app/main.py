@@ -41,10 +41,13 @@ async def db_session_middleware(request: Request, call_next):
 @app.middleware("http")
 async def is_google_middleware(request: Request, call_next):
     user_agent = request.headers['user-agent']
+    print(user_agent)
     if user_agent == 'Google-Dialogflow':
         body = await request.json()
         id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
         decoded_token = jwt.decode_google_token(id_token)
+        print(decoded_token['iss'])
+        print(decoded_token['aud'])
         if decoded_token['iss'] != 'https://accounts.google.com' or decoded_token['aud'] != config.GOOGLE_2_MIAPIO_CLIENT_ID:
             raise AuthenticationError('Invalid basic auth credentials')
         request.state.email = decoded_token['email']
