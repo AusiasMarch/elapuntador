@@ -2,8 +2,9 @@ import os
 from environs import Env
 
 env = Env()
-print(os.listdir('.'))
+
 env_files = [x for x in os.listdir('.') if x.endswith('.env')]
+print(env_files)
 env_files = [x for x in env_files if '_{}'.format(x) not in env_files]
 for env_file in env_files:
     print("Loading {} file.".format(env_file))
