@@ -17,7 +17,6 @@ router = APIRouter()
 def insert_peso(
     *,
     peso_in: PesoCreate,
-    request: Request,
     db_session: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_active_superuser),
 ):
