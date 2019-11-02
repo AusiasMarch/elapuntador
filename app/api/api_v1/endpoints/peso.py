@@ -20,8 +20,8 @@ def insert_peso(
     *,
     # body: dict,
     request = Request,
-    originalDetectIntentRequest: Body(None),
-    queryResult: Body(None),
+    originalDetectIntentRequest: dict = Body(None),
+    queryResult: dict = Body(None),
     db_session: Session = Depends(get_db),
 ):
     print(request.headers)
