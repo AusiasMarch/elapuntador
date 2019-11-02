@@ -61,6 +61,19 @@ def insert_apunte(
         return {
             "msg": "The altura has been inserted."
         }
+    
+    if 'toma' in body['queryResult']['parameters'].keys():
+        centimetros = body['queryResult']['parameters']['n_mililitros']
+        toma_in = AlturaCreate(
+            user_id = user.id,
+            query_text=body['queryResult']['queryText'],
+            ip=x_forwarded_for,
+            mililitros=centimetros,
+        )
+        crud.toma.create(db_session=db_session, toma_in=toma_in)
+        return {
+            "msg": "The toma has been inserted."
+        }
 
 
 
