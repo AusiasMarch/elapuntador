@@ -9,19 +9,32 @@ from models.peso import (
 )
 from models.msg import Msg
 
+from core import jwt
+from starlette.authentication import AuthenticationError
+from core import config
+
 router = APIRouter()
 
 
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    body: dict = Body(None),
+    body: Body(None),
     db_session: Session = Depends(get_db),
-    current_user: User = Depends(get_google_user),
+    # current_user: User = Depends(get_google_user),
 ):
     print('c')
+
+    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+    decoded_token = jwt.decode_google_token(id_token)
+    if decoded_token['aud'] != config.GOOGLE_CLIENTID:
+        raise AuthenticationError('Invalid Google Client ID.')
+    if decoded_token['iss'] != config.GOOGLE_ISS:
+        raise AuthenticationError('Invalid Google Token ID iss.')
+    user = crud.user.get_by_email(db_session, decoded_token['email'])
+    
     peso_in = PesoCreate(
-        user_id = current_user.id,
+        user_id = user.id,
         query_text=body['queryResult']['queryText'],
         kilos=body['queryResult']['parameters']['kilos'],
         gramos=body['queryResult']['parameters']['gramos'],
