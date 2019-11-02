@@ -10,7 +10,7 @@ class Peso(Base):
     user_id = Column(Integer, ForeignKey("user.id"))
     kilos = Column(Integer)
     gramos = Column(Integer)
-    query_text = Column(Integer, String)
+    query_text = Column(String)
     datetime = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", back_populates="pesos")
