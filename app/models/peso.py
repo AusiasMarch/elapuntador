@@ -8,6 +8,7 @@ from datetime import datetime
 class Peso(BaseModel):
     id: int
     user_id: int
+    query_text: str
     kilos: int
     gramos: int
 

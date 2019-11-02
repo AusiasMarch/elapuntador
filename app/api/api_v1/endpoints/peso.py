@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from starlette.requests import Request
 import crud
 from api.utils.db import get_db
-from api.utils.security import get_current_active_superuser
-from db_models.user import User as DBUser
+from api.utils.security import get_google_user
+from db_models.user import User
 from models.peso import (
     PesoCreate,
 )
@@ -16,18 +16,22 @@ router = APIRouter()
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    # peso_in: PesoCreate,
-    request: Request,
+    body,
     db_session: Session = Depends(get_db),
-    # current_user: DBUser = Depends(get_current_active_superuser),
+    current_user: User = Depends(get_google_user),
 ):
     """
     Call the process that inserts a peso in the DB.
     """
-
+    peso_in = PesoCreate(
+        kilos=body['queryResult']['parameters']['kilos'],
+        gramos=body['queryResult']['parameters']['gramos'],
+        query_text=body['queryResult']['queryText'],
+        user_id = current_user.id
+    )
 
     
-    # crud.peso.create(db_session=db_session, peso_in=peso_in)
+    crud.peso.create(db_session=db_session, peso_in=peso_in)
     return {
         "msg": "The peso has been inserted."
     }

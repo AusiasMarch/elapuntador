@@ -11,6 +11,7 @@ from core import config
 from core.jwt import ALGORITHM
 from db_models.user import User
 from models.token import TokenPayload
+from starlette.requests import Request
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/api/v1/login/access-token")
 
@@ -43,3 +44,10 @@ def get_current_active_superuser(current_user: User = Security(get_current_user)
             status_code=400, detail="The user doesn't have enough privileges"
         )
     return current_user
+
+
+def get_google_user(
+        request: Request,
+        db: Session = Depends(get_db),
+):
+    return crud.user.get_by_email(db, email=request.state.email)

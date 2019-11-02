@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.authentication import AuthenticationError
 from starlette.requests import Request
 
 from api.api_v1.api import api_router
 from core import jwt
 from core import config
 from db.session import Session
-from db_models.user import User
 
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
 
@@ -40,14 +40,15 @@ async def db_session_middleware(request: Request, call_next):
 
 @app.middleware("http")
 async def is_google_middleware(request: Request, call_next):
-    print(request.headers)
-    
-    body = await request.json()
-    id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
-    decoded_token = jwt.decode_google_token(id_token)
-    user = User(email=decoded_token['email'])
-    request.state.user = user
-    
+    user_agent = request.headers['user-agent']
+    if user_agent == 'Google-Dialogflow':
+        body = await request.json()
+        id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
+        decoded_token = jwt.decode_google_token(id_token)
+        if decoded_token['iss'] != 'https://accounts.google.com' or decoded_token['aud'] != config.GOOGLE_2_MIAPIO_CLIENT_ID:
+            raise AuthenticationError('Invalid basic auth credentials')
+        request.state.email = decoded_token['email']
+        
     response = await call_next(request)
     return response
 
