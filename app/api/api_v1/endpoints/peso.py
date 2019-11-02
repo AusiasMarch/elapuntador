@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 import crud
 from api.utils.db import get_db
@@ -19,7 +19,7 @@ router = APIRouter()
 @router.post("/insert", response_model=Msg, status_code=202)
 def insert_peso(
     *,
-    body: Body(None),
+    body,
     db_session: Session = Depends(get_db),
     # current_user: User = Depends(get_google_user),
 ):
