@@ -4,6 +4,7 @@ import crud
 from api.utils.db import get_db
 from models.peso import PesoCreate
 from models.altura import AlturaCreate
+from models.toma import TomaCreate
 from models.msg import Msg
 
 from core import jwt
@@ -62,9 +63,9 @@ def insert_apunte(
             "msg": "The altura has been inserted."
         }
     
-    if 'toma' in body['queryResult']['parameters'].keys():
+    if 'tomado' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_mililitros']
-        toma_in = AlturaCreate(
+        toma_in = TomaCreate(
             user_id = user.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
