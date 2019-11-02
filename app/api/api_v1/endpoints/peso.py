@@ -28,7 +28,7 @@ def insert_peso(
     if decoded_token['iss'] != config.GOOGLE_ISS:
         raise AuthenticationError('Invalid Google Token ID iss.')
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
-    if not user.can_report():
+    if not user.can_report:
         return {
             "msg": "The user is not allowed to report"
         }
