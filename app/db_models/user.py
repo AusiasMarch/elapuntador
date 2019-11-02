@@ -15,4 +15,5 @@ class User(Base):
     relation_id = Column(Integer, ForeignKey("relation.id"))
 
     pesos = relationship("Peso", back_populates="user")
+    alturas = relationship("Altura", back_populates="user")
     # relation = relationship("Relation")
