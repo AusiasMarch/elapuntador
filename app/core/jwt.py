@@ -20,4 +20,4 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None):
 
 
 def decode_google_token(encoded_token):
-    jwt.decode(encoded_token, '', verify=False)
+    return jwt.decode(encoded_token, '', verify=False)
