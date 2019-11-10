@@ -8,7 +8,6 @@ from db.session import engine
 # make sure all SQL Alchemy models are imported before initializing DB
 # otherwise, SQL Alchemy might fail to initialize properly relationships
 # for more details: https://github.com/tiangolo/full-stack-fastapi-postgresql/issues/28
-from db import base
 
 
 def init_db(db_session):
