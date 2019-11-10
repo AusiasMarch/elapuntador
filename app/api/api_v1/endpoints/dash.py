@@ -40,7 +40,7 @@ def insert_apunte(
     
     
     
-    return plotly.plot(fig, output_type='div')
+    return plotly.offline.plot(fig, output_type='div')
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
