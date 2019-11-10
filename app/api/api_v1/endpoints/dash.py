@@ -34,6 +34,9 @@ def insert_apunte(
         index=[(x.id) for x in crud_alt]
     )
     
+    print(alturas)
+    print(go.Scatter(x=alturas['datetime'], y=alturas['centimetros']))
+    
     fig = go.Figure([go.Scatter(x=alturas['datetime'], y=alturas['centimetros'])])
     # plotly.offline.plot(
     #     fig,
