@@ -9,3 +9,6 @@ environs
 PyJWT
 requests
 python-multipart
+
+plotly
+pandas

@@ -7,20 +7,13 @@ from core import jwt
 from starlette.authentication import AuthenticationError
 from core import config
 
-router = APIRouter()
-
-
 
 import plotly
 import plotly.graph_objects as go
-from db.session import db_session
 import pandas as pd
 
 
-
-
-
-
+router = APIRouter()
 
 
 @router.get("/dash")
