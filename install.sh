@@ -1,9 +1,11 @@
 sudo apt -y update
 sudo apt -y upgrade
 
+cd elapuntador
+
 set -a
-source backend.env
-source env-postgres.env
+source _backend.env
+source _env-postgres.env
 set +a
 
 

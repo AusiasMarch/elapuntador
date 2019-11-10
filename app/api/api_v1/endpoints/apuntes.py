@@ -5,6 +5,7 @@ from api.utils.db import get_db
 from models.peso import PesoCreate
 from models.altura import AlturaCreate
 from models.toma import TomaCreate
+from models.temperatura import TemperaturaCreate
 from models.msg import Msg
 
 from core import jwt
@@ -74,6 +75,19 @@ def insert_apunte(
         crud.toma.create(db_session=db_session, toma_in=toma_in)
         return {
             "msg": "The toma has been inserted."
+        }
+    
+    if 'temperatura' in body['queryResult']['parameters'].keys():
+        grados = body['queryResult']['parameters']['n_grados']
+        temperatura_in = TemperaturaCreate(
+            user_id = user.id,
+            query_text=body['queryResult']['queryText'],
+            ip=x_forwarded_for,
+            grados=grados,
+        )
+        crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
+        return {
+            "msg": "The temperatura has been inserted."
         }
 
 

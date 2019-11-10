@@ -17,4 +17,5 @@ class User(Base):
     pesos = relationship("Peso", back_populates="user")
     alturas = relationship("Altura", back_populates="user")
     tomas = relationship("Toma", back_populates="user")
+    temperaturas = relationship("Temperatura", back_populates="user")
     # relation = relationship("Relation")
