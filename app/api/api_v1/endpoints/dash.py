@@ -22,10 +22,6 @@ def insert_apunte(
     db_session: Session = Depends(get_db),
 ):
     crud_alt = altura.get_all(db_session)
-    print(crud_alt)
-    print(crud_alt[0])
-    print([(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
-         crud_alt])
     
     alturas = pd.DataFrame(
         [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
@@ -34,8 +30,6 @@ def insert_apunte(
         index=[(x.id) for x in crud_alt]
     )
     
-    print(alturas)
-    print(go.Scatter(x=alturas['datetime'], y=alturas['centimetros']))
     
     fig = go.Figure([go.Scatter(x=alturas['datetime'], y=alturas['centimetros'])])
     # plotly.offline.plot(
@@ -46,7 +40,7 @@ def insert_apunte(
     
     
     
-    return fig
+    return plotly.plot(fig, output_type='div')
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
