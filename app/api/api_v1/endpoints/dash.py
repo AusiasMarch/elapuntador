@@ -10,13 +10,42 @@ from core import config
 router = APIRouter()
 
 
+
+import plotly
+import plotly.graph_objects as go
+from db.session import db_session
+import pandas as pd
+
+
+
+
+
+
+
+
 @router.get("/dash")
 def insert_apunte(
     *,
     db_session: Session = Depends(get_db),
 ):
-    alturas = altura.get_all(db_session)
-    return alturas
+    crud_alt = altura.get_all(db_session)
+    alturas = pd.DataFrame(
+        [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
+         crud_alt],
+        columns=['datetime', 'centimetros', 'ip', 'user_id', 'user_name'],
+        index=[(x.id) for x in crud_alt]
+    )
+    
+    fig = go.Figure([go.Scatter(x=alturas['datetime'], y=alturas['centimetros'])])
+    # plotly.offline.plot(
+    #     fig,
+    #     filename="/tmp/altura.html",
+    #     auto_open=True,
+    # )
+    
+    
+    
+    return fig
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
