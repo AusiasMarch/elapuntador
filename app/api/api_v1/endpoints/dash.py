@@ -22,6 +22,9 @@ def insert_apunte(
     db_session: Session = Depends(get_db),
 ):
     crud_alt = altura.get_all(db_session)
+    print(crud_alt)
+    print(crud_alt[0])
+    
     alturas = pd.DataFrame(
         [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
          crud_alt],
