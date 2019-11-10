@@ -16,10 +16,10 @@ sudo apt install -y python3-pip
 
 
 sudo apt install -y nginx
-sudo cp nginx_mi_apio.conf /etc/nginx/sites-available
+sudo cp nginx_elapuntador.conf /etc/nginx/sites-available
 
 # Hardcoded ports and names
-sudo ln -s /etc/nginx/sites-available/nginx_mi_apio.conf /etc/nginx/sites-enabled/nginx_mi_apio
+sudo ln -s /etc/nginx/sites-available/nginx_elapuntador.conf /etc/nginx/sites-enabled/nginx_elapuntador
 
 # Get ssl certificates https://certbot.eff.org/lets-encrypt/pip-nginx
 sudo apt-get install -y certbot

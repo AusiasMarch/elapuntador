@@ -34,8 +34,8 @@ Insert SD
 * `sudo resize2fs /dev/sda2`
 * `sudo reboot`
 * `sudo apt -y install git`
-* `git clone git@github.com:AusiasMarch/mi_apio.git`
-* `scp /home/ausias/toy_programs/mi_apio/_* raspi:mi_apio`
+* `git clone git@github.com:AusiasMarch/elapuntador.git`
+* `scp /home/ausias/toy_programs/elapuntador/_* raspi:elapuntador`
 * ``
 * ``
 * ``
