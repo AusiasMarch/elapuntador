@@ -31,18 +31,9 @@ def insert_apunte(
         index=[(x.id) for x in crud_alt]
     )
     
-    
     fig = go.Figure([go.Scatter(x=alturas['datetime'], y=alturas['centimetros'])])
-    plotly.offline.plot(
-        fig,
-        filename="/tmp/altura.html",
-        auto_open=True,
-    )
-
-    with open('/tmp/altura.html', 'r') as f:
-        html = f.read()
     
-    return html
+    return plotly.offline.plot(fig, output_type='div')
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
