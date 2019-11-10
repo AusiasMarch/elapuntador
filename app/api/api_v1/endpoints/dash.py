@@ -7,6 +7,7 @@ from core import jwt
 from starlette.authentication import AuthenticationError
 from core import config
 
+from starlette.responses import HTMLResponse
 
 import plotly
 import plotly.graph_objects as go
@@ -16,7 +17,7 @@ import pandas as pd
 router = APIRouter()
 
 
-@router.get("/dash")
+@router.get("/dash", content_type=HTMLResponse)
 def insert_apunte(
     *,
     db_session: Session = Depends(get_db),
