@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Body, Header
 from sqlalchemy.orm import Session
 from crud import altura
+from crud import altura_who
 from api.utils.db import get_db
 
 from core import jwt
@@ -9,9 +10,9 @@ from core import config
 
 from starlette.responses import HTMLResponse
 
+import datetime
 import plotly
 import plotly.graph_objects as go
-import pandas as pd
 
 
 router = APIRouter()
@@ -22,16 +23,33 @@ def insert_apunte(
     *,
     db_session: Session = Depends(get_db),
 ):
-    crud_alt = altura.get_all(db_session)
-    
-    alturas = pd.DataFrame(
-        [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
-         crud_alt],
-        columns=['datetime', 'centimetros', 'ip', 'user_id', 'user_name'],
-        index=[(x.id) for x in crud_alt]
+    birth_date = datetime.datetime(year=2020, month=1, day=1)
+
+    alturas = altura.get_all(db_session)
+    alturas_who = altura_who.get_all_girls(db_session)
+    alturas_who['datetime'] = alturas_who.index.map(
+        lambda x: datetime.timedelta(days=x)) + birth_date
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=alturas.datetime.dt.to_pydatetime(),
+            y=alturas.centimetros.values,
+            mode='lines+markers',
+            name='Measured'
+        )
     )
-    
-    fig = go.Figure([go.Scatter(x=alturas['datetime'], y=alturas['centimetros'])])
+    for percentile in 'P25', 'P50', 'P75':
+        fig.add_trace(
+            go.Scatter(
+                x=alturas_who.datetime.dt.to_pydatetime(),
+                y=alturas_who[percentile].values,
+                mode='lines+markers',
+                name='Measured',
+            )
+        )
+    fig.update_layout(xaxis_tickformat='%d %B %Y')
+    plotly.offline.plot(fig, filename='filename.html', auto_open=True)
     
     return plotly.offline.plot(fig, output_type='div')
 

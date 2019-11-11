@@ -1,5 +1,6 @@
 import crud
 from core import config
+from core import external_data
 from models.user import UserCreate
 from models.relation import RelationCreate
 from db.base import Base
@@ -40,3 +41,4 @@ def init_db(db_session):
 import db
 db_session = db.session.db_session
 init_db(db_session)
+external_data.download_who_data()

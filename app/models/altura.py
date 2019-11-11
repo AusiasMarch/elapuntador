@@ -11,9 +11,10 @@ class Altura(BaseModel):
     query_text: str
     ip: str
     centimetros: int
+    datetime: datetime
 
     def __repr__(self):
-        return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)
+        return '<Altura(centimetros={})>'.format(self.kilos, self.gramos)
 
 
 class AlturaInDb(Altura):
@@ -22,3 +23,4 @@ class AlturaInDb(Altura):
 
 class AlturaCreate(Altura):
     id: Optional[int]
+    datetime: Optional[datetime]
