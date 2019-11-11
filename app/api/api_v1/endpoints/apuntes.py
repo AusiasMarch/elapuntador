@@ -33,14 +33,10 @@ def insert_apunte(
         return {
             "msg": "The user is not allowed to report"
         }
-    print(body['queryResult']['parameters'])
-    print(body['queryResult']['parameters']['sujeto'])
     sujeto = crud.sujeto.get_by_apodo(
         db_session=db_session,
         apodo=body['queryResult']['parameters']['sujeto']
     )
-    print(sujeto)
-    print(body['queryResult']['parameters'])
     
     if 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
@@ -88,8 +84,6 @@ def insert_apunte(
     
     if 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
-        if 'medio' in grados:
-            grados = int(grados.split(' ')[0]) + 0.5
         temperatura_in = TemperaturaCreate(
             user_id=user.id,
             sujeto_id=sujeto.id,
