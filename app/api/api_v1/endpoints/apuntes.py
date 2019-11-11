@@ -34,11 +34,12 @@ def insert_apunte(
             "msg": "The user is not allowed to report"
         }
     print(body['queryResult']['parameters'])
+    print(body['queryResult']['parameters']['sujeto'])
     sujeto = crud.sujeto.get_by_apodo(
         db_session=db_session,
         apodo=body['queryResult']['parameters']['sujeto']
     )
-    
+    print(sujeto)
     print(body['queryResult']['parameters'])
     
     if 'pesa' in body['queryResult']['parameters'].keys():
