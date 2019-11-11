@@ -44,8 +44,9 @@ def insert_apunte(
             go.Scatter(
                 x=alturas_who.datetime.dt.to_pydatetime(),
                 y=alturas_who[percentile].values,
+                line=dict(width=3, dash='dot'),
                 mode='lines+markers',
-                name='Measured',
+                name=percentile,
             )
         )
     fig.update_layout(xaxis_tickformat='%d %B %Y')
