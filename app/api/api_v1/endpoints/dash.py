@@ -35,7 +35,7 @@ def insert_apunte(
         go.Scatter(
             x=alturas.datetime.dt.to_pydatetime(),
             y=alturas.centimetros.values,
-            line=dict(width=5, color='red'),
+            line=dict(width=5, color='black'),
             mode='lines+markers',
             name='Measured'
         )
@@ -45,7 +45,7 @@ def insert_apunte(
         go.Scatter(
             x=alturas_who.datetime.dt.to_pydatetime(),
             y=alturas_who['P50'].values,
-            line=dict(width=3, color='blue', dash='dot'),
+            line=dict(width=3, color='green', dash='dot'),
             mode='lines+markers',
             name='Media',
         )
@@ -56,7 +56,18 @@ def insert_apunte(
             go.Scatter(
                 x=alturas_who.datetime.dt.to_pydatetime(),
                 y=alturas_who[percentile].values,
-                line=dict(width=3, color='green', dash='dot'),
+                line=dict(width=3, color='orange', dash='dot'),
+                mode='lines+markers',
+                name=percentile,
+            )
+        )
+    
+    for percentile in 'P10', 'P90':
+        fig.add_trace(
+            go.Scatter(
+                x=alturas_who.datetime.dt.to_pydatetime(),
+                y=alturas_who[percentile].values,
+                line=dict(width=3, color='red', dash='dot'),
                 mode='lines+markers',
                 name=percentile,
             )
