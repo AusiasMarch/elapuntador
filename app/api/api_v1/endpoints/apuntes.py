@@ -73,13 +73,13 @@ def insert_apunte(
         }
     
     if 'tomado' in body['queryResult']['parameters'].keys():
-        centimetros = body['queryResult']['parameters']['n_mililitros']
+        mililitros = body['queryResult']['parameters']['n_mililitros']
         toma_in = TomaCreate(
             user_id=user.id,
             sujeto_id=sujeto.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
-            mililitros=centimetros,
+            mililitros=mililitros,
         )
         crud.toma.create(db_session=db_session, toma_in=toma_in)
         return {
@@ -88,6 +88,8 @@ def insert_apunte(
     
     if 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
+        if 'medio' in grados:
+            grados = int(grados.split(' ')[0]) + 0.5
         temperatura_in = TemperaturaCreate(
             user_id=user.id,
             sujeto_id=sujeto.id,
