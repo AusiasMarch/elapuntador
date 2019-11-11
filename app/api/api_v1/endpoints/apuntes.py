@@ -34,7 +34,10 @@ def insert_apunte(
         return {
             "msg": "The user is not allowed to report"
         }
-    sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=decoded_token['sujeto'])
+    sujeto = crud.sujeto.get_by_apodo(
+        db_session=db_session,
+        apodo=body['queryResult']['parameters']['sujeto']
+    )
     
     print(body['queryResult']['parameters'])
     
