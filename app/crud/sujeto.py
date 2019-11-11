@@ -47,4 +47,4 @@ def get_by_id(db_session: Session, *, sujeto_id: int) -> Optional[Sujeto]:
 
 
 def get_by_apodo(db_session: Session, *, apodo: str) -> Optional[Sujeto]:
-    return db_session.query(Sujeto).filter(Sujeto.apodos.any(apodo.lower())).first()
+    return db_session.query(Sujeto).filter(Sujeto.apodos.any(apodo)).first()
