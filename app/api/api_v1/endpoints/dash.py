@@ -49,7 +49,7 @@ def insert_apunte(
             )
         )
     fig.update_layout(xaxis_tickformat='%d %B %Y')
-    plotly.offline.plot(fig, filename='filename.html', auto_open=True)
+    # plotly.offline.plot(fig, filename='filename.html', auto_open=True)
     
     return plotly.offline.plot(fig, output_type='div')
 
