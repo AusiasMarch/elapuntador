@@ -5,7 +5,7 @@ import crud
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy import func
 
 from core.security import get_password_hash, verify_password
 from db_models.sujeto import Sujeto
@@ -49,4 +49,4 @@ def get_by_id(db_session: Session, *, sujeto_id: int) -> Optional[Sujeto]:
 
 
 def get_by_apodo(db_session: Session, *, apodo: str) -> Optional[Sujeto]:
-    return db_session.query(Sujeto).filter(Sujeto.apodos.any(apodo)).first()
+    return db_session.query(Sujeto).filter(func.lower(Sujeto.apodos).any(apodo.lower())).first()
