@@ -4,6 +4,7 @@ from . import (
     peso,
     peso_who,
     relation,
+    sujeto,
     temperatura,
     toma,
     user,

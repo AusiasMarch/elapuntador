@@ -7,6 +7,7 @@ from datetime import datetime
 
 class Peso(BaseModel):
     id: int
+    sujeto_id: int
     user_id: int
     query_text: str
     ip: str

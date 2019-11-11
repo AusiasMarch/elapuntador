@@ -24,6 +24,27 @@ def get_all_by_user(
     )
 
 
+def get_all_by_sujeto(
+    db_session: Session, *, sujeto_id: int
+) -> List[Optional[Peso]]:
+    return (
+        db_session.query(Peso)
+        .filter(Peso.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
+def get_all_by_user_and_sujeto(
+    db_session: Session, *, user_id: int, sujeto_id: int
+) -> List[Optional[Peso]]:
+    return (
+        db_session.query(Peso)
+        .filter(Peso.user_id == user_id)
+        .filter(Peso.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
 def create(db_session: Session, *, peso_in: PesoCreate) -> Peso:
     peso_in_data = jsonable_encoder(peso_in)
     peso = Peso(**peso_in_data)

@@ -15,9 +15,9 @@ def get_all(db_session: Session) -> pd.DataFrame:
     alturas_list = db_session.query(Altura).all()
 
     alturas = pd.DataFrame(
-        [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
+        [(x.datetime, x.sujeto_id, x.sujeto.name, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
          alturas_list],
-        columns=['datetime', 'centimetros', 'ip', 'user_id', 'user_name'],
+        columns=['datetime', 'sujeto_id', 'sujeto', 'centimetros', 'ip', 'user_id', 'user_name'],
         index=[(x.id) for x in alturas_list]
     )
 
@@ -30,6 +30,27 @@ def get_all_by_user(
     return (
         db_session.query(Altura)
         .filter(Altura.user_id == user_id)
+        .all()
+    )
+
+
+def get_all_by_sujeto(
+    db_session: Session, *, sujeto_id: int
+) -> List[Optional[Altura]]:
+    return (
+        db_session.query(Altura)
+        .filter(Altura.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
+def get_all_by_user_and_sujeto(
+    db_session: Session, *, user_id: int, sujeto_id: int
+) -> List[Optional[Altura]]:
+    return (
+        db_session.query(Altura)
+        .filter(Altura.user_id == user_id)
+        .filter(Altura.sujeto_id == sujeto_id)
         .all()
     )
 

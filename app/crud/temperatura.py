@@ -24,6 +24,27 @@ def get_all_by_user(
     )
 
 
+def get_all_by_sujeto(
+    db_session: Session, *, sujeto_id: int
+) -> List[Optional[Temperatura]]:
+    return (
+        db_session.query(Temperatura)
+        .filter(Temperatura.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
+def get_all_by_user_and_sujeto(
+    db_session: Session, *, user_id: int, sujeto_id: int
+) -> List[Optional[Temperatura]]:
+    return (
+        db_session.query(Temperatura)
+        .filter(Temperatura.user_id == user_id)
+        .filter(Temperatura.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
 def create(db_session: Session, *, temperatura_in: TemperaturaCreate) -> Temperatura:
     temperatura_in_data = jsonable_encoder(temperatura_in)
     temperatura = Temperatura(**temperatura_in_data)

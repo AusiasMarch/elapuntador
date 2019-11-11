@@ -24,6 +24,27 @@ def get_all_by_user(
     )
 
 
+def get_all_by_sujeto(
+    db_session: Session, *, sujeto_id: int
+) -> List[Optional[Toma]]:
+    return (
+        db_session.query(Toma)
+        .filter(Toma.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
+def get_all_by_user_and_sujeto(
+    db_session: Session, *, user_id: int, sujeto_id: int
+) -> List[Optional[Toma]]:
+    return (
+        db_session.query(Toma)
+        .filter(Toma.user_id == user_id)
+        .filter(Toma.sujeto_id == sujeto_id)
+        .all()
+    )
+
+
 def create(db_session: Session, *, toma_in: TomaCreate) -> Toma:
     toma_in_data = jsonable_encoder(toma_in)
     toma = Toma(**toma_in_data)

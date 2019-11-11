@@ -33,6 +33,7 @@ def insert_apunte(
         return {
             "msg": "The user is not allowed to report"
         }
+    sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=decoded_token['sujeto'])
     
     print(body['queryResult']['parameters'])
     
@@ -40,7 +41,8 @@ def insert_apunte(
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
         peso_in = PesoCreate(
-            user_id = user.id,
+            user_id=user.id,
+            sujeto_id=sujeto.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
             kilos=kilos if kilos else 0,
@@ -54,7 +56,8 @@ def insert_apunte(
     if 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
         altura_in = AlturaCreate(
-            user_id = user.id,
+            user_id=user.id,
+            sujeto_id=sujeto.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
             centimetros=centimetros,
@@ -67,7 +70,8 @@ def insert_apunte(
     if 'tomado' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_mililitros']
         toma_in = TomaCreate(
-            user_id = user.id,
+            user_id=user.id,
+            sujeto_id=sujeto.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
             mililitros=centimetros,
@@ -80,7 +84,8 @@ def insert_apunte(
     if 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
         temperatura_in = TemperaturaCreate(
-            user_id = user.id,
+            user_id=user.id,
+            sujeto_id=sujeto.id,
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
             grados=grados,
