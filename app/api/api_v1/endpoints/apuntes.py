@@ -24,6 +24,7 @@ def insert_apunte(
 ):
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
+    print(decoded_token)
     if decoded_token['aud'] != config.GOOGLE_CLIENTID:
         raise AuthenticationError('Invalid Google Client ID.')
     if decoded_token['iss'] != config.GOOGLE_ISS:
