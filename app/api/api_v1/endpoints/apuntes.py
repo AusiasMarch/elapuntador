@@ -61,10 +61,32 @@ def insert_apunte(
             answer += f"{kilos} kilos"
         if gramos:
             answer += f"{gramos} gramos"
-    
-        return {
-            "textToSpeech": answer
+
+        answer = {
+            "expectUserResponse": False,
+            "expectedInputs": [
+                {
+                    "possibleIntents": [
+                        {
+                            "intent": "actions.intent.TEXT"
+                        }
+                    ],
+                    "inputPrompt": {
+                        "richInitialPrompt": {
+                            "items": [
+                                {
+                                    "simpleResponse": {
+                                        "textToSpeech": answer
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
+    
+        return answer
     
     if 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
