@@ -3,5 +3,8 @@ from typing import List
 
 
 class ApunteResponse(BaseModel):
-    expectUserResponse: str
-    expectedInputs: List[dict]
+    fulfillmentText: str
+    fulfillmentMessages: List[dict]
+    source: str
+    payload: dict
+    
