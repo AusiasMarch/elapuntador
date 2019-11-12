@@ -57,17 +57,17 @@ def insert_apunte(
         )
         crud.peso.create(db_session=db_session, peso_in=peso_in)
     
-        answer = f"He apuntado que {sujeto} pesa "
+        answer = f"He apuntado que {sujeto.name} pesa"
         if kilos:
-            answer += f"{kilos} kilos"
+            answer += f" {kilos} kilos"
         if gramos:
-            answer += f"{gramos} gramos"
+            answer += f" {gramos} gramos"
 
         answer = {
       # "fulfillmentText": answer,
       "payload": {
         "google": {
-          "expectUserResponse": False,
+          "expectUserResponse": True,
           "richResponse": {
             "items": [
               {
