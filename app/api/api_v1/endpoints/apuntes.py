@@ -38,6 +38,11 @@ def insert_apunte(
         apodo=body['queryResult']['parameters']['sujeto']
     )
     
+
+    
+    
+    
+    
     if 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
@@ -50,8 +55,15 @@ def insert_apunte(
             gramos=gramos if gramos else 0,
         )
         crud.peso.create(db_session=db_session, peso_in=peso_in)
+    
+        answer = f"He apuntado que {sujeto} pesa "
+        if kilos:
+            answer += f"{kilos} kilos"
+        if gramos:
+            answer += f"{gramos} gramos"
+    
         return {
-            "msg": "The peso has been inserted."
+            "textToSpeech": answer
         }
     
     if 'mide' in body['queryResult']['parameters'].keys():
