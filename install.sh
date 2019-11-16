@@ -43,3 +43,8 @@ sudo apt install -y uvicorn
 
 
 pip3 install -r requirements.txt
+
+
+sudo cp elapuntador.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo service elapuntador start
