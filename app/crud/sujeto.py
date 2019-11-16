@@ -35,7 +35,6 @@ def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
         ]
         for variante in variantes:
             if variante not in sujeto_in.apodos:
-                print(variante, sujeto_in.apodos)
                 extra_apodos.add(variante)
     sujeto_in.apodos.extend(list(extra_apodos))
     
