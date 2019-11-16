@@ -18,6 +18,7 @@ import pandas as pd
 
 def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
     sujeto_in.apodos.append(sujeto_in.name)
+    extra_apodos = set()
     for apodo in sujeto_in.apodos:
         variantes = [
             apodo.lower(),
@@ -33,8 +34,11 @@ def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
             ).lower(),
         ]
         for variante in variantes:
-            if variante != apodo:
-                sujeto_in.apodos.append(variante)
+            if variante not in sujeto_in.apodos:
+                print(variante, sujeto_in.apodos)
+                extra_apodos.add(variante)
+    sujeto_in.apodos.extend(list(extra_apodos))
+    
     
     sujeto = Sujeto(
         name=sujeto_in.name,
