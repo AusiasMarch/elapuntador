@@ -9,11 +9,33 @@ from core.security import get_password_hash, verify_password
 from db_models.sujeto import Sujeto
 from models.sujeto import SujetoCreate
 
+import re
+from unicodedata import normalize
 import pandas as pd
+
+
 
 
 def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
     sujeto_in.apodos.append(sujeto_in.name)
+    for apodo in sujeto_in.apodos:
+        variantes = [
+            apodo.lower(),
+            re.sub(
+                r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+",
+                r"\1",
+                normalize("NFD", apodo), 0, re.I
+            ),
+            re.sub(
+                r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+",
+                r"\1",
+                normalize("NFD", apodo), 0, re.I
+            ).lower(),
+        ]
+        for variante in variantes:
+            if variante != apodo:
+                sujeto_in.apodos.append(variante)
+    
     sujeto = Sujeto(
         name=sujeto_in.name,
         apodos=sujeto_in.apodos,
