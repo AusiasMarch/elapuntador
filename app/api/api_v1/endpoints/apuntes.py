@@ -16,6 +16,47 @@ from core import config
 router = APIRouter()
 
 
+class Answer:
+    def __init__(self, sujeto, kilos=None, gramos=None, centimetros=None,
+                 mililitros=None, grados=None, decimas=None):
+        content = f"He apuntado que {sujeto.name} "
+        if kilos:
+            content += f"pesa {int(kilos)} kilos"
+            if gramos:
+                content += f" {int(gramos)} gramos"
+        elif centimetros:
+            content += f"mide {int(centimetros)} centimetros"
+        elif mililitros:
+            content += f"ha tomado {int(mililitros)} milititros"
+        elif grados:
+            content += f"está a {int(gramos)} grados"
+            if decimas:
+                content += f" y {int(decimas)} décimas"
+        else:
+            pass
+        content += "."
+
+        self.content = {
+            "payload": {
+                "google": {
+                    "expectUserResponse": True,
+                    "richResponse": {
+                        "items": [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": content
+                                }
+                            }
+                        ]
+                    }
+                },
+            },
+        }
+
+    def to_send(self):
+        return self.content
+
+
 @router.post("/insert", response_model=ApunteResponse, status_code=202)
 def insert_apunte(
     *,
@@ -39,11 +80,6 @@ def insert_apunte(
         apodo=body['queryResult']['parameters']['sujeto']
     )
     
-
-    
-    
-    
-    
     if 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
@@ -56,32 +92,7 @@ def insert_apunte(
             gramos=gramos if gramos else 0,
         )
         crud.peso.create(db_session=db_session, peso_in=peso_in)
-    
-        answer = f"He apuntado que {sujeto.name} pesa"
-        if kilos:
-            answer += f" {kilos} kilos"
-        if gramos:
-            answer += f" {gramos} gramos"
-
-        answer = {
-      # "fulfillmentText": answer,
-      "payload": {
-        "google": {
-          "expectUserResponse": True,
-          "richResponse": {
-            "items": [
-              {
-                "simpleResponse": {
-                  "textToSpeech": answer
-                }
-              }
-            ]
-          }
-        },
-      },
-    }
-    
-        return answer
+        return Answer(sujeto, kilos=kilos, gramos=gramos)
     
     if 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
@@ -93,9 +104,7 @@ def insert_apunte(
             centimetros=centimetros,
         )
         crud.altura.create(db_session=db_session, altura_in=altura_in)
-        return {
-            "msg": "The altura has been inserted."
-        }
+        return Answer(sujeto, centimetros=centimetros)
     
     if 'tomado' in body['queryResult']['parameters'].keys():
         mililitros = body['queryResult']['parameters']['n_mililitros']
@@ -107,12 +116,11 @@ def insert_apunte(
             mililitros=mililitros,
         )
         crud.toma.create(db_session=db_session, toma_in=toma_in)
-        return {
-            "msg": "The toma has been inserted."
-        }
+        return Answer(sujeto, mililitros=mililitros)
     
     if 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
+        decimas = body['queryResult']['parameters']['n_decimas']
         temperatura_in = TemperaturaCreate(
             user_id=user.id,
             sujeto_id=sujeto.id,
@@ -121,9 +129,7 @@ def insert_apunte(
             grados=grados,
         )
         crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
-        return {
-            "msg": "The temperatura has been inserted."
-        }
+        return Answer(sujeto, grados=grados, decimas=decimas)
 
 
 
