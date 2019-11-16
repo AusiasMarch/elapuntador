@@ -10,6 +10,7 @@ class Temperatura(Base):
     user_id = Column(Integer, ForeignKey("user.id"))
     sujeto_id = Column(Integer, ForeignKey("sujeto.id"))
     grados = Column(Integer)
+    decimas = Column(Integer)
     query_text = Column(String)
     datetime = Column(DateTime, default=datetime.datetime.utcnow)
     ip = Column(String)

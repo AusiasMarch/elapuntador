@@ -12,9 +12,10 @@ class Temperatura(BaseModel):
     query_text: str
     ip: str
     grados: int
+    decimas: int
 
     def __repr__(self):
-        return '<Temperatura(grados={})>'.format(self.grados)
+        return "<Temperatura(grados={}, décimas={})>".format(self.grados, self.decimas)
 
 
 class TemperaturaInDb(Temperatura):

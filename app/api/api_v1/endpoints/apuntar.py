@@ -57,7 +57,7 @@ class Answer:
         return self.content
 
 
-@router.post("/insert", response_model=ApunteResponse, status_code=202)
+@router.post("/", response_model=ApunteResponse, status_code=202)
 def insert_apunte(
     *,
     body: dict,
@@ -127,6 +127,7 @@ def insert_apunte(
             query_text=body['queryResult']['queryText'],
             ip=x_forwarded_for,
             grados=grados,
+            decimas=decimas
         )
         crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
         return Answer(sujeto, grados=grados, decimas=decimas)
