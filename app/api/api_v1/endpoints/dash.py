@@ -1,7 +1,8 @@
+import os
+
 from fastapi import APIRouter, Depends, Body, Header
 from sqlalchemy.orm import Session
-from crud import altura
-from crud import altura_who
+import crud
 from api.utils.db import get_db
 
 from starlette.responses import HTMLResponse
@@ -14,64 +15,72 @@ import plotly.graph_objects as go
 router = APIRouter()
 
 
-@router.get("/peso", content_type=HTMLResponse)
+@router.get("/altura", content_type=HTMLResponse)
 def plot_peso(
     *,
     db_session: Session = Depends(get_db),
 ):
-    birth_date = datetime.datetime(year=2020, month=1, day=1)
+    apodo = 'Entropía'
+    sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
+    
 
-    alturas = altura.get_all(db_session)
-    alturas_who = altura_who.get_all_girls(db_session)
+    alturas = crud.altura.get_all(db_session)
+    alturas_who = crud.altura_who.get_all_girls(db_session)
     alturas_who['datetime'] = alturas_who.index.map(
-        lambda x: datetime.timedelta(days=x)) + birth_date
+        lambda x: datetime.timedelta(days=x)) + sujeto.birth
 
-    fig = go.Figure()
-    fig.add_trace(
-        go.Scatter(
-            x=alturas.datetime.dt.to_pydatetime(),
-            y=alturas.centimetros.values,
-            line=dict(width=5, color='black'),
-            mode='lines+markers',
-            name='Measured'
-        )
-    )
+    filename = "/tmp/altura_{}.html".format(alturas["datetime"].max()).replace(" ", "_")
 
-    fig.add_trace(
-        go.Scatter(
-            x=alturas_who.datetime.dt.to_pydatetime(),
-            y=alturas_who['P50'].values,
-            line=dict(width=3, color='green', dash='dot'),
-            mode='lines+markers',
-            name='Media',
-        )
-    )
-    
-    for percentile in 'P25', 'P75':
+    if not os.path.exists(filename):
+        fig = go.Figure()
         fig.add_trace(
             go.Scatter(
-                x=alturas_who.datetime.dt.to_pydatetime(),
-                y=alturas_who[percentile].values,
-                line=dict(width=3, color='orange', dash='dot'),
+                x=alturas.datetime.dt.to_pydatetime(),
+                y=alturas.centimetros.values,
+                line=dict(width=5, color='black'),
                 mode='lines+markers',
-                name=percentile,
+                name='Measured'
             )
         )
     
-    for percentile in 'P10', 'P90':
         fig.add_trace(
             go.Scatter(
                 x=alturas_who.datetime.dt.to_pydatetime(),
-                y=alturas_who[percentile].values,
-                line=dict(width=3, color='red', dash='dot'),
+                y=alturas_who['P50'].values,
+                line=dict(width=3, color='green', dash='dot'),
                 mode='lines+markers',
-                name=percentile,
+                name='Media',
             )
         )
-    fig.update_layout(xaxis_tickformat='%d %B %Y')
-    # plotly.offline.plot(fig, filename='filename.html', auto_open=True)
+        
+        for percentile in 'P25', 'P75':
+            fig.add_trace(
+                go.Scatter(
+                    x=alturas_who.datetime.dt.to_pydatetime(),
+                    y=alturas_who[percentile].values,
+                    line=dict(width=3, color='orange', dash='dot'),
+                    mode='lines+markers',
+                    name=percentile,
+                )
+            )
+        
+        for percentile in 'P10', 'P90':
+            fig.add_trace(
+                go.Scatter(
+                    x=alturas_who.datetime.dt.to_pydatetime(),
+                    y=alturas_who[percentile].values,
+                    line=dict(width=3, color='red', dash='dot'),
+                    mode='lines+markers',
+                    name=percentile,
+                )
+            )
+        fig.update_layout(xaxis_tickformat='%d %B %Y')
+        
+        plotly.offline.plot(fig, filename=filename, auto_open=False)
     
-    return plotly.offline.plot(fig, output_type='div')
+    with open(filename) as html:
+        return html
+    # return plotly.offline.plot(fig, output_type='div')
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
