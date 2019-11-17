@@ -17,3 +17,9 @@ class Peso(Base):
 
     user = relationship("User", back_populates="pesos")
     sujeto = relationship("Sujeto", back_populates="pesos")
+
+    def __repr__(self):
+        return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)
+    
+    def __str__(self):
+        return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)

@@ -19,3 +19,9 @@ class User(Base):
     tomas = relationship("Toma", back_populates="user")
     temperaturas = relationship("Temperatura", back_populates="user")
     # relation = relationship("Relation")
+
+    def __repr__(self):
+        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
+
+    def __str__(self):
+        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
