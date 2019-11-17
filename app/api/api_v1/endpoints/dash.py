@@ -15,6 +15,10 @@ import plotly.graph_objects as go
 router = APIRouter()
 
 
+from db.session import db_session
+
+
+
 @router.get("/altura", content_type=HTMLResponse)
 def plot_peso(
     *,

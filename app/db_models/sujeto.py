@@ -15,3 +15,9 @@ class Sujeto(Base):
     alturas = relationship("Altura", back_populates="sujeto")
     tomas = relationship("Toma", back_populates="sujeto")
     temperaturas = relationship("Temperatura", back_populates="sujeto")
+    
+    def __repr__(self):
+        return f'<Sujeto(name={self.name})>'
+    
+    def __str__(self):
+        return f'<Sujeto(name={self.name})>'
