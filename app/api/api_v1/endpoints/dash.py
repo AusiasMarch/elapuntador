@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 
+from fastapi import Depends
+from sqlalchemy.orm import Session
 from starlette.responses import HTMLResponse
+from api.utils.db import get_db
 
 from core import plots
 
@@ -14,9 +17,10 @@ def plot_peso(
     *,
     table: str,
     apodo: str,
+    db_session: Session = Depends(get_db),
 ):
     if table == 'altura':
-        return plots.altura(apodo=apodo)
+        return plots.altura(db_session=db_session, apodo=apodo)
  
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)

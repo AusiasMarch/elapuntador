@@ -3,17 +3,14 @@ import datetime
 import plotly
 import plotly.graph_objects as go
 
-from fastapi import Depends
-from sqlalchemy.orm import Session
 
 import crud
-from api.utils.db import get_db
 
 
 # from db.session import db_session
 
 def altura(
-    db_session: Session = Depends(get_db),
+    db_session,
     apodo: str = 'Entropía',):
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     
