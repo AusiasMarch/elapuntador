@@ -1,11 +1,9 @@
+import logging
+
 from typing import List, Optional
 
-import crud
-
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from core.security import get_password_hash, verify_password
 from db_models.sujeto import Sujeto
 from models.sujeto import SujetoCreate
 
@@ -14,6 +12,7 @@ from unicodedata import normalize
 import pandas as pd
 
 
+log = logging.getLogger("elapuntador")
 
 
 def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
@@ -64,12 +63,17 @@ def get_all(db_session: Session) -> pd.DataFrame:
 
 
 def get_by_name(db_session: Session, *, sujeto_name: int) -> Optional[Sujeto]:
-    return db_session.query(Sujeto).filter(Sujeto.name == sujeto_name).first()
-
+    sujeto = db_session.query(Sujeto).filter(Sujeto.name == sujeto_name).first()
+    log.debug(f"Sujeto got by name: {sujeto}")
+    return sujeto
 
 def get_by_id(db_session: Session, *, sujeto_id: int) -> Optional[Sujeto]:
-    return db_session.query(Sujeto).filter(Sujeto.id == sujeto_id).first()
+    sujeto = db_session.query(Sujeto).filter(Sujeto.id == sujeto_id).first()
+    log.debug(f"Sujeto got from id: {sujeto}")
+    return sujeto
 
 
 def get_by_apodo(db_session: Session, *, apodo: str) -> Optional[Sujeto]:
-    return db_session.query(Sujeto).filter(Sujeto.apodos.any(apodo)).first()
+    sujeto = db_session.query(Sujeto).filter(Sujeto.apodos.any(apodo)).first()
+    log.debug(f"Sujeto got from apodo: {sujeto}")
+    return sujeto

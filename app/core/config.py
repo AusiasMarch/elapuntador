@@ -47,7 +47,8 @@ BACKEND_CORS_ORIGINS = get_env_variable(
     "BACKEND_CORS_ORIGINS"
 )  # a string of origins separated by commas, e.g: "http://localhost, http://localhost:4200, http://localhost:3000, http://localhost:8080, http://local.dockertoolbox.tiangolo.com"
 PROJECT_NAME = get_env_variable("PROJECT_NAME")
-SENTRY_DSN = get_env_variable("SENTRY_DSN")
+LOG_DIR = get_env_variable("LOG_DIR")
+LOG_LEVEL = get_env_variable("LOG_LEVEL")
 
 POSTGRES_SERVER = get_env_variable("POSTGRES_SERVER")
 POSTGRES_USER = get_env_variable("POSTGRES_USER")

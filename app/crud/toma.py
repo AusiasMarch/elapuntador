@@ -1,3 +1,5 @@
+import logging
+
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
@@ -6,8 +8,13 @@ from db_models.toma import Toma
 from models.toma import TomaCreate
 
 
+log = logging.getLogger("elapuntador")
+
+
 def get_by_id(db_session: Session, *, toma_id: int) -> Optional[Toma]:
-    return db_session.query(Toma).filter(Toma.id == toma_id).first()
+    toma = db_session.query(Toma).filter(Toma.id == toma_id).first()
+    log.debug(f"Toma got by id: {toma}")
+    return toma
 
 
 def get_all(db_session: Session) -> List[Optional[Toma]]:
@@ -51,5 +58,6 @@ def create(db_session: Session, *, toma_in: TomaCreate) -> Toma:
     db_session.add(toma)
     db_session.commit()
     db_session.refresh(toma)
+    log.debug(f"Created toma: {toma}")
     
     return toma

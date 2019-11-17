@@ -14,6 +14,9 @@ class UserBase(BaseModel):
     class Config:
         orm_mode = True
 
+    def __repr__(self):
+        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
+
 
 class UserBaseInDB(UserBase):
     id: int = None

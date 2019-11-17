@@ -10,6 +10,9 @@ class SujetoBase(BaseModel):
     name: str
     apodos: Optional[List[str]]
     birth: datetime.datetime
+    
+    def __repr__(self):
+        return f'<Sujeto(name={self.name})>'
 
 
 class SujetoCreate(SujetoBase):

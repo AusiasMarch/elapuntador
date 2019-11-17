@@ -1,3 +1,9 @@
+import os
+import gzip
+import logging
+from logging.handlers import RotatingFileHandler
+
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -7,7 +13,31 @@ from core import config
 from db.session import Session
 
 
+class GZipRotator:
+    def __call__(self, source, dest):
+        os.rename(source, dest)
+        f_in = open(dest, 'rb')
+        f_out = gzip.open('%s.gz' % dest, 'wb')
+        f_out.writelines(f_in)
+        f_out.close()
+        f_in.close()
+        os.remove(dest)
+
+
+log_folder = config.LOG_DIR
+os.makedirs(log_folder, exist_ok=True)
+handler = RotatingFileHandler(os.path.join(log_folder, 'elapuntador.log'), maxBytes=100 * 1024 * 1024, backupCount=5)
+log = logging.getLogger('elapuntador')
+log.rotator = GZipRotator()
+log.setLevel(logging.getLevelName(config.LOG_LEVEL))  # CRITICAL, ERROR, WARNING, INFO or DEBUG
+handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)8s - %(module)s - %(funcName)s - %(message)s"))
+log.addHandler(handler)
+
+
+log.info(f"Starting {config.PROJECT_NAME} server.")
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json")
+log.info(f"{config.PROJECT_NAME} server started.")
+
 
 # CORS Cross-origin resource sharing
 origins = []

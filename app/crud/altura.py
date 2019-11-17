@@ -1,3 +1,5 @@
+import logging
+
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
@@ -7,8 +9,14 @@ from models.altura import AlturaCreate
 
 import pandas as pd
 
+
+log = logging.getLogger("elapuntador")
+
+
 def get_by_id(db_session: Session, *, altura_id: int) -> Optional[Altura]:
-    return db_session.query(Altura).filter(Altura.id == altura_id).first()
+    altura = db_session.query(Altura).filter(Altura.id == altura_id).first()
+    log.debug(f"Altura got by id: {altura}")
+    return altura
 
 
 def get_all(db_session: Session) -> pd.DataFrame:
@@ -61,5 +69,6 @@ def create(db_session: Session, *, altura_in: AlturaCreate) -> Altura:
     db_session.add(altura)
     db_session.commit()
     db_session.refresh(altura)
+    log.debug(f"Created altura: {altura}")
     
     return altura

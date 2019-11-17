@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, Body, Header
 from sqlalchemy.orm import Session
 import crud
@@ -12,6 +14,9 @@ from core import jwt
 from starlette.authentication import AuthenticationError
 from core import config
 
+log = logging.getLogger('elapuntador')
+
+
 router = APIRouter()
 
 
@@ -22,21 +27,27 @@ def insert_apunte(
     x_forwarded_for: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
+    log.info("Recieving apunte.")
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
-    if decoded_token['aud'] != config.GOOGLE_CLIENTID:
-        raise AuthenticationError('Invalid Google Client ID.')
-    if decoded_token['iss'] != config.GOOGLE_ISS:
-        raise AuthenticationError('Invalid Google Token ID iss.')
+    clientid = decoded_token['aud']
+    iss = decoded_token['iss']
+    if clientid != config.GOOGLE_CLIENTID:
+        log.debug(f"Invalid Google Client ID {clientid}.")
+        return {"msg": "Invalid Google Client ID."}
+    if iss != config.GOOGLE_ISS:
+        log.debug(f"Invalid Google ISS {iss}.")
+        return {"msg": "Invalid Google ISS."}
+    log.debug(decoded_token)
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
+    log.debug("user: {}".format(user))
     if not user.can_report:
-        return {
-            "msg": "The user is not allowed to report"
-        }
+        return {"msg": f"The user {user.full_name} is not allowed to report."}
     sujeto = crud.sujeto.get_by_apodo(
         db_session=db_session,
         apodo=body['queryResult']['parameters']['sujeto']
     )
+    
     
     if 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']

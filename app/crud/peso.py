@@ -1,3 +1,5 @@
+import logging
+
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
@@ -6,8 +8,13 @@ from db_models.peso import Peso
 from models.peso import PesoCreate
 
 
+log = logging.getLogger("elapuntador")
+
+
 def get_by_id(db_session: Session, *, peso_id: int) -> Optional[Peso]:
-    return db_session.query(Peso).filter(Peso.id == peso_id).first()
+    peso = db_session.query(Peso).filter(Peso.id == peso_id).first()
+    log.debug(f"Peso got by id: {peso}")
+    return peso
 
 
 def get_all(db_session: Session) -> List[Optional[Peso]]:
@@ -51,5 +58,6 @@ def create(db_session: Session, *, peso_in: PesoCreate) -> Peso:
     db_session.add(peso)
     db_session.commit()
     db_session.refresh(peso)
+    log.debug(f"Created peso: {peso}")
     
     return peso
