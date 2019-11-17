@@ -18,7 +18,7 @@ import plotly.graph_objects as go
 router = APIRouter()
 
 
-@router.get("/dash", content_type=HTMLResponse)
+@router.get("/peso", content_type=HTMLResponse)
 def insert_apunte(
     *,
     db_session: Session = Depends(get_db),
