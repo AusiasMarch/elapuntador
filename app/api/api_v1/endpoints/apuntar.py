@@ -6,7 +6,6 @@ from models.peso import PesoCreate
 from models.altura import AlturaCreate
 from models.toma import TomaCreate
 from models.temperatura import TemperaturaCreate
-from models.msg import Msg
 from models.apunte_response import Answer, ApunteResponse
 
 from core import jwt
