@@ -92,7 +92,13 @@ def insert_apunte(
             gramos=gramos if gramos else 0,
         )
         crud.peso.create(db_session=db_session, peso_in=peso_in)
-        return Answer(sujeto, kilos=kilos, gramos=gramos)
+        
+        answer = Answer(sujeto, kilos=kilos, gramos=gramos)
+        
+        print(answer)
+        print(type(answer))
+        
+        return answer
     
     if 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
