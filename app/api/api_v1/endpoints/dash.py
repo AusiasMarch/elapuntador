@@ -32,7 +32,7 @@ def plot_peso(
     alturas_who['datetime'] = alturas_who.index.map(
         lambda x: datetime.timedelta(days=x)) + sujeto.birth
 
-    filename = "/tmp/altura_{}_{}.html".format(
+    filename = "/tmp/elapuntador/altura_{}_{}.html".format(
         sujeto.name,
         alturas["datetime"].max()
     ).replace(" ", "_")
