@@ -18,7 +18,7 @@ class Altura(Base):
     sujeto = relationship("Sujeto", back_populates="alturas")
 
     def __repr__(self):
-        return '<Altura(centimetros={})>'.format(self.kilos, self.gramos)
+        return '<Altura(centimetros={})>'.format(self.centimetros)
 
     def __str__(self):
-        return '<Altura(centimetros={})>'.format(self.kilos, self.gramos)
+        return '<Altura(centimetros={})>'.format(self.centimetros)
