@@ -11,7 +11,6 @@ from models.temperatura import TemperaturaCreate
 from models.apunte_response import Answer, ApunteResponse
 
 from core import jwt
-from starlette.authentication import AuthenticationError
 from core import config
 
 log = logging.getLogger('elapuntador')

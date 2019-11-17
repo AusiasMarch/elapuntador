@@ -4,10 +4,6 @@ from crud import altura
 from crud import altura_who
 from api.utils.db import get_db
 
-from core import jwt
-from starlette.authentication import AuthenticationError
-from core import config
-
 from starlette.responses import HTMLResponse
 
 import datetime
