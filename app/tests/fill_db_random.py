@@ -6,18 +6,16 @@ import crud
 from core import config
 
 from models.altura import AlturaCreate
-from models.peso import PesoCreate
-from models.temperatura import TemperaturaCreate
-from models.toma import TomaCreate
 
 from db.session import db_session
 
 user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER_MAIL)
+sujeto = crud.sujeto.get_by_name(db_session, name=config.FIRST_SUJETO_NAME)
 
 
 n_datapoints = 100
-start_date = datetime.datetime(year=2020, month=1, day=1)
-finish_date = datetime.datetime(year=2024, month=1, day=1)
+start_date = sujeto.birth
+finish_date = start_date + datetime.timedelta(days=365*4)
 
 altura_0 = 50
 altura_fin = 110
@@ -28,7 +26,7 @@ def fill():
         centimetros = altura_0 + i_point * (altura_fin - altura_0) / n_datapoints * (1 + (random.random() * 0.3 - 0.15))
     
         altura_in = AlturaCreate(
-            sujeto_id=1,
+            sujeto_id=sujeto.id,
             user_id=user.id,
             query_text='',
             ip='666.666.666.666',

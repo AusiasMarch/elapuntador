@@ -19,12 +19,12 @@ from db.session import db_session
 
 
 
-@router.get("/altura", content_type=HTMLResponse)
+@router.get("/altura/{apodo}", content_type=HTMLResponse)
 def plot_peso(
     *,
+    apodo: str = 'Entropía',
     db_session: Session = Depends(get_db),
 ):
-    apodo = 'Entropía'
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
 
     alturas = crud.altura.get_all(db_session)

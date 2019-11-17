@@ -29,7 +29,7 @@ def init_db(db_session):
             relation=config.FIRST_SUPERUSER_RELATION
         )
         user = crud.user.create(db_session, user_in=user_in)
-    sujeto = crud.sujeto.get_by_name(db_session, sujeto_name=config.FIRST_SUJETO_NAME)
+    sujeto = crud.sujeto.get_by_name(db_session, name=config.FIRST_SUJETO_NAME)
     if not sujeto:
         sujeto_in = SujetoCreate(
             name=config.FIRST_SUJETO_NAME,

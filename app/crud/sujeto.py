@@ -62,8 +62,8 @@ def get_all(db_session: Session) -> pd.DataFrame:
     return sujetos
 
 
-def get_by_name(db_session: Session, *, sujeto_name: int) -> Optional[Sujeto]:
-    sujeto = db_session.query(Sujeto).filter(Sujeto.name == sujeto_name).first()
+def get_by_name(db_session: Session, *, name: str) -> Optional[Sujeto]:
+    sujeto = db_session.query(Sujeto).filter(Sujeto.name == name).first()
     log.debug(f"Sujeto got by name: {sujeto}")
     return sujeto
 
