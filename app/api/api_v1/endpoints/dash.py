@@ -26,14 +26,16 @@ def plot_peso(
 ):
     apodo = 'Entropía'
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
-    
 
     alturas = crud.altura.get_all(db_session)
     alturas_who = crud.altura_who.get_all_girls(db_session)
     alturas_who['datetime'] = alturas_who.index.map(
         lambda x: datetime.timedelta(days=x)) + sujeto.birth
 
-    filename = "/tmp/altura_{}.html".format(alturas["datetime"].max()).replace(" ", "_")
+    filename = "/tmp/altura_{}_{}.html".format(
+        sujeto.name,
+        alturas["datetime"].max()
+    ).replace(" ", "_")
 
     if not os.path.exists(filename):
         fig = go.Figure()
@@ -83,7 +85,7 @@ def plot_peso(
         plotly.offline.plot(fig, filename=filename, auto_open=False)
     
     with open(filename) as html:
-        return html
+        return html.read()
     # return plotly.offline.plot(fig, output_type='div')
 
 
