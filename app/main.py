@@ -1,4 +1,5 @@
 import os
+import shutil
 import gzip
 import logging
 from logging.handlers import RotatingFileHandler
@@ -23,6 +24,9 @@ class GZipRotator:
         f_in.close()
         os.remove(dest)
 
+
+shutil.rmtree('/tmp/elapuntador', ignore_errors=True)
+os.makedirs('/tmp/elapuntador', exist_ok=True)
 
 log_folder = config.LOG_DIR
 os.makedirs(log_folder, exist_ok=True)
