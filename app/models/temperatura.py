@@ -17,6 +17,9 @@ class Temperatura(BaseModel):
     def __repr__(self):
         return "<Temperatura(grados={}, décimas={})>".format(self.grados, self.decimas)
 
+    def __str__(self):
+        return "<Temperatura(grados={}, décimas={})>".format(self.grados, self.decimas)
+
 
 class TemperaturaInDb(Temperatura):
     datetime: datetime

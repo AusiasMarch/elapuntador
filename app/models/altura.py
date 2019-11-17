@@ -17,6 +17,9 @@ class Altura(BaseModel):
     def __repr__(self):
         return '<Altura(centimetros={})>'.format(self.kilos, self.gramos)
 
+    def __str__(self):
+        return '<Altura(centimetros={})>'.format(self.kilos, self.gramos)
+
 
 class AlturaInDb(Altura):
     datetime: datetime

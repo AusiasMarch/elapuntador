@@ -13,6 +13,9 @@ class SujetoBase(BaseModel):
     
     def __repr__(self):
         return f'<Sujeto(name={self.name})>'
+    
+    def __str__(self):
+        return f'<Sujeto(name={self.name})>'
 
 
 class SujetoCreate(SujetoBase):

@@ -16,6 +16,9 @@ class Peso(BaseModel):
 
     def __repr__(self):
         return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)
+    
+    def __str__(self):
+        return '<Peso(kilos={}, gramos={})>'.format(self.kilos, self.gramos)
 
 
 class PesoInDb(Peso):

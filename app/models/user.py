@@ -17,6 +17,9 @@ class UserBase(BaseModel):
     def __repr__(self):
         return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
 
+    def __str__(self):
+        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
+
 
 class UserBaseInDB(UserBase):
     id: int = None

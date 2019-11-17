@@ -12,6 +12,9 @@ class Relation(BaseModel):
     def __repr__(self):
         return '<Relation(id={}, relation={})>'.format(self.id, self.relation)
 
+    def __str__(self):
+        return '<Relation(id={}, relation={})>'.format(self.id, self.relation)
+
 
 class RelationInDb(Relation):
     pass
