@@ -21,22 +21,22 @@ class Answer:
             pass
         content += "."
 
-        self.content = {
-            "payload": {
-                "google": {
-                    "expectUserResponse": True,
-                    "richResponse": {
-                        "items": [
-                            {
-                                "simpleResponse": {
-                                    "textToSpeech": content
-                                }
-                            }
+        self.content=dict(
+            payload=dict(
+                google=dict(
+                    expectUserResponse=True,
+                    richResponse=dict(
+                        items=[
+                            dict(
+                                simpleResponse=dict(
+                                    textToSpeech=content
+                                )
+                            )
                         ]
-                    }
-                },
-            },
-        }
+                    )
+                )
+            )
+        )
 
     def to_send(self):
         return self.content
@@ -44,5 +44,4 @@ class Answer:
 
 
 class ApunteResponse(BaseModel):
-    payload: Answer
-    
+    payload: dict
