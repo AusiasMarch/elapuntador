@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.get("/peso", content_type=HTMLResponse)
-def insert_apunte(
+def plot_peso(
     *,
     db_session: Session = Depends(get_db),
 ):
