@@ -25,6 +25,7 @@ class GZipRotator:
 
 
 log_folder = config.LOG_DIR
+print(log_folder)
 os.makedirs(log_folder, exist_ok=True)
 handler = RotatingFileHandler(os.path.join(log_folder, 'elapuntador.log'), maxBytes=100 * 1024 * 1024, backupCount=5)
 log = logging.getLogger('elapuntador')
