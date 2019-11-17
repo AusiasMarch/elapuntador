@@ -10,7 +10,7 @@ import crud
 from api.utils.db import get_db
 
 
-from db.session import db_session
+# from db.session import db_session
 
 def altura(
     db_session: Session = Depends(get_db),
