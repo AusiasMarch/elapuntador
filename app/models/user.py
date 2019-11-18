@@ -15,10 +15,10 @@ class UserBase(BaseModel):
         orm_mode = True
 
     def __repr__(self):
-        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
+        return f'<User(full_name={self.full_name})>'
 
     def __str__(self):
-        return f'<User(full_name={self.full_name}, relation={self.relation.relation})>'
+        return f'<User(full_name={self.full_name})>'
 
 
 class UserBaseInDB(UserBase):
