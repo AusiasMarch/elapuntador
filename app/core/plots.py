@@ -27,6 +27,11 @@ data_sources = {
     'peso': crud.peso.get_all_by_sujeto
 }
 
+units ={
+    "altura": "cm",
+    "peso": "kg"
+}
+
 
 def add_who(fig, sujeto, table):
     expected = who[table][sujeto.gender](db_session)
@@ -76,15 +81,12 @@ def plot(
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id)
     
-    filename = "/tmp/elapuntador/{}_{}_{}.html".format(
-        table,
-        sujeto.name,
-        data["datetime"].max()
-    ).replace(" ", "_")
+    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.html"\
+        .replace(" ", "_")
     
     if not os.path.exists(filename):
         log.debug(
-            "The plot {table} for {apodo} does not exists or is not updated. "
+            f"The plot {table} for {apodo} does not exists or is not updated. "
             "Creating it."
         )
         fig = go.Figure()
@@ -104,7 +106,7 @@ def plot(
             xaxis_tickformat='%d %B %Y',
             title=f"{sujeto.name}'s {table}s",
             xaxis_title="Day",
-            yaxis_title=table.title(),
+            yaxis_title=f"{table.title()} [{units[table]}]",
             # font=dict(
             #     family="Courier New, monospace",
             #     size=18,
@@ -114,7 +116,7 @@ def plot(
         
         plotly.offline.plot(fig, filename=filename, auto_open=False)
     else:
-        log.debug("The plot {table} for {apodo} already exists. ")
+        log.debug(f"The plot {table} for {apodo} already exists. ")
     
     with open(filename) as html:
         return html.read()
