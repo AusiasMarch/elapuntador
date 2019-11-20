@@ -33,6 +33,7 @@ def init_db(db_session):
     if not sujeto:
         sujeto_in = SujetoCreate(
             name=config.FIRST_SUJETO_NAME,
+            gender=config.FIRST_SUJETO_GENDER,
             apodos=config.FIRST_SUJETO_APODOS.split(','),
             birth=datetime.datetime.strptime(
                 config.FIRST_SUJETO_BIRTH,

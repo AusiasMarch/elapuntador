@@ -8,6 +8,7 @@ from typing import Optional, List
 class SujetoBase(BaseModel):
     id: int
     name: str
+    gender: str
     apodos: Optional[List[str]]
     birth: datetime.datetime
     

@@ -40,6 +40,7 @@ def create(db_session: Session, *, sujeto_in: SujetoCreate) -> Sujeto:
     
     sujeto = Sujeto(
         name=sujeto_in.name,
+        gender=sujeto_in.gender,
         apodos=sujeto_in.apodos,
         birth=sujeto_in.birth
     )
@@ -53,9 +54,9 @@ def get_all(db_session: Session) -> pd.DataFrame:
     sujetos_list = db_session.query(Sujeto).all()
 
     sujetos = pd.DataFrame(
-        [(x.name, x.apodos, x.birth) for x in
+        [(x.name, x.gender, x.apodos, x.birth) for x in
          sujetos_list],
-        columns=['name', 'apodos', 'birth'],
+        columns=['name', 'gender', 'apodos', 'birth'],
         index=[(x.id) for x in sujetos_list]
     )
 

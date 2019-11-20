@@ -1,4 +1,5 @@
 import logging
+import pandas as pd
 
 from typing import Optional, List
 from sqlalchemy.orm import Session
@@ -33,12 +34,21 @@ def get_all_by_user(
 
 def get_all_by_sujeto(
     db_session: Session, *, sujeto_id: int
-) -> List[Optional[Peso]]:
-    return (
-        db_session.query(Peso)
-        .filter(Peso.sujeto_id == sujeto_id)
-        .all()
+) -> pd.DataFrame:
+    pesos_list = db_session.query(
+        Peso
+    ).filter(
+        Peso.sujeto_id == sujeto_id
+    ).all()
+
+    pesos = pd.DataFrame(
+        [(x.datetime, x.sujeto_id, x.sujeto.name, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
+         pesos_list],
+        columns=['datetime', 'sujeto_id', 'sujeto', 'centimetros', 'ip', 'user_id', 'user_name'],
+        index=[(x.id) for x in pesos_list]
     )
+    
+    return pesos
 
 
 def get_all_by_user_and_sujeto(

@@ -8,6 +8,7 @@ from db.base_class import Base
 class Sujeto(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+    gender = Column(String)
     apodos = Column(ARRAY(String))
     birth = Column(DateTime)
 
