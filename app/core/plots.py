@@ -94,7 +94,7 @@ def plot(
         
         fig.update_layout(
             xaxis_tickformat='%d %B %Y',
-            title="{}'s {}}".format(sujeto.name, table),
+            title=f"{sujeto.name}'s {table}s",
             xaxis_title="Day",
             yaxis_title=table,
             # font=dict(

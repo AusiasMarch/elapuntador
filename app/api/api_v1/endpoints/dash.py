@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 
-@router.get("/{table}/{apodo}", content_type=HTMLResponse)
+@router.get("/{apodo}/{table}", content_type=HTMLResponse)
 def plot_peso(
     *,
     table: str,
