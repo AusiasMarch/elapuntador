@@ -2,11 +2,14 @@ import os
 import datetime
 import plotly
 import plotly.graph_objects as go
+import logging
 
 
 from db.session import db_session
 import crud
 
+
+log = logging.getLogger('elapuntador')
 
 who = {
     'altura': {
@@ -69,6 +72,7 @@ def plot(
         table: str,
         apodo: str,
 ):
+    log.debug(f"Plotting {table} for {apodo}.")
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id)
     
@@ -79,6 +83,10 @@ def plot(
     ).replace(" ", "_")
     
     if not os.path.exists(filename):
+        log.debug(
+            "The plot {table} for {apodo} does not exists or is not updated. "
+            "Creating it."
+        )
         fig = go.Figure()
         fig.add_trace(
             go.Scatter(
@@ -96,7 +104,7 @@ def plot(
             xaxis_tickformat='%d %B %Y',
             title=f"{sujeto.name}'s {table}s",
             xaxis_title="Day",
-            yaxis_title=table,
+            yaxis_title=table.title(),
             # font=dict(
             #     family="Courier New, monospace",
             #     size=18,
@@ -105,6 +113,8 @@ def plot(
         )
         
         plotly.offline.plot(fig, filename=filename, auto_open=False)
+    else:
+        log.debug("The plot {table} for {apodo} already exists. ")
     
     with open(filename) as html:
         return html.read()
