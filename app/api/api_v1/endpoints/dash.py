@@ -20,7 +20,7 @@ def plot_peso(
     db_session: Session = Depends(get_db),
 ):
     if table == 'altura':
-        return plots.altura(db_session=db_session, apodo=apodo)
+        return plots.plot('altura', apodo)
  
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
