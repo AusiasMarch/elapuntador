@@ -13,6 +13,7 @@ api_router = APIRouter()
 
 # DRIBIA
 api_router.include_router(apuntar.router, prefix="/apuntar", tags=["apuntar"])
+api_router.include_router(apuntar.router, prefix="/location", tags=["location"])
 api_router.include_router(dash.router, prefix="/dash", tags=["dash"])
 
 api_router.include_router(login.router, tags=["login"])
