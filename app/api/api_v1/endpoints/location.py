@@ -30,10 +30,8 @@ def insert_location(
     lat = float(lat)
     lng = float(lng)
     sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=apodo)
-    log.debug(sujeto)
     coordinates = Coordinates(lat=lat, lng=lng)
-    log.debug(coordinates)
     crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto,
                               coordinates=coordinates, car=False)
     log.debug(f"Location updated for user {sujeto.name}")
-    return {"msg": "Location saved"}
+    return {"msg": "Location updated."}
