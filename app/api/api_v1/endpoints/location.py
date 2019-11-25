@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=Msg, status_code=201)
-def insert_apunte(
+def insert_location(
     *,
     body: dict,
     x_forwarded_for: str = Header(None),
