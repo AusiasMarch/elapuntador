@@ -22,6 +22,7 @@ def insert_apunte(
     db_session: Session = Depends(get_db),
 ):
     print(body)
+    log.debug(body)
     # apodo =
     # lat =
     # lng =
