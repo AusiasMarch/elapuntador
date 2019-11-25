@@ -40,6 +40,7 @@ def insert_apunte(
     log.debug(decoded_token)
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
     log.debug("user: {}".format(user))
+    log.debug(body['queryResult']['parameters'])
     if not user.can_report:
         return {"msg": f"The user {user.full_name} is not allowed to report."}
     sujeto = crud.sujeto.get_by_apodo(
