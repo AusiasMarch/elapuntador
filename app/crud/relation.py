@@ -34,6 +34,5 @@ def create(db_session: Session, *, relation_in: RelationCreate) -> Relation:
     db_session.add(relation)
     db_session.commit()
     db_session.refresh(relation)
-    
-    print(relation)
+
     return relation

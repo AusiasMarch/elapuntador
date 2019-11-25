@@ -6,20 +6,20 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from core.security import get_password_hash, verify_password
-from db_models.user import User
+from db_models.users import Users
 from models.user import UserCreate, UserUpdate
 from models.relation import RelationCreate
 
 
-def get(db_session: Session, *, user_id: int) -> Optional[User]:
-    return db_session.query(User).filter(User.id == user_id).first()
+def get(db_session: Session, *, user_id: int) -> Optional[Users]:
+    return db_session.query(Users).filter(Users.id == user_id).first()
 
 
-def get_by_email(db_session: Session, *, email: str) -> Optional[User]:
-    return db_session.query(User).filter(User.email == email).first()
+def get_by_email(db_session: Session, *, email: str) -> Optional[Users]:
+    return db_session.query(Users).filter(Users.email == email).first()
 
 
-def authenticate(db_session: Session, *, email: str, password: str) -> Optional[User]:
+def authenticate(db_session: Session, *, email: str, password: str) -> Optional[Users]:
     user = get_by_email(db_session, email=email)
     if not user:
         return None
@@ -40,11 +40,11 @@ def can_report(user) -> bool:
     return user.can_report
 
 
-def get_multi(db_session: Session, *, skip=0, limit=100) -> List[Optional[User]]:
-    return db_session.query(User).offset(skip).limit(limit).all()
+def get_multi(db_session: Session, *, skip=0, limit=100) -> List[Optional[Users]]:
+    return db_session.query(Users).offset(skip).limit(limit).all()
 
 
-def create(db_session: Session, *, user_in: UserCreate) -> User:
+def create(db_session: Session, *, user_in: UserCreate) -> Users:
     relation = crud.relation.get_by_relation(
         db_session,
         relation=user_in.relation)
@@ -53,8 +53,8 @@ def create(db_session: Session, *, user_in: UserCreate) -> User:
             relation=user_in.relation
         )
         relation = crud.relation.create(db_session, relation_in=relation_in)
-    
-    user = User(
+
+    user = Users(
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
         full_name=user_in.full_name,
@@ -68,7 +68,7 @@ def create(db_session: Session, *, user_in: UserCreate) -> User:
     return user
 
 
-def update(db_session: Session, *, user: User, user_in: UserUpdate) -> User:
+def update(db_session: Session, *, user: Users, user_in: UserUpdate) -> Users:
     user_data = jsonable_encoder(user)
     update_data = user_in.dict(skip_defaults=True)
     for field in user_data:
