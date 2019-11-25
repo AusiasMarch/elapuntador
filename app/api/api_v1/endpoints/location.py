@@ -6,6 +6,7 @@ import crud
 from api.utils.db import get_db
 from models.msg import Msg
 from models.coordinates import Coordinates
+from core import config
 
 
 log = logging.getLogger('elapuntador')
@@ -18,17 +19,19 @@ router = APIRouter()
 def insert_location(
     *,
     body: dict,
-    x_forwarded_for: str = Header(None),
+    api_key: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
-    print(body)
+    if api_key != config.TASKER_API_KEY:
+        return {"msg": "Not authorized."}
     log.debug(body)
-    # apodo =
-    # lat =
-    # lng =
-    # sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=apodo)
-    # coordinates = Coordinates(lat=lat, lng=lng)
-    # crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto,
-    #                           coordinates=coordinates, car=False)
+    apodo = body['sujeto']
+    lat, lng = body['location'].split(',')
+    lat = float(lat)
+    lng = float(lng)
+    sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=apodo)
+    coordinates = Coordinates(lat=lat, lng=lng)
+    crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto,
+                              coordinates=coordinates, car=False)
 
     return {"msg": "Location saved"}
