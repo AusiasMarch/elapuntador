@@ -1,4 +1,5 @@
 import logging
+import requests
 
 from typing import Optional, List
 from sqlalchemy.orm import Session
@@ -58,7 +59,17 @@ def get_by_sujeto(
                 Location.center,
                 32631
             ).ST_Buffer(Location.radius).ST_Area().asc()).first()
-        return location
+        if location is not None:
+            return location.name
+        else:
+            url_base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+            key = "key=AIzaSyCdCiYs_Q_KHP_GG1xLJwYYPPSO3yFRilg"
+            location = 'location={},{}'.format(
+                *crud.coordinates.get_latlng_from_geom(sujeto.latlng))
+            radius = 'radius=1000'
+    
+            response = requests.get(url_base + "&".join([key, location, radius]))
+            return response.json()['results'][0]['name']
     else:
         return None
 
