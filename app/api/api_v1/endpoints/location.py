@@ -19,11 +19,10 @@ router = APIRouter()
 def insert_location(
     *,
     body: dict,
-    api_key: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
-    if api_key != config.TASKER_API_KEY:
-        log.debug(f"Location recived with api_key {api_key}.")
+    if body["api_key"] != config.TASKER_API_KEY:
+        log.debug(f"Location recived with api_key {body['api_key']}.")
         return {"msg": "Not authorized."}
     log.debug(body)
     apodo = body["sujeto"]
