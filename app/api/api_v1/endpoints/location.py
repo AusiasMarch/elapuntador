@@ -23,10 +23,11 @@ def insert_location(
     db_session: Session = Depends(get_db),
 ):
     if api_key != config.TASKER_API_KEY:
+        log.debug(f"Location recived with api_key {api_key}.")
         return {"msg": "Not authorized."}
     log.debug(body)
-    apodo = body['sujeto']
-    lat, lng = body['location'].split(',')
+    apodo = body["sujeto"]
+    lat, lng = body["location"].split(",")
     lat = float(lat)
     lng = float(lng)
     sujeto = crud.sujeto.get_by_apodo(db_session=db_session, apodo=apodo)
