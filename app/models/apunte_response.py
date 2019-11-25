@@ -5,7 +5,7 @@ class Answer:
     def __init__(self, sujeto, location=None, kilos=None, gramos=None, centimetros=None,
                  mililitros=None, grados=None, decimas=None):
         if location:
-            content = "f{sujeto.name} está en {location.name}."
+            content = f"{sujeto.name} está en {location.name}."
     
         else:
             content = f"He apuntado que {sujeto.name} "
