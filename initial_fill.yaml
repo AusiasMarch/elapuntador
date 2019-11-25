@@ -1,0 +1,19 @@
+users:
+  name: Ausias March
+  mail: ausias.c.m@gmail.com
+  relation: padre
+  password: unpassword
+
+sujetos:
+  name: name
+  apodos:
+    - nickname1
+    - nickname2
+  birth: '2004-10-19 10:23:54'
+  gender: girl
+
+locations:
+  casa:
+    lat: 1.123456
+    lng: 1.123456
+    radius: 50

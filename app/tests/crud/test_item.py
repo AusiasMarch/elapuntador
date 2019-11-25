@@ -10,10 +10,10 @@ def test_create_item():
     description = random_lower_string()
     item_in = ItemCreate(title=title, description=description)
     user = create_random_user()
-    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=user.id)
+    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=users.id)
     assert item.title == title
     assert item.description == description
-    assert item.owner_id == user.id
+    assert item.owner_id == users.id
 
 
 def test_get_item():
@@ -21,7 +21,7 @@ def test_get_item():
     description = random_lower_string()
     item_in = ItemCreate(title=title, description=description)
     user = create_random_user()
-    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=user.id)
+    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=users.id)
     stored_item = crud.item.get(db_session=db_session, item_id=item.id)
     assert item.id == stored_item.id
     assert item.title == stored_item.title
@@ -34,7 +34,7 @@ def test_update_item():
     description = random_lower_string()
     item_in = ItemCreate(title=title, description=description)
     user = create_random_user()
-    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=user.id)
+    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=users.id)
     description2 = random_lower_string()
     item_update = ItemUpdate(description=description2)
     item2 = crud.item.update(db_session=db_session, item=item, item_in=item_update)
@@ -49,11 +49,11 @@ def test_delete_item():
     description = random_lower_string()
     item_in = ItemCreate(title=title, description=description)
     user = create_random_user()
-    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=user.id)
+    item = crud.item.create(db_session=db_session, item_in=item_in, owner_id=users.id)
     item2 = crud.item.remove(db_session=db_session, item_id=item.id)
     item3 = crud.item.get(db_session=db_session, item_id=item.id)
     assert item3 is None
     assert item2.id == item.id
     assert item2.title == title
     assert item2.description == description
-    assert item2.owner_id == user.id
+    assert item2.owner_id == users.id

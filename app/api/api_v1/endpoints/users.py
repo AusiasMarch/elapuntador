@@ -9,7 +9,7 @@ import crud
 from api.utils.db import get_db
 from api.utils.security import get_current_active_superuser, get_current_active_user
 from core import config
-from db_models.user import User as DBUser
+from db_models.users import Users as DBUser
 from models.user import User, UserCreate, UserInDB, UserUpdate
 from myemails import send_new_account_email
 

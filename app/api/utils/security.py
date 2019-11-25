@@ -9,7 +9,7 @@ import crud
 from api.utils.db import get_db
 from core import config
 from core.jwt import ALGORITHM
-from db_models.user import User
+from db_models.users import Users
 from models.token import TokenPayload
 from starlette.requests import Request
 
@@ -32,13 +32,13 @@ def get_current_user(
     return user
 
 
-def get_current_active_user(current_user: User = Security(get_current_user)):
+def get_current_active_user(current_user: Users = Security(get_current_user)):
     if not crud.user.is_active(current_user):
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
 
-def get_current_active_superuser(current_user: User = Security(get_current_user)):
+def get_current_active_superuser(current_user: Users = Security(get_current_user)):
     if not crud.user.is_superuser(current_user):
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough privileges"

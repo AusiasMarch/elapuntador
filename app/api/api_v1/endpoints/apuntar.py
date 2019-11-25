@@ -47,8 +47,11 @@ def insert_apunte(
         apodo=body['queryResult']['parameters']['sujeto']
     )
     
+    if 'donde' in body['queryResult']['parameters'].keys():
+        location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
+        return Answer(sujeto, location=location).content
     
-    if 'pesa' in body['queryResult']['parameters'].keys():
+    elif 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
         gramos = body['queryResult']['parameters']['n_gramos']
         peso_in = PesoCreate(
@@ -63,7 +66,7 @@ def insert_apunte(
         
         return Answer(sujeto, kilos=kilos, gramos=gramos).content
     
-    if 'mide' in body['queryResult']['parameters'].keys():
+    elif 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
         altura_in = AlturaCreate(
             user_id=user.id,
@@ -75,7 +78,7 @@ def insert_apunte(
         crud.altura.create(db_session=db_session, altura_in=altura_in)
         return Answer(sujeto, centimetros=centimetros).content
     
-    if 'tomado' in body['queryResult']['parameters'].keys():
+    elif 'tomado' in body['queryResult']['parameters'].keys():
         mililitros = body['queryResult']['parameters']['n_mililitros']
         toma_in = TomaCreate(
             user_id=user.id,
@@ -87,7 +90,7 @@ def insert_apunte(
         crud.toma.create(db_session=db_session, toma_in=toma_in)
         return Answer(sujeto, mililitros=mililitros).content
     
-    if 'temperatura' in body['queryResult']['parameters'].keys():
+    elif 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
         decimas = body['queryResult']['parameters']['n_decimas']
         temperatura_in = TemperaturaCreate(

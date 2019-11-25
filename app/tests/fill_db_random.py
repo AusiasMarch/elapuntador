@@ -27,7 +27,7 @@ def fill():
     
         altura_in = AlturaCreate(
             sujeto_id=sujeto.id,
-            user_id=user.id,
+            user_id=users.id,
             query_text='',
             ip='666.666.666.666',
             centimetros=centimetros,

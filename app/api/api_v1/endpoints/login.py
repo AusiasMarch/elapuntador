@@ -10,7 +10,7 @@ from api.utils.security import get_current_user
 from core import config
 from core.jwt import create_access_token
 from core.security import get_password_hash
-from db_models.user import User as DBUser
+from db_models.users import Users as DBUser
 from models.msg import Msg
 from models.token import Token
 from models.user import User
@@ -37,7 +37,7 @@ def login_access_token(
     access_token_expires = timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)
     return {
         "access_token": create_access_token(
-            data={"user_id": user.id}, expires_delta=access_token_expires
+            data={"user_id": users.id}, expires_delta=access_token_expires
         ),
         "token_type": "bearer",
     }

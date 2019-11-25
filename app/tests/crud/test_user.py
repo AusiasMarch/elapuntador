@@ -78,6 +78,6 @@ def test_get_user():
     username = random_lower_string()
     user_in = UserCreate(email=username, password=password, is_superuser=True)
     user = crud.user.create(db_session, user_in=user_in)
-    user_2 = crud.user.get(db_session, user_id=user.id)
+    user_2 = crud.user.get(db_session, user_id=users.id)
     assert user.email == user_2.email
     assert jsonable_encoder(user) == jsonable_encoder(user_2)

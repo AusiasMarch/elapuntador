@@ -29,7 +29,7 @@ sudo certbot certonly --authenticator standalone -d $SERVER_NAME --pre-hook "ser
 echo '0 0 1 * * sudo certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"' | sudo tee -a /etc/crontab > /dev/null
 
 
-sudo apt install -y postgresql-$POSTGRES_VERSION libpq-dev postgresql-client postgresql-client-common
+sudo apt install -y postgresql-$POSTGRES_VERSION libpq-dev postgresql-client postgresql-client-common postgresql-$POSTGRES_VERSION-postgis
 echo "host all all 192.168.1.0/24 md5" | sudo tee -a /etc/postgresql/$POSTGRES_VERSION/main/pg_hba.conf
 sudo sed -i "/^#listen_addresses.*/a listen_addresses\ =\ '*'" /etc/postgresql/$POSTGRES_VERSION/main/postgresql.conf
 sudo systemctl restart postgresql
@@ -37,6 +37,7 @@ sudo su postgres -c "psql  -c \"ALTER ROLE postgres WITH PASSWORD '$POSTGRES_PAS
 sudo su postgres -c "psql  -c \"CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';\""
 sudo su postgres -c "psql  -c \"CREATE DATABASE $POSTGRES_USER OWNER $POSTGRES_USER;\""
 sudo su postgres -c "psql  -c \"CREATE DATABASE $POSTGRES_DB OWNER $POSTGRES_USER;\""
+sudo su postgres -c "psql $POSTGRES_DB -c \"CREATE EXTENSION postgis;\""
 
 
 sudo apt install -y uvicorn

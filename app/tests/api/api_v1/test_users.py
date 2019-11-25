@@ -42,7 +42,7 @@ def test_get_existing_user(superuser_token_headers):
     password = random_lower_string()
     user_in = UserCreate(email=username, password=password)
     user = crud.user.create(db_session, user_in=user_in)
-    user_id = user.id
+    user_id = users.id
     r = requests.get(
         f"{server_api}{config.API_V1_STR}/users/{user_id}",
         headers=superuser_token_headers,
