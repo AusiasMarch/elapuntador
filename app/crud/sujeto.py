@@ -101,3 +101,4 @@ def update_latlng(
             "latlng_car": car
         }
     )
+    db_session.commit()

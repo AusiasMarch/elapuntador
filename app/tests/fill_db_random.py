@@ -1,3 +1,5 @@
+import os
+import yaml
 import random
 import datetime
 
@@ -9,9 +11,13 @@ from models.altura import AlturaCreate
 
 from db.session import db_session
 
-user = crud.user.get_by_email(db_session, email=config.FIRST_SUPERUSER_MAIL)
-sujeto = crud.sujeto.get_by_name(db_session, name=config.FIRST_SUJETO_NAME)
 
+fill_file = "_" if os.path.exists("_initial_fill.yaml") else ""
+with open(f"{fill_file}initial_fill.yaml") as fill_input:
+    fill_data = yaml.load(fill_input, Loader=yaml.FullLoader)
+
+user = crud.user.get_by_name(db_session, name="Ausias March")
+sujeto = crud.sujeto.get_by_apodo(db_session, apodo="Entropía")
 
 n_datapoints = 100
 start_date = sujeto.birth
@@ -27,7 +33,7 @@ def fill():
     
         altura_in = AlturaCreate(
             sujeto_id=sujeto.id,
-            user_id=users.id,
+            user_id=user.id,
             query_text='',
             ip='666.666.666.666',
             centimetros=centimetros,

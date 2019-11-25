@@ -73,12 +73,12 @@ init_db(db_session)
 sujeto=crud.sujeto.get_by_name(db_session=db_session, name="Entropía")
 coordinates = Coordinates(lat=41.582603, lng=1.628425)
 crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
-sujeto=crud.sujeto.get_by_name(db_session=db_session, name="Ausias March")
+sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Ausias")
 coordinates = Coordinates(lat=41.582603, lng=1.628425)
 crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
 db_session.commit()
 sujetos = crud.sujeto.get_all(db_session)
 
-# external_data.download_who_data()
-# from app.tests.fill_db_random import fill_file
-# fill_file()
+external_data.download_who_data()
+from app.tests.fill_db_random import fill
+fill()

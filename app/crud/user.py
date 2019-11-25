@@ -19,6 +19,10 @@ def get_by_email(db_session: Session, *, email: str) -> Optional[Users]:
     return db_session.query(Users).filter(Users.email == email).first()
 
 
+def get_by_name(db_session: Session, *, name: str) -> Optional[Users]:
+    return db_session.query(Users).filter(Users.full_name == name).first()
+
+
 def authenticate(db_session: Session, *, email: str, password: str) -> Optional[Users]:
     user = get_by_email(db_session, email=email)
     if not user:
