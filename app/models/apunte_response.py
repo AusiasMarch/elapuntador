@@ -2,28 +2,27 @@ from pydantic import BaseModel
 
 
 class Answer:
-    def __init__(self, sujeto, location=None, kilos=None, gramos=None, centimetros=None,
-                 mililitros=None, grados=None, decimas=None):
-        if location:
-            content = f"{sujeto.name} está en {location.name}."
-    
-        else:
-            content = f"He apuntado que {sujeto.name} "
-            if kilos:
-                content += f"pesa {int(kilos)} kilos"
-                if gramos:
-                    content += f" {int(gramos)} gramos"
-            elif centimetros:
-                content += f"mide {int(centimetros)} centimetros"
-            elif mililitros:
-                content += f"ha tomado {int(mililitros)} milititros"
-            elif grados:
-                content += f"está a {int(gramos)} grados"
-                if decimas:
-                    content += f" y {int(decimas)} décimas"
+    def __init__(self, kind = '', sujeto = None, **kwargs):
+        if kind == 'location':
+            content = f"{sujeto.name} está en {kwargs['location'].name}."
+        elif kind == 'peso':
+            content = f"He apuntado que {sujeto.name} pesa {int(kwargs['kilos'])} kilos"
+            if kwargs['gramos']:
+                content += f" {int(kwargs['gramos'])} gramos."
             else:
-                pass
-            content += "."
+                content += '.'
+        elif kind == 'altura':
+            content = f"He apuntado que mide {int(kwargs['centimetros'])} centimetros."
+        elif kind == 'toma':
+            content = f"He apuntado que ha tomado {int(kwargs['mililitros'])} milititros."
+        elif kind == 'temperatura':
+            content = f"He apuntado que está a {int(kwargs['grados'])} grados"
+            if kwargs['decimas']:
+                content += f" y {int(kwargs['decimas'])} décimas"
+            else:
+                content += '.'
+        else:
+            content = "No te he entendido. Puedes repetir, por favor?"
 
         self.content=dict(
             payload=dict(
