@@ -5,7 +5,7 @@ class Answer:
     def __init__(self, kind = '', sujeto = None, **kwargs):
         if kind == 'location':
             if kwargs['location'] is not None:
-                content = f"{sujeto.name} está en {kwargs['location']}."
+                content = f"{sujeto.name} {'va en coche por' if sujeto.latlng_car else 'está en'} {kwargs['location']}."
             else:
                 content = f"Ahora mismo no se dónde está {sujeto.name}."
         elif kind == 'peso':
