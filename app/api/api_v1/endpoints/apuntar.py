@@ -40,7 +40,7 @@ def insert_apunte(
     log.debug(decoded_token)
     user = crud.user.get_by_email(db_session=db_session, email=decoded_token['email'])
     log.debug("user: {}".format(user))
-    log.debug(body)
+    # log.debug(body)
     log.debug(body['queryResult']['parameters'])
     if not user.can_report:
         return {"msg": f"The user {user.full_name} is not allowed to report."}
@@ -49,7 +49,8 @@ def insert_apunte(
         apodo=body['queryResult']['parameters']['sujeto']
     )
     
-    if 'donde' in body.keys():
+    if "donde" in body['queryResult']['parameters'].keys():
+        log.debug("Is a donde query.")
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
         if location is not None:
