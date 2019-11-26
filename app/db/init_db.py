@@ -49,7 +49,7 @@ def init_db(db_session):
                 birth=datetime.datetime.strptime(
                     sujeto_fill['birth'],
                     '%Y-%m-%d %H:%M:%S'
-                ),
+                ) if sujeto_fill['birth'] is not None else None,
             )
             sujeto = crud.sujeto.create(db_session, sujeto_in=sujeto_in)
 
@@ -67,18 +67,29 @@ def init_db(db_session):
             location = crud.location.create(db_session, location_in=location_in)
 
 
+
+
 from db.session import db_session
 init_db(db_session)
+external_data.download_who_data()
+sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Casa")
+coordinates = Coordinates(lat=41.582629, lng=1.628431)
+crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
+
+
+
 
 sujeto=crud.sujeto.get_by_name(db_session=db_session, name="Entropía")
 coordinates = Coordinates(lat=41.582603, lng=1.628425)
 crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
 sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Ausias")
-coordinates = Coordinates(lat=41.582603, lng=1.628425)
+coordinates = Coordinates(lat=41.579476, lng=1.617769)
+crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
+sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Casa")
+coordinates = Coordinates(lat=41.582629, lng=1.628431)
 crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
 db_session.commit()
 sujetos = crud.sujeto.get_all(db_session)
 
-external_data.download_who_data()
-from app.tests.fill_db_random import fill
-fill()
+# from app.tests.fill_db_random import fill
+# fill()

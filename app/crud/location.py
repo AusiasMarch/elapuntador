@@ -9,7 +9,7 @@ from db_models.location import Location
 from models.location import LocationCreate, LocationInDb
 from models.sujeto import SujetoInDB
 import crud
-from core import config
+from core import google
 
 
 log = logging.getLogger("elapuntador")
@@ -63,14 +63,7 @@ def get_by_sujeto(
         if location is not None:
             return location.name
         else:
-            url_base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-            key = f"key={config.GOOGLE_API_KEY}"
-            location = 'location={},{}'.format(
-                *crud.coordinates.get_latlng_from_geom(sujeto.latlng))
-            radius = 'radius=1000'
-    
-            response = requests.get(url_base + "&".join([key, location, radius]))
-            return response.json()['results'][0]['name']
+            return google.get_sujeto_place(sujeto)
     else:
         return None
 

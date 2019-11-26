@@ -11,9 +11,9 @@ from models import coordinates
 class SujetoBase(BaseModel):
     id: int
     name: str
-    gender: str
+    gender: str = None
     apodos: Optional[List[str]]
-    birth: datetime.datetime
+    birth: datetime.datetime = None
     latlng: coordinates.Coordinates = None
     latlng_update: datetime.datetime = None
     latlng_car: bool = None
