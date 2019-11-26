@@ -19,6 +19,8 @@ def get_sujeto_place(sujeto):
     if response.status_code != 200:
         log.debug("Failed Google Place call.")
         return None
+    elif len(response.json()['results']) == 0:
+        return None
     loc_0 = response.json()['results'][0]['name']
     loc_1 = response.json()['results'][0]['vicinity']
     
