@@ -20,6 +20,7 @@ def get_sujeto_place(sujeto):
         log.debug("Failed Google Place call.")
         return None
     elif len(response.json()['results']) == 0:
+        log.debug("No results found.")
         return None
     loc_0 = response.json()['results'][0]['name']
     loc_1 = response.json()['results'][0]['vicinity']
