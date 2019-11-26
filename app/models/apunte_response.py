@@ -4,7 +4,10 @@ from pydantic import BaseModel
 class Answer:
     def __init__(self, kind = '', sujeto = None, **kwargs):
         if kind == 'location':
-            content = f"{sujeto.name} está en {kwargs['location']}."
+            if kwargs['location'] is not None:
+                content = f"{sujeto.name} está en {kwargs['location']}."
+            else:
+                content = f"No se dónde está {sujeto.name}."
         elif kind == 'peso':
             content = f"He apuntado que {sujeto.name} pesa {int(kwargs['kilos'])} kilos"
             if kwargs['gramos']:
