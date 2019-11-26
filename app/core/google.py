@@ -1,7 +1,11 @@
+import logging
 import requests
 
 import crud
 from core import config
+
+
+log = logging.getLogger('elapuntador')
 
 
 def get_sujeto_place(sujeto):
@@ -13,9 +17,10 @@ def get_sujeto_place(sujeto):
     
     response = requests.get(url_base + "&".join([key, location, radius]))
     if response.status_code != 200:
+        log.debug("Failed Google Place call.")
         return None
     loc_0 = response.json()['results'][0]['name']
-    loc_1 = response.json()['results'][1]['name']
+    loc_1 = response.json()['results'][0]['vicinity']
     
     if loc_0 == "Igualada":
         return f"{loc_0} cerca de {loc_1}"
