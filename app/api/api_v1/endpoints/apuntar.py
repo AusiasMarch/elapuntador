@@ -71,7 +71,7 @@ def insert_apunte(
         )
         crud.peso.create(db_session=db_session, peso_in=peso_in)
         
-        return Answer(sujeto, kind='peso', kilos=kilos, gramos=gramos).content
+        return Answer(kind='peso', suejto=sujeto, kilos=kilos, gramos=gramos).content
     
     elif 'mide' in body['queryResult']['parameters'].keys():
         centimetros = body['queryResult']['parameters']['n_centimetros']
@@ -83,7 +83,7 @@ def insert_apunte(
             centimetros=centimetros,
         )
         crud.altura.create(db_session=db_session, altura_in=altura_in)
-        return Answer(sujeto, kind='altura', centimetros=centimetros).content
+        return Answer(kind='altura', suejto=sujeto, centimetros=centimetros).content
     
     elif 'tomado' in body['queryResult']['parameters'].keys():
         mililitros = body['queryResult']['parameters']['n_mililitros']
@@ -95,7 +95,7 @@ def insert_apunte(
             mililitros=mililitros,
         )
         crud.toma.create(db_session=db_session, toma_in=toma_in)
-        return Answer(sujeto, kind='toma', mililitros=mililitros).content
+        return Answer(kind='toma', suejto=sujeto, mililitros=mililitros).content
     
     elif 'temperatura' in body['queryResult']['parameters'].keys():
         grados = body['queryResult']['parameters']['n_grados']
@@ -109,7 +109,7 @@ def insert_apunte(
             decimas=decimas
         )
         crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
-        return Answer(sujeto, kind='temperatura', grados=grados, decimas=decimas).content
+        return Answer(kind='temperatura', suejto=sujeto, grados=grados, decimas=decimas).content
 
 
 
