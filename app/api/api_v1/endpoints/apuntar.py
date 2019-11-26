@@ -49,7 +49,7 @@ def insert_apunte(
         apodo=body['queryResult']['parameters']['sujeto']
     )
     
-    if 'donde' in body['queryResult']['parameters'].keys():
+    if 'donde' in body.keys():
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
         if location is not None:
