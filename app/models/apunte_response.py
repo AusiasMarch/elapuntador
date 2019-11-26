@@ -7,7 +7,7 @@ class Answer:
             if kwargs['location'] is not None:
                 content = f"{sujeto.name} está en {kwargs['location']}."
             else:
-                content = f"No se dónde está {sujeto.name}."
+                content = f"Ahora mismo no se dónde está {sujeto.name}."
         elif kind == 'peso':
             content = f"He apuntado que {sujeto.name} pesa {int(kwargs['kilos'])} kilos"
             if kwargs['gramos']:
