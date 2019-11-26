@@ -54,7 +54,7 @@ def insert_apunte(
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
         if location is not None:
-            return Answer(sujeto, location=location).content
+            return Answer(kind='location', sujeto=sujeto, location=location).content
         else:
             return Answer()
     
