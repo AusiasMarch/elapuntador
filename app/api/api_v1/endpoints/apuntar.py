@@ -53,10 +53,7 @@ def insert_apunte(
         log.debug("Is a donde query.")
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
-        if location is not None:
-            return Answer(kind='location', sujeto=sujeto, location=location).content
-        else:
-            return Answer()
+        return Answer(kind='location', sujeto=sujeto, location=location).content
     
     elif 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']
