@@ -7,6 +7,15 @@ from core import config
 
 log = logging.getLogger('elapuntador')
 
+"""
+from db.session import db_session
+from models.coordinates import Coordinates
+
+sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Ausias")
+coordinates = Coordinates(lat=41.549812, lng=1.847321) # A2
+coordinates = Coordinates(lat=41.584295, lng=1.624064) # Avda Barcelona
+crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=True)
+"""
 
 def get_sujeto_place(sujeto):
     url_base = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
@@ -24,13 +33,15 @@ def get_sujeto_place(sujeto):
         log.debug("No results found.")
         log.debug(url)
         return None
-    loc_0 = response.json()['results'][0]['name']
-    loc_1 = response.json()['results'][0]['vicinity']
-    
-    if loc_0 == "Igualada":
-        return f"{loc_0} cerca de {loc_1}"
+    loc_0 = response.json()['results'][0]
+    loc_1 = response.json()['results'][1]
+    if loc_0["name"] == "Igualada":
+        return f"{loc_0['name']} cerca de {loc_1['vicinity']}"
     else:
-        return loc_1
+        for loc in response.json()['results']:
+            if 'locality' in loc["types"]:
+                return loc["name"]
+    return f"near {loc_0['vicinity'].split(',')[-1].strip()}"
 
 
 def get_expected_time(sujeto_1, sujeto_2):
