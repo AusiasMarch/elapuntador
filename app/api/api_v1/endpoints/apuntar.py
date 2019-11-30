@@ -26,6 +26,7 @@ def insert_apunte(
     x_forwarded_for: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
+    log.debug(body)
     log.info("Recieving apunte.")
     id_token = body['originalDetectIntentRequest']['payload']['user']['idToken']
     decoded_token = jwt.decode_google_token(id_token)
