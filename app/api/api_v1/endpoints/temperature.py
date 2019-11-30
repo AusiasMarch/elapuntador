@@ -15,7 +15,7 @@ log = logging.getLogger('elapuntador')
 
 router = APIRouter()
 
-cyber_user = crud.user.get_by_name("Cyber")
+cyber_user = crud.user.get_by_name(name="Arduino")
 
 
 @router.post("/", response_model=Msg, status_code=201)
