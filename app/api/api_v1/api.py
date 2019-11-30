@@ -5,6 +5,7 @@ from api.api_v1.endpoints import (
     dash,
     location,
     login,
+    temperature,
     users,
     utils,
 )
