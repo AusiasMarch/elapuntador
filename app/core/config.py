@@ -40,6 +40,7 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 if not SECRET_KEY:
     SECRET_KEY = os.urandom(32)
 TASKER_API_KEY = get_env_variable("TASKER_API_KEY")
+ARDUINO_API_KEY = get_env_variable("ARDUINO_API_KEY")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 8  # 60 minutes * 24 hours * 8 days = 8 days
 

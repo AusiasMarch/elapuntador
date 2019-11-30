@@ -9,8 +9,8 @@ class Temperatura(BaseModel):
     id: int
     sujeto_id: int
     user_id: int
-    query_text: str
-    ip: str
+    query_text: Optional[str]
+    ip: Optional[str]
     grados: int
     decimas: int
 
