@@ -21,6 +21,8 @@ def insert_location(
     body: dict,
     db_session: Session = Depends(get_db),
 ):
+    log.debug(body)
+    
     if body["api_key"] != config.TASKER_API_KEY:
         log.debug(f"Location recived with api_key {body['api_key']}.")
         return {"msg": "Not authorized."}
