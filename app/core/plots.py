@@ -115,8 +115,13 @@ def plot(
         if table in who.keys():
             fig = add_who(fig, sujeto, table)
         
+        
+        delta_t = data.datetime.max() - data.datetime.min()
+        xaxis_tickformat = "yyyy-mm-dd HH:MM" if delta_t < datetime.timedelta(days=3) \
+            else "%d %B %Y"
+        
         fig.update_layout(
-            xaxis_tickformat='%d %B %Y',
+            xaxis_tickformat=xaxis_tickformat,
             title=f"{sujeto.name}'s {table}s",
             xaxis_title="Day",
             yaxis_title=f"{table.title()} [{units[table]}]",
