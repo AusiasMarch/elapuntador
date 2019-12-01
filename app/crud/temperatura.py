@@ -1,5 +1,7 @@
 import logging
 
+import pandas as pd
+
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
@@ -38,11 +40,20 @@ def get_all_by_user(
 def get_all_by_sujeto(
     db_session: Session, *, sujeto_id: int
 ) -> List[Optional[Temperatura]]:
-    return (
-        db_session.query(Temperatura)
-        .filter(Temperatura.sujeto_id == sujeto_id)
-        .all()
+    temperatura_list = db_session.query(
+        Temperatura
+    ).filter(
+        Temperatura.sujeto_id == sujeto_id
+    ).all()
+    
+    temperaturas = pd.DataFrame(
+        [(x.datetime, x.grados, x.decimas, x.ip, x.user_id, x.user.full_name) for x in
+         temperatura_list],
+        columns=['datetime', 'grados', 'decimas', 'ip', 'user_id', 'user_name'],
+        index=[(x.id) for x in temperatura_list]
     )
+    
+    return temperaturas
 
 
 def get_all_by_user_and_sujeto(

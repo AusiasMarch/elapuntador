@@ -79,20 +79,20 @@ crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coor
 
 
 
-sujeto=crud.sujeto.get_by_name(db_session=db_session, name="Entropía")
-coordinates = Coordinates(lat=41.582603, lng=1.628425)
-crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
-sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Ausias")
-coordinates = Coordinates(lat=41.549812, lng=1.847321)
-crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=True)
-sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Casa")
-coordinates = Coordinates(lat=41.582629, lng=1.628431)
-crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
-sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Carla")
-coordinates = Coordinates(lat=41.582629, lng=1.628431)
-crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
-db_session.commit()
-sujetos = crud.sujeto.get_all(db_session)
+# sujeto=crud.sujeto.get_by_name(db_session=db_session, name="Entropía")
+# coordinates = Coordinates(lat=41.582603, lng=1.628425)
+# crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
+# sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Ausias")
+# coordinates = Coordinates(lat=41.549812, lng=1.847321)
+# crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=True)
+# sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Casa")
+# coordinates = Coordinates(lat=41.582629, lng=1.628431)
+# crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
+# sujeto=crud.sujeto.get_by_apodo(db_session=db_session, apodo="Carla")
+# coordinates = Coordinates(lat=41.582629, lng=1.628431)
+# crud.sujeto.update_latlng(db_session=db_session, sujeto=sujeto, coordinates=coordinates, car=False)
+# db_session.commit()
+# sujetos = crud.sujeto.get_all(db_session)
 
-# from app.tests.fill_db_random import fill
-# fill()
+from app.tests.fill_db_random import fill
+fill()

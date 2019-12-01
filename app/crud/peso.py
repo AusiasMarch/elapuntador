@@ -42,9 +42,9 @@ def get_all_by_sujeto(
     ).all()
 
     pesos = pd.DataFrame(
-        [(x.datetime, x.sujeto_id, x.sujeto.name, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
+        [(x.datetime, x.centimetros, x.ip, x.user_id, x.user.full_name) for x in
          pesos_list],
-        columns=['datetime', 'sujeto_id', 'sujeto', 'centimetros', 'ip', 'user_id', 'user_name'],
+        columns=['datetime', 'centimetros', 'ip', 'user_id', 'user_name'],
         index=[(x.id) for x in pesos_list]
     )
     
