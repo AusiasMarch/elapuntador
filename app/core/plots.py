@@ -28,10 +28,16 @@ data_sources = {
     'temperatura': crud.temperatura.get_all_by_sujeto,
 }
 
-units ={
+units = {
     "altura": "cm",
     "peso": "kg",
     "temperatura": "º"
+}
+
+variable = {
+    "altura": "centimetros",
+    "peso": "kilos",
+    "temperatura": "grados"
 }
 
 
@@ -82,20 +88,24 @@ def plot(
     log.debug(f"Plotting {table} for {apodo}.")
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id)
+    if table == 'temperatura':
+        data['grados'] = data['grados'] + data['decimas'] / 10
+    elif table == 'peso':
+        data['kilos'] = data['kilos'] + data['gramos'] / 100
     
     filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.html"\
         .replace(" ", "_")
     
     if not os.path.exists(filename):
         log.debug(
-            f"The plot {table} for {apodo} does not exists or is not updated. "
+            f"The plot {table} for {apodo} does not exist or is not updated. "
             "Creating it."
         )
         fig = go.Figure()
         fig.add_trace(
             go.Scatter(
                 x=data.datetime.dt.to_pydatetime(),
-                y=data.centimetros.values,
+                y=data[variable[table]].values,
                 line=dict(width=5, color='black'),
                 mode='lines+markers',
                 name='Measured'
@@ -103,7 +113,7 @@ def plot(
         )
         
         if table in who.keys():
-            fig = add_who(fig, sujeto, 'altura')
+            fig = add_who(fig, sujeto, table)
         
         fig.update_layout(
             xaxis_tickformat='%d %B %Y',

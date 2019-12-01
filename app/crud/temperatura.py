@@ -39,7 +39,7 @@ def get_all_by_user(
 
 def get_all_by_sujeto(
     db_session: Session, *, sujeto_id: int
-) -> List[Optional[Temperatura]]:
+) -> pd.DataFrame:
     temperatura_list = db_session.query(
         Temperatura
     ).filter(
