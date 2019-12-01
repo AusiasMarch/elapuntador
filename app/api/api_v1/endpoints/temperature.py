@@ -8,6 +8,7 @@ from models.temperatura import TemperaturaCreate
 from models.msg import Msg
 from core import config
 
+from db.session import db_session
 
 
 log = logging.getLogger('elapuntador')
@@ -15,7 +16,7 @@ log = logging.getLogger('elapuntador')
 
 router = APIRouter()
 
-cyber_user = crud.user.get_by_name(name="Arduino")
+cyber_user = crud.user.get_by_name(db_session, name="Arduino")
 
 
 @router.post("/", response_model=Msg, status_code=201)
