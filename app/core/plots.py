@@ -124,11 +124,13 @@ def plot(
         
         if table == "temperatura":
             fig.add_trace(
-                x=data.datetime.dt.to_pydatetime(),
-                y=data[variable[table]].values,
-                line=dict(width=5, color='red'),
-                mode='lines',
-                name='Average'
+                go.Scatter(
+                    x=data.datetime.dt.to_pydatetime(),
+                    y=data[variable[table]].values,
+                    line=dict(width=5, color='red'),
+                    mode='lines',
+                    name='Average'
+                )
             )
         
         
