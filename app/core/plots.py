@@ -125,15 +125,16 @@ def plot(
         if table == "temperatura":
             fig.add_trace(
                 go.Scatter(
-                    x=data.datetime.dt.to_pydatetime(),
-                    y=data[variable[table]].values,
+                    x=[data.datetime.dt.to_pydatetime().min(),
+                       data.datetime.dt.to_pydatetime().max()],
+                    y=[data[variable[table]].mean(),
+                       data[variable[table]].mean()],
                     line=dict(width=5, color='red'),
                     mode='lines',
                     name='Average'
                 )
             )
-        
-        
+
         delta_t = data.datetime.max() - data.datetime.min()
         xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
             else "%Y-%b-%d"
