@@ -8,10 +8,11 @@ from models.peso import PesoCreate
 from models.altura import AlturaCreate
 from models.toma import TomaCreate
 from models.temperatura import TemperaturaCreate
-from models.apunte_response import Answer, ApunteResponse
+from models.apunte_response import Answer, BasicCard, ApunteResponse
 
 from core import jwt
 from core import config
+from core import plots
 
 log = logging.getLogger('elapuntador')
 
@@ -55,6 +56,19 @@ def insert_apunte(
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
         return Answer(kind='location', sujeto=sujeto, location=location).content
+    elif ("que" in body['queryResult']['parameters'].keys() and
+        "temperatura" in body['queryResult']['parameters'].keys()):
+        filename = plots.plot("temperatura", sujeto.full_name, format="png")
+        
+        return BasicCard(
+            content="La temperatura actual es",
+            title=f"Temperatura de {sujeto.full_name}",
+            button_title="Full plot",
+            button_url="rebre",
+            image_text="Plotillo",
+            image_url=f"elapuntador.ddns.net/card_plots/{filename}"
+        )
+    
     
     elif 'pesa' in body['queryResult']['parameters'].keys():
         kilos = body['queryResult']['parameters']['n_kilos']

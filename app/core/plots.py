@@ -109,8 +109,12 @@ def plot(
     xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
         else "%Y-%b-%d"
     
-    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.{format}"\
-        .replace(" ", "_")
+    if format == 'png':
+        filename = f"/var/www/card_plots/{table}_{sujeto.name}_{data['datetime'].max()}.png" \
+            .replace(" ", "_")
+    else:
+        filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.{format}"\
+            .replace(" ", "_")
     
     if not os.path.exists(filename):
         if format == 'png':
@@ -168,7 +172,7 @@ def plot(
         log.debug(f"The plot {table} for {apodo} already exists. ")
     
     if format == 'png':
-        return filename
+        return filename.split("/")[-1]
     else:
         with open(filename) as html:
             return html.read()
