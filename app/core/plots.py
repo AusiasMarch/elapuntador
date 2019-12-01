@@ -133,7 +133,7 @@ def plot(
         )
         
         plotly.offline.plot(fig, filename=filename, auto_open=False)
-        fig.write_image(filename[:-4] + 'png')
+        # fig.write_image(filename[:-4] + 'png')
     else:
         log.debug(f"The plot {table} for {apodo} already exists. ")
     

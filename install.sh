@@ -13,6 +13,10 @@ sudo dpkg-reconfigure locales
 sudo echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment
 sudo echo "LANG=en_US.UTF-8 UTF-8" | sudo tee -a /etc/environment
 
+#wget "https://github.com/plotly/orca/releases/download/v1.2.1/orca-1.2.1-x86_64.AppImage"
+#sudo chmod +x orca-1.2.1-x86_64.AppImage
+#sudo mv orca-1.2.1-x86_64.AppImage /usr/local/sbin/orca
+
 
 sudo apt install -y python3-pip
 
