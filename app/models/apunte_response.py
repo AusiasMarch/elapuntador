@@ -48,6 +48,46 @@ class Answer:
         return self.content
 
 
+class BasicCard:
+    def __init__(self, content, title, button_title, button_url, image_text, image_url):
+        self.content=dict(
+            payload=dict(
+                google=dict(
+                    expectUserResponse=True,
+                    richResponse=dict(
+                        items=[
+                            dict(
+                                simpleResponse=dict(
+                                    textToSpeech=content
+                                )
+                            ),
+                            dict(
+                                basicCard=dict(
+                                    title=title,
+                                    buttons=[
+                                        dict(
+                                            title=button_title,
+                                            openUrlAction=dict(
+                                                url=button_url
+                                            )
+                                        )
+                                    ],
+                                    formattedText=image_text,
+                                    image=dict(
+                                        url=image_url,
+                                        accessibilityText=""
+                                    ),
+                                ),
+                            )
+                        ]
+                    )
+                )
+            )
+        )
+
+    def to_send(self):
+        return self.content
+
 
 class ApunteResponse(BaseModel):
     payload: dict
