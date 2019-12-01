@@ -24,7 +24,8 @@ who = {
 
 data_sources = {
     'altura': crud.altura.get_all_by_sujeto,
-    'peso': crud.peso.get_all_by_sujeto
+    'peso': crud.peso.get_all_by_sujeto,
+    'temperatura': crud.temperatura.get_all_by_sujeto,
 }
 
 units ={
