@@ -29,7 +29,8 @@ data_sources = {
 
 units ={
     "altura": "cm",
-    "peso": "kg"
+    "peso": "kg",
+    "temperatura": "º"
 }
 
 
@@ -100,7 +101,8 @@ def plot(
             )
         )
         
-        fig = add_who(fig, sujeto, 'altura')
+        if table in who.keys():
+            fig = add_who(fig, sujeto, 'altura')
         
         fig.update_layout(
             xaxis_tickformat='%d %B %Y',
@@ -115,6 +117,7 @@ def plot(
         )
         
         plotly.offline.plot(fig, filename=filename, auto_open=False)
+        fig.write_image(filename[:-4] + 'png')
     else:
         log.debug(f"The plot {table} for {apodo} already exists. ")
     
