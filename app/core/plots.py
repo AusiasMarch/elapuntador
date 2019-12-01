@@ -3,6 +3,10 @@ import datetime
 import plotly
 import plotly.graph_objects as go
 import logging
+import pandas as pd
+
+import seaborn as sns
+
 
 
 from db.session import db_session
@@ -90,6 +94,7 @@ def add_who(fig, sujeto, table):
 def plot(
         table: str,
         apodo: str,
+        format: str = 'html'
 ):
     log.debug(f"Plotting {table} for {apodo}.")
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
@@ -99,62 +104,71 @@ def plot(
         data['grados'] = data['grados'] + data['decimas'] / 10
     elif table == 'peso':
         data['kilos'] = data['kilos'] + data['gramos'] / 100
+
+    delta_t = data.datetime.max() - data.datetime.min()
+    xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
+        else "%Y-%b-%d"
     
-    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.html"\
+    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.{format}"\
         .replace(" ", "_")
     
     if not os.path.exists(filename):
-        log.debug(
-            f"The plot {table} for {apodo} does not exist or is not updated. "
-            "Creating it."
-        )
-        fig = go.Figure()
-        fig.add_trace(
-            go.Scatter(
+        if format == 'png':
+            ax = sns.lineplot(
                 x=data.datetime.dt.to_pydatetime(),
-                y=data[variable[table]].values,
-                line=dict(width=5, color='black'),
-                mode='lines+markers',
-                name='Measured'
+                y=data[variable[table]],
+                sort=True, lw=5
             )
-        )
-        
-        if table in who.keys():
-            fig = add_who(fig, sujeto, table)
-        
-        if table == "temperatura":
+            ax.axhline(data[variable[table]].mean(), ls='--', color='red')
+            fig = ax.get_figure()
+            fig.autofmt_xdate()
+            sns.set_context("notebook", font_scale=1.5)
+            fig.savefig(filename[:-4] + 'png', dpi=192, bbox_inches = "tight")
+        else:
+            log.debug(
+                f"The plot {table} for {apodo} does not exist or is not updated. "
+                "Creating it."
+            )
+            fig = go.Figure()
             fig.add_trace(
                 go.Scatter(
-                    x=[data.datetime.dt.to_pydatetime().min(),
-                       data.datetime.dt.to_pydatetime().max()],
-                    y=[data[variable[table]].mean(),
-                       data[variable[table]].mean()],
-                    line=dict(width=5, color='red'),
-                    mode='lines',
-                    name='Average'
+                    x=data.datetime.dt.to_pydatetime(),
+                    y=data[variable[table]].values,
+                    line=dict(width=5, color='black'),
+                    mode='lines+markers',
+                    name='Measured'
                 )
             )
+            
+            if table in who.keys():
+                fig = add_who(fig, sujeto, table)
+            
+            if table == "temperatura":
+                fig.add_trace(
+                    go.Scatter(
+                        x=[data.datetime.dt.to_pydatetime().min(),
+                           data.datetime.dt.to_pydatetime().max()],
+                        y=[data[variable[table]].mean(),
+                           data[variable[table]].mean()],
+                        line=dict(width=5, color='red'),
+                        mode='lines',
+                        name='Average'
+                    )
+                )
 
-        delta_t = data.datetime.max() - data.datetime.min()
-        xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
-            else "%Y-%b-%d"
-        
-        fig.update_layout(
-            xaxis_tickformat=xaxis_tickformat,
-            title=f"{sujeto.name}'s {table}s",
-            xaxis_title="Time",
-            yaxis_title=f"{table.title()} [{units[table]}]",
-            # font=dict(
-            #     family="Courier New, monospace",
-            #     size=18,
-            #     color="#7f7f7f"
-            # )
-        )
-        
-        plotly.offline.plot(fig, filename=filename, auto_open=False)
-        # fig.write_image(filename[:-4] + 'png')
+            fig.update_layout(
+                xaxis_tickformat=xaxis_tickformat,
+                title=f"{sujeto.name}'s {table}s",
+                xaxis_title="Time",
+                yaxis_title=f"{table.title()} [{units[table]}]",
+            )
+            
+            plotly.offline.plot(fig, filename=filename, auto_open=False)
     else:
         log.debug(f"The plot {table} for {apodo} already exists. ")
     
-    with open(filename) as html:
-        return html.read()
+    if format == 'png':
+        return filename
+    else:
+        with open(filename) as html:
+            return html.read()
