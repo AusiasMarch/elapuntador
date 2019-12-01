@@ -11,6 +11,12 @@ import crud
 
 log = logging.getLogger('elapuntador')
 
+
+def utc_to_local(utc_dt):
+    return utc_dt.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
+
+
+
 who = {
     'altura': {
         'girl': crud.altura_who.get_all_girls,
@@ -88,6 +94,7 @@ def plot(
     log.debug(f"Plotting {table} for {apodo}.")
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id)
+    data["datetime"] = data["datetime"].apply(utc_to_local)
     if table == 'temperatura':
         data['grados'] = data['grados'] + data['decimas'] / 10
     elif table == 'peso':
@@ -115,6 +122,15 @@ def plot(
         if table in who.keys():
             fig = add_who(fig, sujeto, table)
         
+        if table == "temperatura":
+            fig.add_trace(
+                x=data.datetime.dt.to_pydatetime(),
+                y=data[variable[table]].values,
+                line=dict(width=5, color='red'),
+                mode='lines',
+                name='Average'
+            )
+        
         
         delta_t = data.datetime.max() - data.datetime.min()
         xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
@@ -123,7 +139,7 @@ def plot(
         fig.update_layout(
             xaxis_tickformat=xaxis_tickformat,
             title=f"{sujeto.name}'s {table}s",
-            xaxis_title="Day",
+            xaxis_title="Time",
             yaxis_title=f"{table.title()} [{units[table]}]",
             # font=dict(
             #     family="Courier New, monospace",
