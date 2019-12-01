@@ -117,8 +117,8 @@ def plot(
         
         
         delta_t = data.datetime.max() - data.datetime.min()
-        xaxis_tickformat = "yyyy-mm-dd HH:MM" if delta_t < datetime.timedelta(days=3) \
-            else "%d %B %Y"
+        xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
+            else "%Y-%b-%d"
         
         fig.update_layout(
             xaxis_tickformat=xaxis_tickformat,
