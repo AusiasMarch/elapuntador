@@ -10,6 +10,8 @@ from core import plots
 router = APIRouter()
 
 
+ploteable = 'altura', 'temperatura'
+
 
 
 @router.get("/{apodo}/{table}", content_type=HTMLResponse)
@@ -19,8 +21,8 @@ def plot_peso(
     apodo: str,
     db_session: Session = Depends(get_db),
 ):
-    if table == 'altura':
-        return plots.plot('altura', apodo)
+    if table in ploteable:
+        return plots.plot(table, apodo)
  
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
