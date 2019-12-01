@@ -99,6 +99,7 @@ def plot(
     log.debug(f"Plotting {table} for {apodo}.")
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
     data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id)
+    data = data.sort_values("datetime")
     data["datetime"] = data["datetime"].apply(utc_to_local)
     if table == 'temperatura':
         data['grados'] = data['grados'] + data['decimas'] / 10
