@@ -23,12 +23,11 @@ cyber_user = crud.user.get_by_name(db_session, name="Arduino")
 def insert_location(
     *,
     body: dict,
-    secret_key: str = Header(None),
     db_session: Session = Depends(get_db),
 ):
     log.debug(body)
-    if secret_key != config.ARDUINO_API_KEY:
-        log.debug(f"Temperature recived with api_key {secret_key}.")
+    if body["secret_key"] != config.ARDUINO_API_KEY:
+        log.debug(f"Temperature recived with api_key {body['secret_key']}.")
         return {"msg": "Not authorized."}
     apodo = body["sujeto"]
     grados = body["temperature"]
