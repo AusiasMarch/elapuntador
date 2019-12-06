@@ -215,6 +215,8 @@ def get_last_static(table: str, apodo: str):
     sujeto_name = crud.sujeto.get_by_apodo(db_session, apodo=apodo).name
     plots = os.listdir("/tmp/elapuntador")
     plots = [x for x in plots if filter_plot(x, table, sujeto_name, '.png')]
+    if len(plots) == 0:
+        return None, None
     plot = sorted(plots)[-1]
     plot_date, plot_time = plot.split("_")[2:4]
     plot_time = plot_time.split(".")[0]
