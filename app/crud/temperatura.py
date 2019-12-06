@@ -1,5 +1,5 @@
 import logging
-
+import datetime
 import pandas as pd
 
 from typing import Optional, List
@@ -39,12 +39,16 @@ def get_all_by_user(
 
 
 def get_all_by_sujeto(
-    db_session: Session, *, sujeto_id: int
+        db_session: Session, *,
+        sujeto_id: int,
+        previous_days: int=10000
 ) -> pd.DataFrame:
     temperatura_list = db_session.query(
         Temperatura
     ).filter(
         Temperatura.sujeto_id == sujeto_id
+    ).filter(
+        Temperatura.datetime >= datetime.datetime.now() - datetime.timedelta(days=previous_days)
     ).all()
     
     temperaturas = pd.DataFrame(
