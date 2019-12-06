@@ -22,7 +22,7 @@ def plot_peso(
     db_session: Session = Depends(get_db),
 ):
     if table in ploteable:
-        return plots.plot_plotly(table, apodo)
+        return plots.plot_dynamic(table, apodo)
  
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)

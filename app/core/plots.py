@@ -101,7 +101,7 @@ def get_data(apodo: str, table: str):
     return data, sujeto
 
 
-def plot_plotly(
+def plot_dynamic(
         table: str,
         apodo: str
 ):
@@ -162,10 +162,7 @@ def plot_plotly(
         return html.read()
     
 
-def plot_seaborn(
-        table: str,
-        apodo: str,
-):
+def plot_static(table: str, apodo: str):
     log.debug(f"Plotting {table} for {apodo}.")
 
     data, sujeto = get_data(apodo, table)
@@ -195,8 +192,24 @@ def plot_seaborn(
     return filename.split("/")[-1]
 
 
+def filter_plot(plot: str, table: str, sujeto_name: str):
+    p_table, p_sujeto_name, p_date, p_time = plot.split("_")
+    if p_table == table and p_sujeto_name == sujeto_name:
+        return True
+    else:
+        return False
+
+
+def get_last_static(table: str, apodo: str):
+    sujeto_name = crud.sujeto.get_by_apodo(db_session, apodo=apodo).name
+    plots = os.listdir("/var/www/card_plots")
+    plots = [x for x in plots if filter_plot(x, table, sujeto_name)]
+    plot = sorted(plots)[-1]
+    return plot
+
+
 # import matplotlib.pyplot as plt
 # plt.clf()
 # table='temperatura'
 # apodo='sala'
-# plot_seaborn(table, apodo)
+# plot_static(table, apodo)
