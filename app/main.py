@@ -25,7 +25,7 @@ class GZipRotator:
         os.remove(dest)
 
 
-shutil.rmtree('/tmp/elapuntador', ignore_errors=True)
+# shutil.rmtree('/tmp/elapuntador', ignore_errors=True)
 os.makedirs('/tmp/elapuntador', exist_ok=True)
 
 log_folder = config.LOG_DIR
