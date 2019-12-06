@@ -142,7 +142,7 @@ def insert_apunte(
         
         if last_temp is None or \
                 datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
-            plots.plot_static("temperature", sujeto.name)
+            plots.plot_static("temperatura", sujeto.name)
         
         return Answer(kind='temperatura', suejto=sujeto, grados=grados, decimas=decimas).content
 
