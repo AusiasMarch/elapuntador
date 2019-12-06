@@ -25,7 +25,7 @@ def get(
     filename, plot_datetime = plots.get_last_static(table, apodo)
     
     return FileResponse(
-        os.path.join("tmp", "elapuntador", filename),
+        os.path.join("/", "tmp", "elapuntador", filename),
         media_type="image/png"
     )
     
