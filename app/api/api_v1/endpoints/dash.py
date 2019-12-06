@@ -1,13 +1,19 @@
+import logging
 from fastapi import APIRouter
 
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from starlette.responses import HTMLResponse
 from api.utils.db import get_db
+from api.utils.security import get_current_active_user
+from db_models.users import Users as DBUser
+
 
 from core import plots
 
 router = APIRouter()
+
+log = logging.getLogger('elapuntador')
 
 
 ploteable = 'altura', 'temperatura'
@@ -20,7 +26,9 @@ def plot_peso(
     table: str,
     apodo: str,
     db_session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_active_user),
 ):
+    log.debug(current_user)
     if table in ploteable:
         return plots.plot_dynamic(table, apodo)
  
