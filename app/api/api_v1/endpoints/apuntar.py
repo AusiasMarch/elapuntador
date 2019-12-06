@@ -69,7 +69,8 @@ def insert_apunte(
         
         card = BasicCard(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
-            title=f"Temperatura de {sujeto.name} ({datetime.datetime.strptime(plot_datetime, '%H:%M')})",
+            title=f"Temperatura de {sujeto.name} "
+                  f"({datetime.datetime.strptime(plot_datetime, '%H:%M')})",
             button_title="Full plot",
             button_url=os.path.join(
                 "http://elapuntador.ddns.net",
@@ -78,7 +79,7 @@ def insert_apunte(
                 sujeto.name,
                 "temperatura"
             ),
-            image_text="Plotillo",
+            image_text="Evolución de la temperatura",
             image_url=f"http://elapuntador.ddns.net/card_plots/{filename}"
         )
         log.debug(card.content)
