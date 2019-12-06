@@ -142,9 +142,16 @@ def insert_apunte(
         
         if last_temp is None or \
                 datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
-            plots.plot_static("temperature", sujeto.name, last=True)
+            plots.plot_static("temperature", sujeto.name)
         
         return Answer(kind='temperatura', suejto=sujeto, grados=grados, decimas=decimas).content
+
+
+    # from db.session import db_session
+    # sujeto = crud.sujeto.get_by_apodo(
+    #     db_session=db_session,
+    #     apodo='sala'
+    # )
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
