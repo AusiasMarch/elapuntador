@@ -60,13 +60,15 @@ def insert_apunte(
         "temperatura" in body['queryResult']['parameters'].keys()):
         filename = plots.plot_seaborn("temperatura", sujeto.name)
         
+        temp = crud.temperatura.get_last_by_sujeto(db_session, sujeto.id)
+        
         card = BasicCard(
-            content="La temperatura actual es",
+            content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
             title=f"Temperatura de {sujeto.name}",
             button_title="Full plot",
             button_url="rebre",
             image_text="Plotillo",
-            image_url=f"elapuntador.ddns.net/card_plots/{filename}"
+            image_url=f"http://elapuntador.ddns.net/card_plots/{filename}"
         )
         log.debug(card.content)
         

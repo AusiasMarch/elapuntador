@@ -67,6 +67,17 @@ def get_all_by_user_and_sujeto(
     )
 
 
+def get_last_by_sujeto(
+    db_session: Session, *, sujeto_id: int
+):
+    return (
+        db_session.query(Temperatura)
+        .filter(Temperatura.sujeto_id == sujeto_id)
+        .order_by(Temperatura.id.desc())
+        .first()
+    )
+
+
 def create(db_session: Session, *, temperatura_in: TemperaturaCreate) -> Temperatura:
     temperatura_in_data = jsonable_encoder(temperatura_in)
     temperatura = Temperatura(**temperatura_in_data)
