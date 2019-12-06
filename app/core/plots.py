@@ -197,10 +197,16 @@ def plot_static(table: str, apodo: str, last: bool=False):
     return filename.split("/")[-1]
 
 
-def filter_plot(plot: str, table: str, sujeto_name: str):
+def filter_plot(plot: str, table: str, sujeto_name: str, extension: str = None):
     p_table, p_sujeto_name, p_date, p_time = plot.split("_")
     if p_table == table and p_sujeto_name == sujeto_name:
-        return True
+        if extension is None:
+            return True
+        else:
+            if p_time.endswith(extension):
+                return True
+            else:
+                return False
     else:
         return False
 
@@ -208,7 +214,7 @@ def filter_plot(plot: str, table: str, sujeto_name: str):
 def get_last_static(table: str, apodo: str):
     sujeto_name = crud.sujeto.get_by_apodo(db_session, apodo=apodo).name
     plots = os.listdir("/tmp/elapuntador")
-    plots = [x for x in plots if filter_plot(x, table, sujeto_name)]
+    plots = [x for x in plots if filter_plot(x, table, sujeto_name, '.png')]
     plot = sorted(plots)[-1]
     plot_date, plot_time = plot.split("_")[2:4]
     plot_time = plot_time.split(".")[0]
