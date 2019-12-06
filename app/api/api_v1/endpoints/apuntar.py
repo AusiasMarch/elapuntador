@@ -62,7 +62,7 @@ def insert_apunte(
         
         card = BasicCard(
             content="La temperatura actual es",
-            title=f"Temperatura de {sujeto.full_name}",
+            title=f"Temperatura de {sujeto.name}",
             button_title="Full plot",
             button_url="rebre",
             image_text="Plotillo",
