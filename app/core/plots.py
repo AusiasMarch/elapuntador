@@ -162,18 +162,15 @@ def plot_dynamic(
         return html.read()
     
 
-def plot_static(table: str, apodo: str, last: bool=False):
+def plot_static(table: str, apodo: str):
     log.debug(f"Plotting {table} for {apodo}.")
 
     data, sujeto = get_data(apodo, table, previous_days=3)
     
-    if last:
-        filename = f"/tmp/elapuntador/{table}_{sujeto.name}_last.png"
-    else:
-        filename = os.path.join(
-            "/tmp/elapuntador/",
-            f"{table}_{sujeto.name}_{data['datetime'].max()}.png".replace(" ", "_")
-        )
+    filename = os.path.join(
+        "/tmp/elapuntador/",
+        f"{table}_{sujeto.name}_{data['datetime'].max()}.png".replace(" ", "_")
+    )
 
     log.debug(f"Searching for {filename}.")
 
