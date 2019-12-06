@@ -58,13 +58,17 @@ def insert_apunte(
         return Answer(kind='location', sujeto=sujeto, location=location).content
     elif ("Que" in body['queryResult']['parameters'].keys() and
         "temperatura" in body['queryResult']['parameters'].keys()):
-        filename = plots.plot_seaborn("temperatura", sujeto.name)
+        filename = plots.get_last_static(
+            "temperatura",
+            body['queryResult']['parameters']['sujeto']
+        )
+        date_time = filename.split("_")[3].split(".")[0]
         
         temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
         
         card = BasicCard(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
-            title=f"Temperatura de {sujeto.name}",
+            title=f"Temperatura de {sujeto.name} ({date_time})",
             button_title="Full plot",
             button_url=f"http://elapuntador.ddns.net/api/{config.API_V1_STR}/dash/{sujeto.name}/temperatura",
             image_text="Plotillo",
