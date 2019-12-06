@@ -36,8 +36,8 @@ def login(db: Session = Depends(get_db)):
 def login_access_token(
         db: Session = Depends(get_db),
         *,
-        username: Body(None),
-        password: Body(None),
+        username: str = Body(None),
+        password: str = Body(None),
         # form_data: dict,
         # form_data: OAuth2PasswordRequestForm = Depends()
 ):
