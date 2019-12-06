@@ -1,7 +1,7 @@
 import logging
 from datetime import timedelta
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import HTMLResponse
 from sqlalchemy.orm import Session
@@ -34,9 +34,13 @@ def login(db: Session = Depends(get_db)):
 
 @router.post("/login/access-token", response_model=Token, tags=["login"])
 def login_access_token(
-    db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
+    db: Session = Depends(get_db),
+        username: str=Form(...),
+        password: str=Form(...),
+        # form_data: OAuth2PasswordRequestForm = Depends()
 ):
-    log.debug(form_data)
+    log.debug(username)
+    log.debug(password)
     
     """
     OAuth2 compatible token login, get an access token for future requests
