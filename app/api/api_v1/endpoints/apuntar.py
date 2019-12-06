@@ -138,18 +138,10 @@ def insert_apunte(
             decimas=decimas
         )
         crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
-
-        sujeto = crud.sujeto.get_by_apodo(
-            db_session=db_session,
-            apodo="sala"
-        )
-        
-        last_temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
-        
-        last_plot_time =
+        _, last_temp = plots.get_last_static("temperatura", sujeto.name)
         
         
-        if datetime.datetime.now() - last_temp.datetime > datetime.timedelta(hours=1):
+        if datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
             plots.plot_static("temperature", sujeto.name)
         
         return Answer(kind='temperatura', suejto=sujeto, grados=grados, decimas=decimas).content
