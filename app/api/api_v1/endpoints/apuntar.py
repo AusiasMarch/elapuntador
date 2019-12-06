@@ -64,13 +64,15 @@ def insert_apunte(
             "temperatura",
             body['queryResult']['parameters']['sujeto']
         )
+        plot_datetime = datetime.datetime.strftime(
+            plot_datetime.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None),
+            '%H:%M')
         
         temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
         
         card = BasicCard(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
-            title=f"Temperatura de {sujeto.name} "
-                  f"({datetime.datetime.strftime(plot_datetime, '%H:%M')})",
+            title=f"Temperatura de {sujeto.name} ({plot_datetime})",
             button_title="Full plot",
             button_url=os.path.join(
                 "http://elapuntador.ddns.net",
