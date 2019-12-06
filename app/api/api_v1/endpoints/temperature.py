@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
@@ -7,6 +8,7 @@ from api.utils.db import get_db
 from models.temperatura import TemperaturaCreate
 from models.msg import Msg
 from core import config
+from core import plots
 
 from db.session import db_session
 
@@ -20,7 +22,7 @@ cyber_user = crud.user.get_by_name(db_session, name="Arduino")
 
 
 @router.post("/", response_model=Msg, status_code=201)
-def insert_location(
+def insert_temperature(
     *,
     body: dict,
     db_session: Session = Depends(get_db),
@@ -42,6 +44,11 @@ def insert_location(
         decimas=0
     )
     crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
+    _, last_temp = plots.get_last_static("temperatura", sujeto.name)
+
+    if last_temp is None or \
+            datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
+        plots.plot_static("temperatura", sujeto.name)
 
     return {"msg": "Location updated."}
 
