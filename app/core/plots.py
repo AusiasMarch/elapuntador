@@ -190,7 +190,6 @@ def plot_seaborn(
     else:
         log.debug(f"The plot {filename} already exists. ")
 
-    log.debug(f"Returning {filename.split('/')[-1]}.")
     return filename.split("/")[-1]
 
 
