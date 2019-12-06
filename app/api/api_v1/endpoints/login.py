@@ -1,7 +1,9 @@
+import logging
 from datetime import timedelta
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
+from starlette.responses import HTMLResponse
 from sqlalchemy.orm import Session
 
 import crud
@@ -20,10 +22,22 @@ from myemails import send_reset_password_email
 router = APIRouter()
 
 
+log = logging.getLogger('elapuntador')
+
+
+
+@router.get("/login", response_model=HTMLResponse)
+def login(db: Session = Depends(get_db)):
+    with open("/app/html/login.html") as html:
+        return html.read()
+
+
 @router.post("/login/access-token", response_model=Token, tags=["login"])
 def login_access_token(
     db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
 ):
+    log.debug(form_data)
+    
     """
     OAuth2 compatible token login, get an access token for future requests
     """
