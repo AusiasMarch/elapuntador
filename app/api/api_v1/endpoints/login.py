@@ -37,10 +37,10 @@ def login_access_token(
         db: Session = Depends(get_db),
         *,
         # body: dict,
-        form_data: dict,
+        # form_data: dict,
         # form_data: OAuth2PasswordRequestForm = Depends()
 ):
-    log.debug(form_data)
+    log.debug("yeah")
 
     
     """
