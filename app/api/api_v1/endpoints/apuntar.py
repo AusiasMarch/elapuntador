@@ -60,7 +60,7 @@ def insert_apunte(
         "temperatura" in body['queryResult']['parameters'].keys()):
         filename = plots.plot_seaborn("temperatura", sujeto.name)
         
-        temp = crud.temperatura.get_last_by_sujeto(db_session, sujeto.id)
+        temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
         
         card = BasicCard(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",

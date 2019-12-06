@@ -8,6 +8,7 @@ from fastapi.encoders import jsonable_encoder
 
 from db_models.temperatura import Temperatura
 from models.temperatura import TemperaturaCreate
+from models.sujeto import SujetoInDB
 
 
 log = logging.getLogger("elapuntador")
@@ -68,11 +69,12 @@ def get_all_by_user_and_sujeto(
 
 
 def get_last_by_sujeto(
-    db_session: Session, *, sujeto_id: int
+        db_session: Session, *,
+        sujeto: SujetoInDB
 ):
     return (
         db_session.query(Temperatura)
-        .filter(Temperatura.sujeto_id == sujeto_id)
+        .filter(Temperatura.sujeto_id == sujeto.id)
         .order_by(Temperatura.id.desc())
         .first()
     )
