@@ -172,7 +172,10 @@ def plot_seaborn(
     filename = f"/var/www/card_plots/{table}_{sujeto.name}_{data['datetime'].max()}.png" \
         .replace(" ", "_")
 
+    log.debug(f"Searching for {filename}.")
+
     if not os.path.exists(filename):
+        log.debug(f"The plot {filename} does not exist. Making it.")
         sns.set_context("poster")
         ax = sns.lineplot(
             x=data.datetime.dt.to_pydatetime(),
@@ -185,8 +188,9 @@ def plot_seaborn(
         sns.set_context("notebook", font_scale=1.5)
         fig.savefig(filename, dpi=192, bbox_inches="tight")
     else:
-        log.debug(f"The plot {table} for {apodo} already exists. ")
+        log.debug(f"The plot {filename} already exists. ")
 
+    log.debug(f"Returning {filename.split('/')[-1]}.")
     return filename.split("/")[-1]
 
 
