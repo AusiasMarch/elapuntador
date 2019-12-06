@@ -58,9 +58,9 @@ def insert_apunte(
         return Answer(kind='location', sujeto=sujeto, location=location).content
     elif ("que" in body['queryResult']['parameters'].keys() and
         "temperatura" in body['queryResult']['parameters'].keys()):
-        filename = plots.plot("temperatura", sujeto.full_name, format="png")
+        filename = plots.plot_seaborn("temperatura", sujeto.full_name)
         
-        return BasicCard(
+        card = BasicCard(
             content="La temperatura actual es",
             title=f"Temperatura de {sujeto.full_name}",
             button_title="Full plot",
@@ -68,6 +68,9 @@ def insert_apunte(
             image_text="Plotillo",
             image_url=f"elapuntador.ddns.net/card_plots/{filename}"
         )
+        log.debug(card.content)
+        
+        return card.content
     
     
     elif 'pesa' in body['queryResult']['parameters'].keys():
