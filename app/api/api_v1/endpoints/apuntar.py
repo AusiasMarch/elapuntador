@@ -140,12 +140,11 @@ def insert_apunte(
         crud.temperatura.create(db_session=db_session, temperatura_in=temperatura_in)
         _, last_temp = plots.get_last_static("temperatura", sujeto.name)
         
-        if datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
+        if last_temp is None or \
+                datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
             plots.plot_static("temperature", sujeto.name, last=True)
         
         return Answer(kind='temperatura', suejto=sujeto, grados=grados, decimas=decimas).content
-
-
 
 
 # @router.get("/info", response_model=List[FitInfoDB], status_code=200)
