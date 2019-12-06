@@ -112,7 +112,7 @@ def plot_plotly(
     xaxis_tickformat = "%b-%d %H:%M" if delta_t < datetime.timedelta(days=3) \
         else "%Y-%b-%d"
     
-    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.{format}"\
+    filename = f"/tmp/elapuntador/{table}_{sujeto.name}_{data['datetime'].max()}.html"\
         .replace(" ", "_")
     
     if not os.path.exists(filename):
@@ -156,7 +156,7 @@ def plot_plotly(
         
         plotly.offline.plot(fig, filename=filename, auto_open=False)
     else:
-        log.debug(f"The plot {table} for {apodo} already exists. ")
+        log.debug(f"The plot {table} for {apodo} already exists.")
     
     with open(filename) as html:
         return html.read()
