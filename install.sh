@@ -17,6 +17,7 @@ sudo echo "LANG=en_US.UTF-8 UTF-8" | sudo tee -a /etc/environment
 #sudo chmod +x orca-1.2.1-x86_64.AppImage
 #sudo mv orca-1.2.1-x86_64.AppImage /usr/local/sbin/orca
 sudo mkdir /var/www/card_plots
+sudo chown pi: /var/www/card_plots
 
 
 sudo apt install -y python3-pip

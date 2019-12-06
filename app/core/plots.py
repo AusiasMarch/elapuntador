@@ -4,6 +4,7 @@ import plotly
 import plotly.graph_objects as go
 import logging
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 from db.session import db_session
 import crud
@@ -177,6 +178,7 @@ def plot_seaborn(
     if not os.path.exists(filename):
         log.debug(f"The plot {filename} does not exist. Making it.")
         sns.set_context("poster")
+        plt.clf()
         ax = sns.lineplot(
             x=data.datetime.dt.to_pydatetime(),
             y=data[variable[table]],
