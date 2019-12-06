@@ -56,7 +56,7 @@ def insert_apunte(
         location = crud.location.get_by_sujeto(db_session=db_session, sujeto=sujeto)
         log.debug(location)
         return Answer(kind='location', sujeto=sujeto, location=location).content
-    elif ("que" in body['queryResult']['parameters'].keys() and
+    elif ("Que" in body['queryResult']['parameters'].keys() and
         "temperatura" in body['queryResult']['parameters'].keys()):
         filename = plots.plot_seaborn("temperatura", sujeto.full_name)
         
