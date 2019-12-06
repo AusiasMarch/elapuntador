@@ -35,8 +35,8 @@ def login(db: Session = Depends(get_db)):
 @router.post("/login/access-token", response_model=Token, tags=["login"])
 def login_access_token(
         db: Session = Depends(get_db),
-        *,
-        body: dict,
+        # *,
+        # body: dict,
         # form_data: dict,
         # form_data: OAuth2PasswordRequestForm = Depends()
 ):
