@@ -162,13 +162,18 @@ def plot_dynamic(
         return html.read()
     
 
-def plot_static(table: str, apodo: str):
+def plot_static(table: str, apodo: str, last: bool=False):
     log.debug(f"Plotting {table} for {apodo}.")
 
     data, sujeto = get_data(apodo, table)
     
-    filename = f"/var/www/card_plots/{table}_{sujeto.name}_{data['datetime'].max()}.png" \
-        .replace(" ", "_")
+    if last:
+        filename = f"/tmp/elapuntador/{table}_{sujeto.name}_last.png"
+    else:
+        filename = os.path.join(
+            "/tmp/elapuntador/",
+            f"{table}_{sujeto.name}_{data['datetime'].max()}.png".replace(" ", "_")
+        )
 
     log.debug(f"Searching for {filename}.")
 
@@ -202,7 +207,7 @@ def filter_plot(plot: str, table: str, sujeto_name: str):
 
 def get_last_static(table: str, apodo: str):
     sujeto_name = crud.sujeto.get_by_apodo(db_session, apodo=apodo).name
-    plots = os.listdir("/var/www/card_plots")
+    plots = os.listdir("/tmp/elapuntador")
     plots = [x for x in plots if filter_plot(x, table, sujeto_name)]
     plot = sorted(plots)[-1]
     plot_date, plot_time = plot.split("_")[2:4]
