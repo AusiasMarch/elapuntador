@@ -36,12 +36,14 @@ def login(db: Session = Depends(get_db)):
 def login_access_token(
         db: Session = Depends(get_db),
         *,
-        body: dict,
+        username: Body(None),
+        password: Body(None),
         # form_data: dict,
         # form_data: OAuth2PasswordRequestForm = Depends()
 ):
     log.debug("yeah")
-    log.debug(body)
+    log.debug(username)
+    log.debug(password)
     
     """
     OAuth2 compatible token login, get an access token for future requests
