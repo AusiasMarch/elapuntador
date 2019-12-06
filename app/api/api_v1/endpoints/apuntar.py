@@ -58,7 +58,7 @@ def insert_apunte(
         return Answer(kind='location', sujeto=sujeto, location=location).content
     elif ("Que" in body['queryResult']['parameters'].keys() and
         "temperatura" in body['queryResult']['parameters'].keys()):
-        filename = plots.plot_seaborn("temperatura", sujeto.full_name)
+        filename = plots.plot_seaborn("temperatura", sujeto.name)
         
         card = BasicCard(
             content="La temperatura actual es",
