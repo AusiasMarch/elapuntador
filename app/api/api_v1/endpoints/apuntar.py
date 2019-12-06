@@ -1,3 +1,4 @@
+import os
 import logging
 
 from fastapi import APIRouter, Depends, Body, Header
@@ -70,7 +71,13 @@ def insert_apunte(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
             title=f"Temperatura de {sujeto.name} ({date_time})",
             button_title="Full plot",
-            button_url=f"http://elapuntador.ddns.net/api/{config.API_V1_STR}/dash/{sujeto.name}/temperatura",
+            button_url=os.path.join(
+                "http://elapuntador.ddns.net",
+                config.API_V1_STR,
+                "dash",
+                sujeto.name,
+                "temperatura"
+            ),
             image_text="Plotillo",
             image_url=f"http://elapuntador.ddns.net/card_plots/{filename}"
         )
