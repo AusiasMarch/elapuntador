@@ -26,7 +26,7 @@ log = logging.getLogger('elapuntador')
 
 
 
-@router.get("/login", response_model=HTMLResponse)
+@router.get("/login", content_type=HTMLResponse)
 def login(db: Session = Depends(get_db)):
     with open("/app/html/login.html") as html:
         return html.read()
