@@ -60,17 +60,16 @@ def insert_apunte(
         return Answer(kind='location', sujeto=sujeto, location=location).content
     elif ("Que" in body['queryResult']['parameters'].keys() and
         "temperatura" in body['queryResult']['parameters'].keys()):
-        filename = plots.get_last_static(
+        filename, plot_datetime = plots.get_last_static(
             "temperatura",
             body['queryResult']['parameters']['sujeto']
         )
-        date_time = filename.split("_")[3].split(".")[0]
         
         temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
         
         card = BasicCard(
             content=f"La temperatura actual de {sujeto.name} es de {temp.grados} grados.",
-            title=f"Temperatura de {sujeto.name} ({date_time})",
+            title=f"Temperatura de {sujeto.name} ({datetime.datetime.strptime(plot_datetime, '%H:%M')})",
             button_title="Full plot",
             button_url=os.path.join(
                 "http://elapuntador.ddns.net",
@@ -145,6 +144,10 @@ def insert_apunte(
         )
         
         last_temp = crud.temperatura.get_last_by_sujeto(db_session=db_session, sujeto=sujeto)
+        
+        last_plot_time =
+        
+        
         if datetime.datetime.now() - last_temp.datetime > datetime.timedelta(hours=1):
             plots.plot_static("temperature", sujeto.name)
         

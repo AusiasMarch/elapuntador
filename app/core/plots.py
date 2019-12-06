@@ -205,7 +205,14 @@ def get_last_static(table: str, apodo: str):
     plots = os.listdir("/var/www/card_plots")
     plots = [x for x in plots if filter_plot(x, table, sujeto_name)]
     plot = sorted(plots)[-1]
-    return plot
+    plot_date, plot_time = plot.split("_")[2:4]
+    plot_time = plot_time.split(".")[0]
+    
+    plot_datetime = datetime.datetime.strptime(
+        f"{plot_date} {plot_time}",
+        "%Y-%m-%d %H:%M:%S"
+    )
+    return plot, plot_datetime
 
 
 # import matplotlib.pyplot as plt
