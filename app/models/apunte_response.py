@@ -30,7 +30,7 @@ class Answer:
         self.content=dict(
             payload=dict(
                 google=dict(
-                    expectUserResponse=True,
+                    expectUserResponse=False,
                     richResponse=dict(
                         items=[
                             dict(
@@ -53,7 +53,7 @@ class BasicCard:
         self.content=dict(
             payload=dict(
                 google=dict(
-                    expectUserResponse=True,
+                    expectUserResponse=False,
                     richResponse=dict(
                         items=[
                             dict(
