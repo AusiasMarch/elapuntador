@@ -48,7 +48,7 @@ def insert_temperature(
 
     if last_temp is None or \
             datetime.datetime.now() - last_temp > datetime.timedelta(hours=1):
-        plots.plot_static("temperatura", sujeto.name,)
+        plots.plot_static("temperatura", sujeto.name)
 
     return {"msg": "Location updated."}
 

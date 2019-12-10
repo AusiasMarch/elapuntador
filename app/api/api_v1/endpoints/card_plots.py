@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import APIRouter
 
 from fastapi import Depends
@@ -14,6 +15,7 @@ router = APIRouter()
 
 ploteable = 'altura', 'temperatura'
 
+log = logging.getLogger('elapuntador')
 
 @router.get("/{apodo}/{table}", content_type=FileResponse)
 def get(
