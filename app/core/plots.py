@@ -88,9 +88,9 @@ def add_who(fig, sujeto, table):
     return fig
 
 
-def get_data(apodo: str, table: str, previous_days: int=None):
+def get_data(apodo: str, table: str, previous_days: int=1000):
     sujeto = crud.sujeto.get_by_apodo(db_session, apodo=apodo)
-    data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id, previous_days=1000)
+    data = data_sources[table](db_session=db_session, sujeto_id=sujeto.id, previous_days=previous_days)
     data = data.sort_values("datetime")
     data["datetime"] = data["datetime"].apply(utc_to_local)
     if table == 'temperatura':
