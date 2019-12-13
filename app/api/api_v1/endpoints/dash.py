@@ -25,10 +25,10 @@ def plot_peso(
     *,
     table: str,
     apodo: str,
-    db_session: Session = Depends(get_db),
-    current_user: DBUser = Depends(get_current_active_user),
+    # db_session: Session = Depends(get_db),
+    # current_user: DBUser = Depends(get_current_active_user),
 ):
-    log.debug(current_user)
+    # log.debug(current_user)
     if table in ploteable:
         return plots.plot_dynamic(table, apodo)
  
